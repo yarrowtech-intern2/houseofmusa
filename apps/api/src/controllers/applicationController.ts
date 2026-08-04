@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { applicationSchema } from "@houseofmusa/schemas";
+import { applicationSchema, type ApplicationStatusInput } from "@houseofmusa/schemas";
 import { Application } from "../models/Application";
 import { CareerRole } from "../models/CareerRole";
 import { ApiError } from "../middleware/errorHandler";
@@ -62,4 +62,17 @@ export async function listApplications(req: Request, res: Response) {
   ]);
 
   res.json({ items, total, page, pageSize, totalPages: Math.ceil(total / pageSize) });
+}
+
+export async function updateApplicationStatus(
+  req: Request<{ id: string }, unknown, ApplicationStatusInput>,
+  res: Response,
+) {
+  const application = await Application.findByIdAndUpdate(
+    req.params.id,
+    { status: req.body.status },
+    { new: true },
+  ).populate("roleId", "title department");
+  if (!application) throw new ApiError(404, "Application not found");
+  res.json({ item: application });
 }

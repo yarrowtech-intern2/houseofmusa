@@ -30,3 +30,12 @@ pnpm --filter @houseofmusa/api seed:products
 
 Upserts 8 placeholder products (one per category) by slug — see `apps/api/src/scripts/seedProducts.ts`.
 Replace via the admin Products CRUD once real product content exists.
+
+## Seeding placeholder career roles
+
+```
+pnpm --filter @houseofmusa/api seed:career-roles
+```
+
+Upserts 6 placeholder roles across Engineering/Design/Sales/People by slug — see
+`apps/api/src/scripts/seedCareerRoles.ts`. Replace via the admin Career Roles CRUD once real openings exist.

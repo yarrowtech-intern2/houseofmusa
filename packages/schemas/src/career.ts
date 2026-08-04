@@ -21,6 +21,9 @@ export const careerRoleSchema = z.object({
 
 export type CareerRoleInput = z.infer<typeof careerRoleSchema>;
 
+export const careerRoleUpdateSchema = careerRoleSchema.partial();
+export type CareerRoleUpdateInput = z.infer<typeof careerRoleUpdateSchema>;
+
 export const applicationSchema = z.object({
   roleId: z.string().trim().min(1, "A role must be selected"),
   fullName: z.string().trim().min(2).max(120),
@@ -36,3 +39,18 @@ export const applicationSchema = z.object({
 });
 
 export type ApplicationInput = z.infer<typeof applicationSchema>;
+
+export const applicationStatusValues = [
+  "new",
+  "reviewing",
+  "interviewing",
+  "offered",
+  "rejected",
+  "hired",
+] as const;
+
+export const applicationStatusSchema = z.object({
+  status: z.enum(applicationStatusValues),
+});
+
+export type ApplicationStatusInput = z.infer<typeof applicationStatusSchema>;

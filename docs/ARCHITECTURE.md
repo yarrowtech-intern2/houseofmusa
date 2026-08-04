@@ -122,7 +122,11 @@ a static site (Render Static Site), with the API on a separate VPS. Consequences
 
 Separate Next.js app/deploy target. Auth is a `POST /api/auth/login` call that sets an httpOnly cookie;
 `(dashboard)/layout.tsx` is a server component that calls `getServerSession()` (forwards the cookie to
-`/api/auth/me`) and redirects to `/login` if unauthenticated. Sidebar covers all ten sections from the brief
+`/api/auth/me`) and redirects to `/login` if unauthenticated. Sidebar covers the ten sections from the brief
 (Analytics, Contacts, Job Applications, Products, Gallery Frames, Homepage Content, Media, Statistics, SEO,
-Website Analytics) as real routes; most render `SectionPlaceholder` until their follow-up phase lands (see
-[ROADMAP.md](./ROADMAP.md)). Dark mode via `next-themes`.
+Website Analytics) plus **Career Roles** — added because the brief's admin section list didn't actually
+include job-posting management, even though the Careers page section explicitly calls for "admin can post
+jobs"; "Job Applications" alone only covers reviewing candidate submissions, a distinct workflow from
+authoring the postings themselves. Products and Career Roles have full working CRUD; the rest render
+`SectionPlaceholder` until their follow-up phase lands (see [ROADMAP.md](./ROADMAP.md)). Dark mode via
+`next-themes`.

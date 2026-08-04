@@ -6,6 +6,7 @@ import {
   BarChart3,
   Mail,
   FileText,
+  Briefcase,
   Package,
   Frame,
   Home,
@@ -20,6 +21,7 @@ import { Logo } from "./Logo";
 const NAV_SECTIONS = [
   { href: "/", label: "Analytics", icon: BarChart3 },
   { href: "/contacts", label: "Contacts", icon: Mail },
+  { href: "/career-roles", label: "Career Roles", icon: Briefcase },
   { href: "/applications", label: "Job Applications", icon: FileText },
   { href: "/products", label: "Products", icon: Package },
   { href: "/gallery-frames", label: "Gallery Frames", icon: Frame },

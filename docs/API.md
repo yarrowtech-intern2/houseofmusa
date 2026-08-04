@@ -40,14 +40,20 @@ Security middleware applied globally: `helmet`, `cors` (origin allowlist via `CO
 | Method | Path | Auth | Notes |
 |---|---|---|---|
 | GET | `/api/career-roles` | — | Published only |
-| GET | `/api/career-roles/:slug` | — | |
+| GET | `/api/career-roles/:slug` | — | Published only |
+| GET | `/api/career-roles/admin` | admin | Includes unpublished (draft) roles |
+| GET | `/api/career-roles/admin/:id` | admin | Fetch by Mongo `_id` regardless of published status (used by the edit form) |
+| POST | `/api/career-roles` | admin | Rejects duplicate `slug` with `409` |
+| PATCH | `/api/career-roles/:id` | admin | Partial update (`careerRoleUpdateSchema`); re-checks `slug` uniqueness if changed |
+| DELETE | `/api/career-roles/:id` | admin | `204` on success |
 
 ## Applications
 
 | Method | Path | Auth | Notes |
 |---|---|---|---|
 | POST | `/api/applications` | — | `multipart/form-data`: `resume` (required), `coverLetter` (optional), plus form fields. `skills` accepts a JSON array string or comma-separated string. Rate-limited. |
-| GET | `/api/applications` | admin | Paginated, populates role title/department |
+| GET | `/api/applications` | admin | Paginated, populates `roleId` → `{ _id, title, department }` |
+| PATCH | `/api/applications/:id/status` | admin | Body: `{ status }`, one of `applicationStatusValues` (new/reviewing/interviewing/offered/rejected/hired) |
 
 ## Static
 
@@ -55,5 +61,4 @@ Uploaded files served from `/uploads/*` (disk storage under `apps/api/uploads/`,
 
 ## Not yet built (see [ROADMAP.md](./ROADMAP.md))
 
-Admin CRUD for career roles, gallery-frame management, homepage content editing, media library, analytics
-ingestion endpoint, CSV export.
+Gallery-frame management, homepage content editing, media library, analytics ingestion endpoint, CSV export.

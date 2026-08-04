@@ -45,14 +45,27 @@ all 10 sidebar sections as routes).
   frames currently map to products by seed order (`order` field, cycling if fewer than 8 products exist).
   Worth adding once frame-to-product assignment needs to be independent of that.
 
-## Phase 4 — Careers
+- Visual realism upgrade plan: [GALLERY-REALISM-PLAN.md](./GALLERY-REALISM-PLAN.md).
 
-Job listings UI, role detail page, full application form (resume/cover-letter upload, LinkedIn/GitHub/
-portfolio, salary, experience, skills, availability) wired to `POST /api/applications`. Admin: Applications
-review/status pipeline, CareerRole CRUD. Note: `/careers/[slug]` was removed for now (see
-[ARCHITECTURE.md](./ARCHITECTURE.md#static-export) — static export needs `generateStaticParams` to resolve
-to at least one real role, and none exist until this phase seeds some) — re-add it once real `CareerRole`
-documents exist.
+## Phase 4 — Careers (done)
+
+- Careers list (`/careers`) and role detail (`/careers/[slug]`, re-added now that real `CareerRole`
+  documents exist to satisfy static export's `generateStaticParams` requirement) — 6 placeholder roles
+  seeded across Engineering/Design/Sales/People (`apps/api/src/scripts/seedCareerRoles.ts`), clearly generic
+  copy, swap via the admin CRUD once real openings exist.
+- Full application form (`components/careers/ApplicationForm.tsx`) embedded on the role detail page —
+  resume (required) + cover letter (optional) upload, LinkedIn/GitHub/portfolio, expected salary, experience,
+  comma-separated skills, availability. Submits as `FormData` directly from the browser to
+  `POST /api/applications` (not through a Next.js server action — stays compatible with static export, since
+  it's a client-side fetch at runtime, not a build-time concern).
+- Admin: full CareerRole CRUD (`/career-roles`, `/career-roles/new`, `/career-roles/[id]`) mirroring the
+  Products admin pattern; Applications review (`/applications`) with resume/cover-letter download links and
+  a per-row status dropdown (new → reviewing → interviewing → offered/rejected/hired) wired to the new
+  `PATCH /api/applications/:id/status`.
+- API additions: `GET/POST /api/career-roles(/admin)`, `PATCH`/`DELETE /api/career-roles/:id`,
+  `PATCH /api/applications/:id/status` (see [API.md](./API.md)).
+- Verified with a real end-to-end submission through the live API (multipart upload, Atlas write, admin
+  list/status-update read), not just page-render checks — then cleaned up the test record.
 
 ## Phase 5 — Contact
 
