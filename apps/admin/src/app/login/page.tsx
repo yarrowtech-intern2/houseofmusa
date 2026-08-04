@@ -1,0 +1,66 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginInput } from "@houseofmusa/schemas";
+import { Button, Input, Label } from "@houseofmusa/ui";
+import { apiFetch, ApiRequestError } from "@/lib/api";
+import { Logo } from "@/components/layout/Logo";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+
+  const onSubmit = async (values: LoginInput) => {
+    setServerError(null);
+    try {
+      await apiFetch("/api/auth/login", { method: "POST", body: JSON.stringify(values) });
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      setServerError(err instanceof ApiRequestError ? err.message : "Something went wrong");
+    }
+  };
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-background px-6 dark:bg-[#0d0d0d]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-sm rounded-3xl border border-foreground/8 bg-surface p-8 shadow-soft-lg dark:border-white/10 dark:bg-[#151515]"
+      >
+        <div className="mb-8 flex flex-col items-center text-center">
+          <Logo className="h-7 w-auto" />
+          <h1 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground dark:text-white">
+            Admin Sign In
+          </h1>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" autoComplete="email" {...register("email")} />
+            {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="password">Password</Label>
+            <Input id="password" type="password" autoComplete="current-password" {...register("password")} />
+            {errors.password && <span className="text-xs text-red-500">{errors.password.message}</span>}
+          </div>
+        </div>
+
+        {serverError && <p className="mt-4 text-sm text-red-500">{serverError}</p>}
+
+        <Button type="submit" className="mt-8 w-full" size="lg" disabled={isSubmitting}>
+          {isSubmitting ? "Signing in…" : "Sign In"}
+        </Button>
+      </form>
+    </main>
+  );
+}

@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+dist/
+build/
+out/
+
+# env
+.env
+.env.local
+.env.example
+
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editor / os
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# uploads (local dev only)
+apps/api/uploads/
+
+# turbo (future)
+.turbo/

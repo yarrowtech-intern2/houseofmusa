@@ -1,0 +1,18 @@
+{
+  "name": "houseofmusa",
+  "private": true,
+  "version": "0.1.0",
+  "description": "House of Musa — ultra-premium IT company website (monorepo)",
+  "scripts": {
+    "dev:web": "pnpm --filter @houseofmusa/web dev",
+    "dev:api": "pnpm --filter @houseofmusa/api dev",
+    "dev:admin": "pnpm --filter @houseofmusa/admin dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.29.2"
+}
