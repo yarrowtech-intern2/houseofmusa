@@ -33,3 +33,11 @@ needs tuning once viewed in-browser.
 
 `apps/api/.env` is pre-configured to a MongoDB Atlas cluster — not committed (gitignored), so anyone else
 setting up the repo needs their own `MONGODB_URI`.
+
+## Render deployment
+
+The public web app is a static export. If `NEXT_PUBLIC_API_URL` is unset, it builds with bundled placeholder
+products and career roles, and runtime submissions that need the API are disabled. Leave it unset until the
+API exists; do not set it to `localhost` on Render. Once the API exists, set `NEXT_PUBLIC_API_URL` on the
+Render Static Site to the public, reachable API origin without a trailing slash, for example
+`https://houseofmusa-api.onrender.com`.

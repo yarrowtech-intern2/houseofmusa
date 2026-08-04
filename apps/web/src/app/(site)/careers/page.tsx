@@ -4,6 +4,7 @@ import type { CareerRole } from "@houseofmusa/types";
 import { apiGet } from "@/lib/api";
 import { RevealText } from "@/components/motion/RevealText";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
+import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function CareersPage() {
   const { items: roles } = await apiGet<{ items: CareerRole[] }>("/api/career-roles").catch(
-    () => ({ items: [] as CareerRole[] }),
+    () => ({ items: STATIC_CAREER_ROLES }),
   );
 
   return (

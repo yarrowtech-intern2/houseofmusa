@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Product, PaginatedResult } from "@houseofmusa/types";
 import { apiGet } from "@/lib/api";
 import { GalleryExperience } from "@/components/gallery/GalleryExperience";
+import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
   title: "3D Gallery",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 // the Lenis smooth-scroll provider entirely.
 export default async function GalleryPage() {
   const { items: products } = await apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
-    () => ({ items: [] as Product[] }) as PaginatedResult<Product>,
+    () => toPaginatedResult(STATIC_PRODUCTS),
   );
 
   return <GalleryExperience products={products} />;

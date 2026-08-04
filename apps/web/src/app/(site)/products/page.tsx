@@ -3,6 +3,7 @@ import type { Product, PaginatedResult } from "@houseofmusa/types";
 import { apiGet } from "@/lib/api";
 import { RevealText } from "@/components/motion/RevealText";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
+import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
   const { items: products } = await apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
-    () => ({ items: [] as Product[] }) as PaginatedResult<Product>,
+    () => toPaginatedResult(STATIC_PRODUCTS),
   );
 
   return (

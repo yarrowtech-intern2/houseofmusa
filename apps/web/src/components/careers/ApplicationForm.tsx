@@ -6,8 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle2 } from "lucide-react";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 
 const applicationFormSchema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(120),
@@ -39,6 +38,11 @@ export function ApplicationForm({ roleId, roleTitle }: { roleId: string; roleTit
 
   const onSubmit = async (values: ApplicationFormValues) => {
     setServerError(null);
+    if (!CAN_USE_API) {
+      setServerError("Application submissions are unavailable until the API is connected.");
+      return;
+    }
+
     const resumeFile = values.resume[0];
     if (!resumeFile) {
       setServerError("A resume file is required.");
@@ -172,9 +176,14 @@ export function ApplicationForm({ roleId, roleTitle }: { roleId: string; roleTit
         </div>
       </div>
 
+      {!CAN_USE_API && (
+        <p className="mt-5 text-sm text-foreground/50">
+          Application submissions are unavailable until the API is connected.
+        </p>
+      )}
       {serverError && <p className="mt-5 text-sm text-red-500">{serverError}</p>}
 
-      <Button type="submit" size="lg" className="mt-8 w-full sm:w-auto" disabled={isSubmitting}>
+      <Button type="submit" size="lg" className="mt-8 w-full sm:w-auto" disabled={isSubmitting || !CAN_USE_API}>
         {isSubmitting ? "Submitting…" : "Submit Application"}
       </Button>
     </form>

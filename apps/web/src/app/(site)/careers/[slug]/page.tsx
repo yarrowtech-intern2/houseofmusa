@@ -5,24 +5,38 @@ import { ArrowLeft } from "lucide-react";
 import type { CareerRole } from "@houseofmusa/types";
 import { RevealText } from "@/components/motion/RevealText";
 import { ApplicationForm } from "@/components/careers/ApplicationForm";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
 async function getCareerRole(slug: string): Promise<CareerRole | null> {
-  const res = await fetch(`${API_URL}/api/career-roles/${slug}`);
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`Failed to load role: ${res.status}`);
-  const data = (await res.json()) as { item: CareerRole };
-  return data.item;
+  const staticRole = STATIC_CAREER_ROLES.find((role) => role.slug === slug) ?? null;
+
+  if (!CAN_USE_API) return staticRole;
+
+  try {
+    const res = await fetch(`${API_URL}/api/career-roles/${slug}`);
+    if (res.status === 404) return staticRole;
+    if (!res.ok) throw new Error(`Failed to load role: ${res.status}`);
+    const data = (await res.json()) as { item: CareerRole };
+    return data.item;
+  } catch {
+    return staticRole;
+  }
 }
 
 // Static export needs every path known at build time — see docs/ARCHITECTURE.md#static-export.
 export async function generateStaticParams() {
-  const res = await fetch(`${API_URL}/api/career-roles`);
-  if (!res.ok) return [];
-  const data = (await res.json()) as { items: CareerRole[] };
-  return data.items.map((role) => ({ slug: role.slug }));
+  if (!CAN_USE_API) return STATIC_CAREER_ROLES.map((role) => ({ slug: role.slug }));
+
+  try {
+    const res = await fetch(`${API_URL}/api/career-roles`);
+    if (!res.ok) return STATIC_CAREER_ROLES.map((role) => ({ slug: role.slug }));
+    const data = (await res.json()) as { items: CareerRole[] };
+    return data.items.map((role) => ({ slug: role.slug }));
+  } catch {
+    return STATIC_CAREER_ROLES.map((role) => ({ slug: role.slug }));
+  }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {

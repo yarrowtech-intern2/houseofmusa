@@ -104,19 +104,18 @@ list and [DATABASE.md](./DATABASE.md) for schemas.
 `apps/web` builds with `output: "export"` (`next.config.mjs`) — no Node server on the host; it's deployed as
 a static site (Render Static Site), with the API on a separate VPS. Consequences worth knowing:
 
-- Every dynamic route needs `generateStaticParams` (`products/[slug]` fetches all product slugs at build
-  time). **Next requires it to resolve to at least one entry** — an empty array makes the build fail with a
-  (confusingly-worded) "missing `generateStaticParams()`" error, not a silent zero-page skip. This is why
-  `careers/[slug]` doesn't exist right now: there are no `CareerRole` documents yet, so it has nothing to
-  return. Re-add it once Phase 4 seeds real roles.
+- Every dynamic route needs `generateStaticParams`; products and careers fetch slugs from the API at build
+  time when `NEXT_PUBLIC_API_URL` is configured, and otherwise use bundled placeholder content from
+  `apps/web/src/lib/staticContent.ts` so Render can deploy the static site before the API exists.
 - Content edited via the admin dashboard (products, eventually careers) only appears on the live site after
   a rebuild — there's no server left to re-fetch on request. A rebuild-on-publish webhook from the API is a
   reasonable follow-up once that becomes annoying.
 - `next/image` is never used anywhere in `apps/web` (plain `<img>` throughout) specifically so this doesn't
   also require `images: { unoptimized: true }` — the built-in optimizer needs a server and errors under
   `output: "export"` otherwise.
-- `NEXT_PUBLIC_API_URL` must be reachable from wherever the build runs (Render's build environment), not just
-  from end users' browsers — it's read at build time for every server-fetched page.
+- To render live API content, `NEXT_PUBLIC_API_URL` must be reachable from wherever the build runs (Render's
+  build environment), not just from end users' browsers. If it is unset in production, the public site uses
+  bundled placeholder content and disables runtime submissions that require the API.
 
 ## Admin app (`apps/admin`)
 

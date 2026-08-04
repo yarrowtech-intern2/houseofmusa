@@ -6,25 +6,39 @@ import type { Product, PaginatedResult } from "@houseofmusa/types";
 import { Button, Badge } from "@houseofmusa/ui";
 import { RevealText } from "@/components/motion/RevealText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+import { STATIC_PRODUCTS } from "@/lib/staticContent";
 
 async function getProduct(slug: string): Promise<Product | null> {
-  const res = await fetch(`${API_URL}/api/products/${slug}`);
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`Failed to load product: ${res.status}`);
-  const data = (await res.json()) as { item: Product };
-  return data.item;
+  const staticProduct = STATIC_PRODUCTS.find((product) => product.slug === slug) ?? null;
+
+  if (!CAN_USE_API) return staticProduct;
+
+  try {
+    const res = await fetch(`${API_URL}/api/products/${slug}`);
+    if (res.status === 404) return staticProduct;
+    if (!res.ok) throw new Error(`Failed to load product: ${res.status}`);
+    const data = (await res.json()) as { item: Product };
+    return data.item;
+  } catch {
+    return staticProduct;
+  }
 }
 
 // Static export needs every path known at build time — no server-side
 // fallback for slugs outside this list.
 export async function generateStaticParams() {
-  const res = await fetch(`${API_URL}/api/products?pageSize=50`);
-  if (!res.ok) return [];
-  const data = (await res.json()) as PaginatedResult<Product>;
-  return data.items.map((product) => ({ slug: product.slug }));
+  if (!CAN_USE_API) return STATIC_PRODUCTS.map((product) => ({ slug: product.slug }));
+
+  try {
+    const res = await fetch(`${API_URL}/api/products?pageSize=50`);
+    if (!res.ok) return STATIC_PRODUCTS.map((product) => ({ slug: product.slug }));
+    const data = (await res.json()) as PaginatedResult<Product>;
+    return data.items.map((product) => ({ slug: product.slug }));
+  } catch {
+    return STATIC_PRODUCTS.map((product) => ({ slug: product.slug }));
+  }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
