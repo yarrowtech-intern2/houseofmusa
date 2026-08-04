@@ -21,17 +21,38 @@ all 10 sidebar sections as routes).
 - Product content is placeholder copy (`apps/api/src/scripts/seedProducts.ts`) — swap via the admin CRUD
   once real product details exist.
 
-## Phase 3 — 3D Gallery
+## Phase 3 — 3D Gallery (done)
 
-First-person walkthrough gallery: WASD + mouse-look (desktop), virtual joystick + swipe (mobile), `E` to
-interact, frame glow/metadata on approach, camera zoom into project detail, footstep/ambient audio, bloom,
-minimal UI. Admin: Gallery Frames management (assign products to frames/positions).
+- First-person walkthrough at `/gallery` (`apps/web/src/app/gallery`, a standalone route outside the
+  `(site)` group — full-bleed, no nav/footer/Lenis). Desktop: WASD + pointer-lock mouse-look. Mobile: virtual
+  joystick + drag-to-look, both hand-rolled (see `components/gallery/`).
+  - `E` (desktop) / tap (mobile) opens a product detail panel when within range of a frame; a GSAP camera
+    tween zooms toward the frame on open and eases back to the player on close (`Esc` or the close button).
+  - The room ("balcony museum" — a grand hall with a non-walkable mezzanine ring) is **fully procedural**,
+    not a loaded model — primitive geometry + canvas-generated marble/plaster textures, built once in
+    `MuseumEnvironment.tsx`. `gallery.glb` is no longer used by this route (still on disk, just unreferenced)
+    — this was a deliberate pivot from the first pass, for full control over scale/look and one fewer
+    network fetch (~1.9MB) on load.
+  - 8 frames positioned around the room's perimeter (`lib/galleryLayout.ts`, realistic scale — 1 unit ≈ 1m),
+    one per seeded product, each with real molding, a museum label plaque, its own picture-light spotlight,
+    and a proximity-based emissive glow computed per-frame in its own `useFrame` — no React state/re-renders
+    on the hot path.
+  - Collision is a simple rectangular walk boundary, not per-mesh against the room's geometry — a deliberate
+    first-pass tradeoff, tighten later if it looks off in-browser.
+  - No audio (footsteps/ambient) — no real audio assets exist yet and synthesizing convincing ones wasn't
+    worth the effort for a placeholder pass; drop files in and wire them up whenever real audio exists.
+- Admin Gallery Frames management (assigning specific products to specific frame positions) wasn't built —
+  frames currently map to products by seed order (`order` field, cycling if fewer than 8 products exist).
+  Worth adding once frame-to-product assignment needs to be independent of that.
 
 ## Phase 4 — Careers
 
 Job listings UI, role detail page, full application form (resume/cover-letter upload, LinkedIn/GitHub/
 portfolio, salary, experience, skills, availability) wired to `POST /api/applications`. Admin: Applications
-review/status pipeline, CareerRole CRUD.
+review/status pipeline, CareerRole CRUD. Note: `/careers/[slug]` was removed for now (see
+[ARCHITECTURE.md](./ARCHITECTURE.md#static-export) — static export needs `generateStaticParams` to resolve
+to at least one real role, and none exist until this phase seeds some) — re-add it once real `CareerRole`
+documents exist.
 
 ## Phase 5 — Contact
 

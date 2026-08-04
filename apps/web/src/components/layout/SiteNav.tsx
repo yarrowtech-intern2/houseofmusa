@@ -147,7 +147,7 @@ function NavIconLink({
         aria-hidden
         className={cn(
           "object-contain transition-transform duration-300 group-hover:scale-105",
-          inPill ? "h-6 w-6" : "h-7 w-7",
+          inPill ? "h-6 w-6" : "h-6 w-6",
         )}
       />
       <span
