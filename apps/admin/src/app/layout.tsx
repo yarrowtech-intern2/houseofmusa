@@ -8,6 +8,7 @@ const onest = Onest({ subsets: ["latin"], variable: "--font-onest", weight: "var
 export const metadata: Metadata = {
   title: { default: "Admin · House of Musa", template: "%s · Admin" },
   description: "House of Musa content and operations dashboard.",
+  icons: { icon: "/favicon.png" },
   robots: { index: false, follow: false },
 };
 

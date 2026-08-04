@@ -17,7 +17,7 @@ export function HeroOverlay({ onBookConsultation }: { onBookConsultation: () => 
         mode="word"
         trigger="immediate"
         delay={0.2}
-        className="font-display text-display-xl font-medium tracking-tight text-white"
+        className="font-hero-azonix text-display-xl font-medium tracking-tight text-white"
       />
       <p className="pointer-events-none max-w-xl text-balance font-sans text-base text-white/80 sm:text-lg">
         Enterprise ERP, SaaS, and AI-ready infrastructure — engineered from a single digital headquarters.

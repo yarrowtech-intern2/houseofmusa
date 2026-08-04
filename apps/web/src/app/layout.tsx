@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   description:
     "House of Musa builds enterprise ERP systems, SaaS products, AI-ready infrastructure, and digital transformation solutions for ambitious companies.",
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

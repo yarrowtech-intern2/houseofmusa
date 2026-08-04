@@ -22,7 +22,7 @@ export function StorySection({ eyebrow, title, body, href, linkLabel }: StorySec
           text={title}
           mode="word"
           trigger="scroll"
-          className="mt-4 font-display text-display-lg font-medium tracking-tight text-white"
+          className="mt-4 font-display text-display-lg font-medium leading-[0.94] tracking-tight text-white"
         />
         <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75">{body}</p>
         {href && linkLabel && (

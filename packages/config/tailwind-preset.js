@@ -37,14 +37,12 @@ module.exports = {
         sans: ["var(--font-onest)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        // Line-heights kept close to 1 for a tight cinematic feel, but not
-        // below it — the reveal-word mask (overflow:hidden per word, see
-        // globals.css) clips anything a glyph's ascender/descender pokes
-        // past the line box, so going under ~1.05 crops capitals/descenders.
-        "display-2xl": ["clamp(3.5rem, 9vw, 9rem)", { lineHeight: "1.08", letterSpacing: "-0.02em" }],
-        "display-xl": ["clamp(2.75rem, 6vw, 6rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        "display-lg": ["clamp(2.25rem, 4.5vw, 4rem)", { lineHeight: "1.02", letterSpacing: "-0.01em" }],
-        "display-md": ["clamp(1.75rem, 3vw, 2.5rem)", { lineHeight: "1.16", letterSpacing: "-0.01em" }],
+        // Tight cinematic title leading. Reveal masks add their own vertical
+        // breathing room in globals.css so large animated headings do not crop.
+        "display-2xl": ["clamp(3.5rem, 9vw, 9rem)", { lineHeight: "1.12", letterSpacing: "0" }],
+        "display-xl": ["clamp(2.75rem, 6vw, 6rem)", { lineHeight: "1.14", letterSpacing: "0" }],
+        "display-lg": ["clamp(2.25rem, 4.5vw, 4rem)", { lineHeight: "1", letterSpacing: "0" }],
+        "display-md": ["clamp(1.75rem, 3vw, 2.5rem)", { lineHeight: "1.04", letterSpacing: "0" }],
       },
       boxShadow: {
         soft: "0 1px 2px rgba(17,17,17,0.04), 0 8px 24px rgba(17,17,17,0.06)",

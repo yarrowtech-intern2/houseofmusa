@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Azonix";
+  src: url("/font/Azonix.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 html {
   scroll-behavior: auto; /* Lenis owns smooth scrolling; native smooth-scroll would fight it */
 }
@@ -16,13 +24,20 @@ body {
   color: white;
 }
 
+.font-hero-azonix {
+  font-family: "Azonix", var(--font-onest), system-ui, sans-serif;
+}
+
 .reveal-word {
   display: inline-block;
   overflow: hidden;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
 }
 
 .reveal-word > span {
   display: inline-block;
+  line-height: inherit;
   will-change: transform;
 }
 
