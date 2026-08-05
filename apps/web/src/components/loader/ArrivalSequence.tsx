@@ -1,75 +1,82 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useProgress } from "@react-three/drei";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { gsap } from "gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const SESSION_KEY = "hom:arrival-played";
+const WAIT_MESSAGES = [
+  "Preparing the entrance",
+  "Loading the headquarters",
+  "Polishing the details",
+  "A few seconds more",
+  "Setting the scene",
+];
+const ALMOST_THERE = "Almost there";
 
 /**
- * Near-black loader: ambient particles fade in, logo settles, headline
- * reveals word-by-word, then the whole overlay dissolves and hands off to
- * the hero (camera intro begins on `onComplete`). Locks page scroll for its
- * duration so it can never race the camera's scroll-scrubbed timeline.
- * Plays a short version on repeat visits within the same session.
+ * Progress-aware cinematic curtain for the home hero. It stays mounted until
+ * the async 3D model subtree has resolved, then lifts out of the viewport and
+ * hands off to the camera intro.
  */
-export function ArrivalSequence({ onComplete }: { onComplete: () => void }) {
+export function ArrivalSequence({ sceneReady, onComplete }: { sceneReady: boolean; onComplete: () => void }) {
   const [visible, setVisible] = useState(true);
+  const [copyIndex, setCopyIndex] = useState(0);
+  const [visualProgress, setVisualProgress] = useState(8);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const line1Ref = useRef<HTMLDivElement>(null);
-  const line2Ref = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLCanvasElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const completeRef = useRef(false);
+  const previousOverflowRef = useRef<string>();
   const reducedMotion = useReducedMotion();
+  const { progress, total } = useProgress();
 
   useEffect(() => {
+    previousOverflowRef.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const canvas = particlesRef.current;
-    let rafId = 0;
 
-    if (canvas && !reducedMotion) {
-      const ctx = canvas.getContext("2d");
-      const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      };
-      resize();
-      window.addEventListener("resize", resize);
-
-      const particles = Array.from({ length: 60 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.4 + 0.3,
-        speed: Math.random() * 0.15 + 0.03,
-      }));
-
-      const draw = () => {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(255, 227, 194, 0.5)";
-        for (const p of particles) {
-          p.y -= p.speed;
-          if (p.y < 0) p.y = canvas.height;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        rafId = requestAnimationFrame(draw);
-      };
-      draw();
-
-      return () => {
-        cancelAnimationFrame(rafId);
-        window.removeEventListener("resize", resize);
-      };
-    }
-  }, [reducedMotion]);
+    return () => {
+      document.body.style.overflow = previousOverflowRef.current ?? "";
+    };
+  }, []);
 
   useEffect(() => {
-    const alreadyPlayed = typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY) === "1";
+    if (visualProgress >= 90 || sceneReady) return;
+    const intervalId = window.setInterval(() => {
+      setCopyIndex((index) => (index + 1 + Math.floor(Math.random() * (WAIT_MESSAGES.length - 1))) % WAIT_MESSAGES.length);
+    }, 1600);
+
+    return () => window.clearInterval(intervalId);
+  }, [sceneReady, visualProgress]);
+
+  useEffect(() => {
+    const assetProgress = total > 0 ? progress : 12;
+    const target = sceneReady ? 100 : Math.min(98, Math.max(assetProgress, 12));
+    setVisualProgress(target);
+  }, [progress, sceneReady, total]);
+
+  useEffect(() => {
+    if (!visible || reducedMotion || sessionStorage.getItem(SESSION_KEY) === "1") return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        contentRef.current,
+        { autoAlpha: 0, y: 18, scale: 0.98 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out", delay: 0.15 },
+      );
+    }, overlayRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion, visible]);
+
+  useEffect(() => {
+    if (!sceneReady || completeRef.current) return;
+
+    completeRef.current = true;
     const finish = () => {
       sessionStorage.setItem(SESSION_KEY, "1");
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflowRef.current ?? "";
       setVisible(false);
       onComplete();
     };
@@ -79,67 +86,65 @@ export function ArrivalSequence({ onComplete }: { onComplete: () => void }) {
       return;
     }
 
-    const tl = gsap.timeline({ onComplete: finish });
+    const alreadyPlayed = sessionStorage.getItem(SESSION_KEY) === "1";
+    const tl = gsap.timeline({ defaults: { ease: "power4.inOut" }, onComplete: finish });
 
-    if (alreadyPlayed) {
-      // Short handoff for returning visitors within the same session.
-      tl.to(overlayRef.current, { opacity: 0, duration: 0.5, ease: "power2.out", delay: 0.15 });
-      return () => {
-        tl.kill();
-      };
-    }
-
-    tl.set([logoRef.current, line1Ref.current, line2Ref.current], { opacity: 0 })
-      .to(logoRef.current, { opacity: 1, duration: 1, ease: "power2.out" }, 0.6)
-      .fromTo(
-        line1Ref.current?.querySelectorAll("span") ?? [],
-        { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power4.out" },
-        1.5,
-      )
-      .fromTo(
-        line2Ref.current?.querySelectorAll("span") ?? [],
-        { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.06, ease: "power4.out" },
-        2.1,
-      )
-      .to({}, { duration: 1 }) // hold
-      .to(overlayRef.current, { opacity: 0, duration: 0.9, ease: "power2.inOut" });
+    tl.to(contentRef.current, { y: alreadyPlayed ? -16 : -44, autoAlpha: 0, duration: alreadyPlayed ? 0.35 : 0.65 })
+      .to(
+        overlayRef.current,
+        {
+          clipPath: "inset(0% 0% 100% 0%)",
+          yPercent: -4,
+          duration: alreadyPlayed ? 0.55 : 1.15,
+        },
+        alreadyPlayed ? 0.05 : 0.18,
+      );
 
     return () => {
       tl.kill();
     };
-  }, [reducedMotion, onComplete]);
+  }, [onComplete, reducedMotion, sceneReady]);
 
   if (!visible) return null;
 
-  const words1 = "Engineering Tomorrow.".split(" ");
-  const words2 = "One Digital Experience at a Time.".split(" ");
+  const roundedProgress = Math.round(visualProgress);
+  const statusCopy = roundedProgress >= 90 || sceneReady ? ALMOST_THERE : WAIT_MESSAGES[copyIndex]!;
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0a] text-white"
+      className="fixed inset-0 z-[100] flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-primary text-primary-foreground"
+      style={{ clipPath: "inset(0% 0% 0% 0%)" }}
     >
-      <canvas ref={particlesRef} className="pointer-events-none absolute inset-0 opacity-70" />
-      <div ref={logoRef} className="relative mb-8">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/logo-white.png" alt="House of Musa" className="h-8 w-auto" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden text-center font-display text-[18vw] font-semibold leading-none text-black/[0.055] sm:text-[15vw]">
+        HOUSEOFMUSA
       </div>
-      <div className="relative px-6 text-center">
-        <div ref={line1Ref} className="font-display text-display-lg font-semibold tracking-tight">
-          {words1.map((word, i) => (
-            <span key={i} className="reveal-word mr-[0.2em]">
-              <span>{word}</span>
-            </span>
-          ))}
+
+      <div
+        ref={contentRef}
+        className="relative z-10 flex w-full max-w-[min(34rem,calc(100vw-2rem))] flex-col items-center px-4 text-center"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo/logo-black.png" alt="House of Musa" className="h-auto w-[min(18rem,68vw)]" />
+
+        <div className="relative mt-10 grid size-40 place-items-center sm:size-48" aria-hidden="true">
+          <DotLottieReact
+            src="/loader/loader2.lottie"
+            autoplay
+            loop
+            className="absolute inset-0 size-full"
+          />
         </div>
-        <div ref={line2Ref} className="font-display text-display-md font-medium tracking-tight text-white/70">
-          {words2.map((word, i) => (
-            <span key={i} className="reveal-word mr-[0.2em]">
-              <span>{word}</span>
-            </span>
-          ))}
+
+        <div className="mt-2 font-display text-2xl font-semibold tabular-nums text-primary-foreground sm:text-3xl">
+          {roundedProgress}
+        </div>
+
+        <div className="mt-7 min-h-12">
+          <p className="font-display text-xl font-semibold leading-tight sm:text-2xl">{statusCopy}</p>
+          <p className="mt-2 text-sm font-medium uppercase tracking-[0.18em] text-black/55 sm:text-[0.8rem]">
+            Wait a few seconds
+          </p>
         </div>
       </div>
     </div>

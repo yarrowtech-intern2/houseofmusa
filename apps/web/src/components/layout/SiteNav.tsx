@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@houseofmusa/ui";
 
@@ -15,6 +15,7 @@ const NAV_LINKS: Array<{ href: string; label: string; iconSrc: string }> = [
 
 export function SiteNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoOverDark, setLogoOverDark] = useState(false);
 
@@ -36,28 +37,7 @@ export function SiteNav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex items-start justify-between px-4 pt-2 sm:px-10 sm:pt-4 lg:px-14">
-      <Link
-        href="/"
-        aria-label="House of Musa home"
-        className="relative block h-20 w-56 drop-shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:h-24 sm:w-72 lg:h-28 lg:w-80"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo/logo-black.png"
-          alt="House of Musa"
-          className={cn("h-full w-full object-contain object-left transition-opacity duration-300", logoOverDark && "opacity-0")}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo/logo-white.png"
-          alt=""
-          aria-hidden
-          className={cn(
-            "absolute inset-0 h-full w-full object-contain object-left opacity-0 transition-opacity duration-300",
-            logoOverDark && "opacity-100",
-          )}
-        />
-      </Link>
+      <LogoHomeLink logoOverDark={logoOverDark} pathname={pathname} routerPush={router.push} />
 
       <nav aria-label="Primary navigation" className="hidden items-center gap-2 sm:mt-6 sm:flex lg:mt-8">
         <NavIconLink href="/" label="Home" iconSrc="/icons/home.webp" active={isActive("/")} />
@@ -110,6 +90,73 @@ export function SiteNav() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function getAdminLoginUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_ADMIN_URL?.trim().replace(/\/$/, "");
+  if (configuredUrl) return configuredUrl.endsWith("/login") ? configuredUrl : `${configuredUrl}/login`;
+  if (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) {
+    return `${window.location.protocol}//${window.location.hostname}:3001/login`;
+  }
+  return "/admin/login";
+}
+
+function LogoHomeLink({
+  logoOverDark,
+  pathname,
+  routerPush,
+}: {
+  logoOverDark: boolean;
+  pathname: string;
+  routerPush: (href: string) => void;
+}) {
+  const [tapCount, setTapCount] = useState(0);
+
+  useEffect(() => {
+    if (tapCount === 0) return;
+    const timeoutId = window.setTimeout(() => {
+      setTapCount(0);
+      if (pathname !== "/") routerPush("/");
+    }, 520);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [pathname, routerPush, tapCount]);
+
+  return (
+    <Link
+      href="/"
+      aria-label="House of Musa home"
+      onClick={(event) => {
+        event.preventDefault();
+        setTapCount((count) => {
+          const nextCount = count + 1;
+          if (nextCount >= 3) {
+            window.location.href = getAdminLoginUrl();
+            return 0;
+          }
+          return nextCount;
+        });
+      }}
+      className="relative block h-20 w-56 drop-shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:h-24 sm:w-72 lg:h-28 lg:w-80"
+    >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/logo-black.png"
+          alt="House of Musa"
+          className={cn("h-full w-full object-contain object-left transition-opacity duration-300", logoOverDark && "opacity-0")}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/logo-white.png"
+          alt=""
+          aria-hidden
+          className={cn(
+            "absolute inset-0 h-full w-full object-contain object-left opacity-0 transition-opacity duration-300",
+            logoOverDark && "opacity-100",
+          )}
+        />
+    </Link>
   );
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, type RefObject } from "react";
+import { Suspense, useEffect, type RefObject } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Environment } from "@react-three/drei";
 import { EffectComposer, DepthOfField, Bloom } from "@react-three/postprocessing";
@@ -13,13 +13,23 @@ import { usePointerParallax } from "@/hooks/usePointerParallax";
 
 const DPR_BY_TIER = { low: [1, 1] as [number, number], mid: [1, 1.5] as [number, number], high: [1, 2] as [number, number] };
 
+function SceneReadyReporter({ onReady }: { onReady: () => void }) {
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
+
+  return null;
+}
+
 export function HeroCanvas({
   hasModel,
   ready,
+  onSceneReady,
   storyContainerRef,
 }: {
   hasModel: boolean;
   ready: boolean;
+  onSceneReady: () => void;
   storyContainerRef: RefObject<HTMLElement>;
 }) {
   const tier = useDeviceTier();
@@ -51,12 +61,18 @@ export function HeroCanvas({
       <directionalLight position={[-8, 4, -6]} intensity={0.3} color="#2F78ED" />
 
       <Suspense fallback={null}>
-        <Environment preset="sunset" environmentIntensity={0.6} />
         <HeadquartersModel hasModel={hasModel} tier={tier} />
-        {tier !== "low" && <ContactShadows position={[0, 0, 0]} opacity={0.4} scale={20} blur={2.4} far={6} />}
-        <DustParticles tier={tier} />
-        {tier !== "low" && <VolumetricLight />}
+        <SceneReadyReporter onReady={onSceneReady} />
       </Suspense>
+
+      {ready && (
+        <Suspense fallback={null}>
+          <Environment preset="sunset" environmentIntensity={0.6} />
+          {tier !== "low" && <ContactShadows position={[0, 0, 0]} opacity={0.4} scale={20} blur={2.4} far={6} />}
+          <DustParticles tier={tier} />
+          {tier !== "low" && <VolumetricLight />}
+        </Suspense>
+      )}
 
       <CameraRig ready={ready} storyContainerRef={storyContainerRef} parallaxRef={parallaxRef} />
 

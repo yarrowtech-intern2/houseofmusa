@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { applicationSchema, type ApplicationStatusInput } from "@houseofmusa/schemas";
 import { Application } from "../models/Application";
+import { AnalyticsEvent } from "../models/Analytics";
 import { CareerRole } from "../models/CareerRole";
 import { ApiError } from "../middleware/errorHandler";
 
@@ -44,6 +45,11 @@ export async function submitApplication(req: Request, res: Response) {
     resumeUrl: `/uploads/applications/${resumeFile.filename}`,
     coverLetterUrl: coverLetterFile ? `/uploads/applications/${coverLetterFile.filename}` : undefined,
   });
+  await AnalyticsEvent.create({
+    type: "application-submit",
+    path: `/careers/${role.slug}`,
+    meta: { applicationId: application.id, roleId: role.id, department: role.department },
+  }).catch(() => undefined);
 
   res.status(201).json({ id: application.id });
 }

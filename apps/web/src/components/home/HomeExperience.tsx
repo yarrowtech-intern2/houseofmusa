@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { ArrivalSequence } from "@/components/loader/ArrivalSequence";
 import { HeroOverlay } from "@/components/home/HeroOverlay";
 import { StorySection, type StorySectionData } from "@/components/home/StorySection";
@@ -53,15 +53,23 @@ const STORY_SECTIONS: StorySectionData[] = [
 
 export function HomeExperience({ hasModel }: { hasModel: boolean }) {
   const [ready, setReady] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const storyContainerRef = useRef<HTMLDivElement>(null);
+  const handleArrivalComplete = useCallback(() => setReady(true), []);
+  const handleSceneReady = useCallback(() => setSceneReady(true), []);
 
   return (
     <main className="relative">
-      <ArrivalSequence onComplete={() => setReady(true)} />
+      <ArrivalSequence sceneReady={sceneReady} onComplete={handleArrivalComplete} />
 
       <div className="fixed inset-0 -z-10">
-        <HeroCanvas hasModel={hasModel} ready={ready} storyContainerRef={storyContainerRef} />
+        <HeroCanvas
+          hasModel={hasModel}
+          ready={ready}
+          onSceneReady={handleSceneReady}
+          storyContainerRef={storyContainerRef}
+        />
       </div>
 
       <div className="relative z-0 flex min-h-screen items-end">

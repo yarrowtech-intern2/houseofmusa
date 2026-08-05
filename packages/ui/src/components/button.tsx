@@ -10,9 +10,11 @@ export const buttonVariants = cva(
       variant: {
         primary: "bg-primary text-white shadow-soft hover:shadow-glow hover:-translate-y-0.5",
         secondary: "bg-secondary text-white shadow-soft hover:-translate-y-0.5",
-        outline: "border border-foreground/15 bg-transparent text-foreground hover:bg-foreground/5",
-        ghost: "bg-transparent text-foreground hover:bg-foreground/5",
-        glass: "border border-white/30 bg-glass-light text-foreground backdrop-blur-md hover:bg-white/80",
+        outline:
+          "border border-foreground/15 bg-transparent text-foreground hover:bg-foreground/5 dark:border-white/15 dark:text-white dark:hover:bg-white/10",
+        ghost: "bg-transparent text-foreground hover:bg-foreground/5 dark:text-white dark:hover:bg-white/10",
+        glass:
+          "border border-white/30 bg-glass-light text-foreground backdrop-blur-md hover:bg-white/80 dark:text-white dark:hover:bg-white/15",
       },
       size: {
         sm: "h-9 px-4 text-xs",

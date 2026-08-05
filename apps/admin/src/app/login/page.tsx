@@ -1,13 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Home } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@houseofmusa/schemas";
 import { Button, Input, Label } from "@houseofmusa/ui";
 import { apiFetch, ApiRequestError } from "@/lib/api";
 import { Logo } from "@/components/layout/Logo";
+
+function getPublicHomeUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_WEB_URL?.trim().replace(/\/$/, "");
+  if (configuredUrl) return configuredUrl;
+  if (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) {
+    return `${window.location.protocol}//${window.location.hostname}:3000`;
+  }
+  return "/";
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,6 +42,14 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 dark:bg-[#0d0d0d]">
+      <Link
+        href={getPublicHomeUrl()}
+        className="absolute left-4 top-4 inline-flex h-10 items-center gap-2 rounded-full border border-foreground/10 bg-surface px-4 text-sm font-medium text-foreground/70 shadow-soft transition-colors hover:text-primary dark:border-white/10 dark:bg-[#151515] dark:text-white/70 dark:hover:text-primary sm:left-6 sm:top-6"
+      >
+        <Home className="h-4 w-4" />
+        Go Home
+      </Link>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-sm rounded-3xl border border-foreground/8 bg-surface p-8 shadow-soft-lg dark:border-white/10 dark:bg-[#151515]"

@@ -9,18 +9,18 @@ import type { DeviceTier } from "@/hooks/useDeviceTier";
 
 export const HOUSE_MODEL_PATH = "/models/house.glb";
 
-function RealHeadquartersModel() {
+function RealHeadquartersModel({ tier }: { tier: DeviceTier }) {
   const { scene } = useGLTF(HOUSE_MODEL_PATH);
   const ref = useRef<Group>(null);
 
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof Mesh) {
-        child.castShadow = true;
+        child.castShadow = tier !== "low";
         child.receiveShadow = true;
       }
     });
-  }, [scene]);
+  }, [scene, tier]);
 
   // house.glb bundles the house together with two huge background/terrain
   // meshes (~2700 units deep, centered ~1300 units from the export origin).
@@ -54,6 +54,6 @@ function RealHeadquartersModel() {
  * fetch a file we already know is absent.
  */
 export function HeadquartersModel({ hasModel, tier }: { hasModel: boolean; tier: DeviceTier }) {
-  if (hasModel) return <RealHeadquartersModel />;
+  if (hasModel) return <RealHeadquartersModel tier={tier} />;
   return <PlaceholderMonument tier={tier} />;
 }

@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "House of Musa — ultra-premium IT company website (monorepo)",
   "scripts": {
+    "dev": "pnpm --parallel --filter @houseofmusa/api --filter @houseofmusa/web --filter @houseofmusa/admin dev",
     "dev:web": "pnpm --filter @houseofmusa/web dev",
     "dev:api": "pnpm --filter @houseofmusa/api dev",
     "dev:admin": "pnpm --filter @houseofmusa/admin dev",

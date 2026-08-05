@@ -9,7 +9,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className
       type={type}
       ref={ref}
       className={cn(
-        "flex h-12 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 text-sm text-foreground placeholder:text-foreground/40 backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-12 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 text-sm text-foreground placeholder:text-foreground/40 backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/15 dark:bg-white/[0.08] dark:text-white dark:placeholder:text-white/35",
         className,
       )}
       {...props}
@@ -24,7 +24,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
       <textarea
         ref={ref}
         className={cn(
-          "flex min-h-32 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50",
+          "flex min-h-32 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/15 dark:bg-white/[0.08] dark:text-white dark:placeholder:text-white/35",
           className,
         )}
         {...props}

@@ -22,14 +22,14 @@ export function HeroOverlay({ onBookConsultation }: { onBookConsultation: () => 
       <p className="pointer-events-none max-w-xl text-balance font-sans text-base text-white/80 sm:text-lg">
         Enterprise ERP, SaaS, and AI-ready infrastructure — engineered from a single digital headquarters.
       </p>
-      <div className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row">
-        <MagneticButton>
-          <Button size="lg" variant="primary" onClick={onBookConsultation}>
+      <div className="pointer-events-auto flex w-full max-w-56 flex-col items-center gap-4 sm:w-auto sm:max-w-none sm:flex-row">
+        <MagneticButton className="w-full sm:w-auto">
+          <Button size="lg" variant="primary" className="w-full sm:w-auto" onClick={onBookConsultation}>
             Book Consultation
           </Button>
         </MagneticButton>
-        <MagneticButton>
-          <Button size="lg" variant="glass" asChild>
+        <MagneticButton className="w-full sm:w-auto">
+          <Button size="lg" variant="glass" className="w-full sm:w-auto" asChild>
             <Link href="/products">View Products</Link>
           </Button>
         </MagneticButton>

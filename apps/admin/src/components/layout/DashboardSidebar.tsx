@@ -36,30 +36,56 @@ export function DashboardSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-64 shrink-0 flex-col border-r border-foreground/8 bg-surface px-4 py-6 dark:border-white/10 dark:bg-[#111111] lg:flex">
-      <div className="mb-8 px-2">
-        <Logo />
-      </div>
-      <nav className="flex flex-col gap-1">
-        {NAV_SECTIONS.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-                active
-                  ? "bg-primary/10 text-primary"
-                  : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white",
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              {label}
-            </Link>
-          );
-        })}
+    <>
+      <aside className="hidden w-64 shrink-0 flex-col border-r border-foreground/8 bg-surface px-4 py-6 dark:border-white/10 dark:bg-[#111111] lg:flex">
+        <div className="mb-7 -ml-1 px-1">
+          <Logo className="h-16 w-52 object-contain object-left" />
+        </div>
+        <nav className="flex flex-col gap-1">
+          {NAV_SECTIONS.map(({ href, label, icon: Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                  active
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
+
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-foreground/8 bg-surface/95 px-2 py-2 shadow-soft backdrop-blur-md dark:border-white/10 dark:bg-[#111111]/95 lg:hidden">
+        <div className="flex gap-1 overflow-x-auto">
+          {NAV_SECTIONS.map(({ href, label, icon: Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-label={label}
+                className={cn(
+                  "flex min-w-16 flex-col items-center justify-center gap-1 rounded-lg px-2 py-1.5 text-[0.65rem] font-medium transition-colors",
+                  active
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground/55 hover:bg-foreground/5 dark:text-white/55 dark:hover:bg-white/5",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                <span className="max-w-14 truncate">{label}</span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
-    </aside>
+    </>
   );
 }

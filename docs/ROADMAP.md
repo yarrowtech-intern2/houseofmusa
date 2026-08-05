@@ -67,10 +67,20 @@ all 10 sidebar sections as routes).
 - Verified with a real end-to-end submission through the live API (multipart upload, Atlas write, admin
   list/status-update read), not just page-render checks — then cleaned up the test record.
 
-## Phase 5 — Contact
+## Phase 5 — Contact (done)
 
-Full glassmorphism booking modal wired to `POST /api/contacts`, validation + success animation (currently a
-UI-only stub in `components/contact/ContactModal.tsx`).
+- `components/contact/ContactModal.tsx` now does the real thing: React Hook Form + `contactSchema`
+  (`@houseofmusa/schemas`, shared with the API, so client and server validation can't drift), full field set
+  (name, email, phone, company, budget, project type, message), submits directly to `POST /api/contacts`,
+  success state (checkmark + message) instead of closing immediately, form resets on reopen so a second visit
+  never shows a stale success screen.
+- Respects the `CAN_USE_API` fallback pattern (`lib/api.ts`) the rest of the site now uses for
+  static-placeholder deploys: when no real API is configured in production, the modal falls back to the
+  original "email us directly" content instead of rendering a form with nowhere to submit.
+- Admin **Contacts** list is still a placeholder — deliberately left for phase 6, which already scopes the
+  search/filter/CSV export work it needs; `GET /api/contacts` has worked since phase 1.
+- Verified with a real submission through the live API (not just a page-render check) — write, admin-side
+  read, then cleaned up the test record.
 
 ## Phase 6 — Admin depth
 

@@ -24,4 +24,16 @@ export const contactSchema = z.object({
   message: z.string().trim().min(10, "Tell us a little more about your project").max(2000),
 });
 
+export const contactStatusValues = ["new", "contacted", "qualified", "closed"] as const;
+
+export const contactStatusSchema = z.object({
+  status: z.enum(contactStatusValues),
+});
+
+export const contactAdminUpdateSchema = contactSchema.extend({
+  status: z.enum(contactStatusValues),
+});
+
 export type ContactInput = z.infer<typeof contactSchema>;
+export type ContactStatusInput = z.infer<typeof contactStatusSchema>;
+export type ContactAdminUpdateInput = z.infer<typeof contactAdminUpdateSchema>;

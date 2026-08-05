@@ -10,10 +10,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@houseofmusa/config": "workspace:*",
     "@houseofmusa/schemas": "workspace:*",
     "@houseofmusa/types": "workspace:*",
     "@houseofmusa/ui": "workspace:*",
+    "@lottiefiles/dotlottie-react": "^0.19.12",
     "@react-three/drei": "^9.114.3",
     "@react-three/fiber": "^8.17.10",
     "@react-three/postprocessing": "^2.16.3",
@@ -25,7 +27,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
-    "@hookform/resolvers": "^3.9.1",
     "tailwind-merge": "^2.5.4",
     "three": "^0.169.0",
     "zod": "^3.23.8"

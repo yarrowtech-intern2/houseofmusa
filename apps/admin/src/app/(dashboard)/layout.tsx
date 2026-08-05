@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <DashboardSidebar />
       <div className="flex flex-1 flex-col">
         <DashboardTopbar admin={admin} />
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 px-4 py-4 pb-24 sm:px-5 lg:px-6 lg:py-6 lg:pb-6">{children}</main>
       </div>
     </div>
   );
