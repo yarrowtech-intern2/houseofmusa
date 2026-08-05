@@ -8,7 +8,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import type { Product } from "@houseofmusa/types";
 import { FirstPersonRig, type MoveInput, type LookDelta, type Orientation } from "./FirstPersonRig";
-import { MuseumEnvironment } from "./MuseumEnvironment";
+import { ModelGalleryEnvironment } from "./ModelGalleryEnvironment";
 import { GalleryFrame } from "./GalleryFrame";
 import { InteractionCameraTween } from "./InteractionCameraTween";
 import { FRAME_ANCHORS, SPAWN_POSITION, SPAWN_YAW, ROOM } from "@/lib/galleryLayout";
@@ -50,14 +50,14 @@ export function GalleryScene({
       gl={{ antialias: tier !== "low", powerPreference: "high-performance" }}
       camera={{ fov: 62, near: 0.1, far: 70, position: SPAWN_POSITION }}
     >
-      <color attach="background" args={["#141210"]} />
+      <color attach="background" args={["#0f0f0f"]} />
       {/* Subtle — mainly softens the far clip edge, not meant to read as visible indoor haze. */}
-      <fog attach="fog" args={["#141210", ROOM.halfDepth * 1.6, ROOM.halfDepth * 2.3]} />
+      <fog attach="fog" args={["#0f0f0f", ROOM.halfDepth * 1.8, ROOM.halfDepth * 2.8]} />
 
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.65} />
       <directionalLight
-        position={[6, ROOM.wallHeight - 0.5, 4]}
-        intensity={0.35}
+        position={[6, ROOM.wallHeight - 0.5, -4]}
+        intensity={0.45}
         color="#FFF6E6"
         castShadow={tier !== "low"}
         shadow-mapSize={tier === "high" ? [1024, 1024] : [512, 512]}
@@ -65,7 +65,7 @@ export function GalleryScene({
 
       <Suspense fallback={null}>
         <Environment preset="apartment" environmentIntensity={0.2} />
-        <MuseumEnvironment tier={tier} />
+        <ModelGalleryEnvironment tier={tier} />
         {FRAME_ANCHORS.map((anchor, index) => {
           const product = products[index % products.length];
           if (!product) return null;

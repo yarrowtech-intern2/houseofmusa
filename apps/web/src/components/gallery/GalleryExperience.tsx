@@ -27,11 +27,6 @@ export function GalleryExperience({ products }: { products: Product[] }) {
   const [activeFrameIndex, setActiveFrameIndex] = useState<number | null>(null);
   const [isReturning, setIsReturning] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setShowInstructions(false), 6000);
-    return () => clearTimeout(timeout);
-  }, []);
-
   const handleInteract = useCallback(() => {
     if (nearbyFrameIndex === null || activeFrameIndex !== null) return;
     setShowInstructions(false);
@@ -79,6 +74,8 @@ export function GalleryExperience({ products }: { products: Product[] }) {
         lookDeltaRef={lookDeltaRef}
         onInteract={handleInteract}
         onClose={handleClose}
+        onShowInstructions={() => setShowInstructions(true)}
+        onHideInstructions={() => setShowInstructions(false)}
       />
     </div>
   );
