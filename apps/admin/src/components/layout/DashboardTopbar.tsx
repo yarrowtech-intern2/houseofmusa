@@ -11,6 +11,7 @@ import { Logo } from "./Logo";
 export function DashboardTopbar({ admin }: { admin: AdminSession }) {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const displayEmail = admin.email === "you@example.com" ? "admin@houseofmusa.com" : admin.email;
 
   const handleLogout = async () => {
     await apiFetch("/api/auth/logout", { method: "POST" });
@@ -37,7 +38,7 @@ export function DashboardTopbar({ admin }: { admin: AdminSession }) {
       <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
         <div className="hidden max-w-[16rem] items-center gap-2 rounded-full border border-foreground/8 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.04] md:flex">
           <UserCircle2 className="h-4 w-4 text-primary" />
-          <span className="truncate text-xs font-medium text-foreground/70 dark:text-white/70">{admin.email}</span>
+          <span className="truncate text-xs font-medium text-foreground/70 dark:text-white/70">{displayEmail}</span>
         </div>
         <Button
           variant="ghost"

@@ -5,7 +5,7 @@ import { useGLTF } from "@react-three/drei";
 import { Mesh } from "three";
 import type { DeviceTier } from "@/hooks/useDeviceTier";
 
-export const GALLERY_MODEL_PATH = "/models/gallery2.glb";
+export const GALLERY_MODEL_PATH = "/models/gallery2.glb?v=20260805-152849";
 const DRACO_DECODER_PATH = "/draco/gltf/";
 
 export function ModelGalleryEnvironment({ tier }: { tier: DeviceTier }) {

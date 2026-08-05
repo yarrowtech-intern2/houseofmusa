@@ -12,7 +12,7 @@ export const ROOM = {
   balconyDepth: 1.8,
 };
 
-export const EYE_HEIGHT = 3.2;
+export const EYE_HEIGHT = 4.35;
 
 export const WALK_BOUNDS = {
   minX: -11.8,

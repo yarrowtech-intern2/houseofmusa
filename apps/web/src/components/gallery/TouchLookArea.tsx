@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import type { MutableRefObject } from "react";
 
-/** Full-screen drag-to-look surface for touch — sits behind the joystick/buttons in z-order. */
+/** Full-screen drag-to-look surface for touch. Interactive controls sit above it in z-order. */
 export function TouchLookArea({ lookDeltaRef }: { lookDeltaRef: MutableRefObject<{ dx: number; dy: number }> }) {
   const lastPos = useRef<{ x: number; y: number } | null>(null);
   const activePointerId = useRef<number | null>(null);
@@ -11,7 +11,7 @@ export function TouchLookArea({ lookDeltaRef }: { lookDeltaRef: MutableRefObject
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     activePointerId.current = e.pointerId;
     lastPos.current = { x: e.clientX, y: e.clientY };
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -33,7 +33,7 @@ export function TouchLookArea({ lookDeltaRef }: { lookDeltaRef: MutableRefObject
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="absolute inset-0 touch-none"
+      className="pointer-events-auto absolute inset-0 z-0 touch-none"
       aria-hidden
     />
   );

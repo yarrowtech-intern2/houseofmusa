@@ -17,7 +17,7 @@ write via `packages/schemas` (Zod). All collections use `{ timestamps: true }`.
 ## Seeding an admin user
 
 ```
-pnpm --filter @houseofmusa/api seed:admin you@company.com "a-strong-password" "Your Name"
+pnpm --filter @houseofmusa/api seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
 ```
 
 Upserts by email, so it's safe to re-run.

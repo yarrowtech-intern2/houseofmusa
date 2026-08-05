@@ -124,7 +124,7 @@ export function GalleryUI({
       {nearbyProduct && !activeProduct && (
         <button
           onClick={onInteract}
-          className="pointer-events-auto absolute bottom-8 right-5 z-10 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white shadow-glow transition-transform hover:-translate-y-0.5 sm:bottom-10 sm:left-1/2 sm:right-auto sm:h-auto sm:w-auto sm:-translate-x-1/2 sm:px-5 sm:py-2.5 sm:text-sm"
+          className="pointer-events-auto absolute bottom-28 right-5 z-10 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white shadow-glow transition-transform hover:-translate-y-0.5 sm:bottom-10 sm:left-1/2 sm:right-auto sm:h-auto sm:w-auto sm:-translate-x-1/2 sm:px-5 sm:py-2.5 sm:text-sm"
         >
           <span className="sm:hidden">View</span>
           <span className="hidden sm:inline">
@@ -133,8 +133,8 @@ export function GalleryUI({
         </button>
       )}
 
-      {isTouchDevice && !activeProduct && (
-        <div className="pointer-events-none absolute bottom-6 left-5 z-10">
+      {isTouchDevice && !activeProduct && !showInstructions && (
+        <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2">
           <VirtualJoystick moveInputRef={moveInputRef} />
         </div>
       )}

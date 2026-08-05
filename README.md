@@ -23,7 +23,7 @@ pnpm dev:web      # http://localhost:3000
 pnpm dev:admin    # http://localhost:3001
 
 # create your first admin login:
-pnpm --filter @houseofmusa/api seed:admin you@company.com "a-strong-password" "Your Name"
+pnpm --filter @houseofmusa/api seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
 ```
 
 The headquarters model (`house.glb`), the gallery environment (`gallery.glb`), and both logo variants are
