@@ -6,6 +6,8 @@ import { careerRolesRouter } from "./careerRoles.routes";
 import { applicationsRouter } from "./applications.routes";
 import { analyticsRouter } from "./analytics.routes";
 import { dashboardRouter } from "./dashboard.routes";
+import { settingsRouter } from "./settings.routes";
+import { mediaRouter } from "./media.routes";
 
 export const apiRouter = Router();
 
@@ -16,3 +18,5 @@ apiRouter.use("/career-roles", careerRolesRouter);
 apiRouter.use("/applications", applicationsRouter);
 apiRouter.use("/analytics", analyticsRouter);
 apiRouter.use("/dashboard", dashboardRouter);
+apiRouter.use("/settings", settingsRouter);
+apiRouter.use("/media", mediaRouter);

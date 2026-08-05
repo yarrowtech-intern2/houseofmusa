@@ -1,4 +1,4 @@
-# Architecture
+﻿# Architecture
 
 ## Monorepo layout
 
@@ -107,9 +107,9 @@ a static site (Render Static Site), with the API on a separate VPS. Consequences
 - Every dynamic route needs `generateStaticParams`; products and careers fetch slugs from the API at build
   time when `NEXT_PUBLIC_API_URL` is configured, and otherwise use bundled placeholder content from
   `apps/web/src/lib/staticContent.ts` so Render can deploy the static site before the API exists.
-- Content edited via the admin dashboard (products, eventually careers) only appears on the live site after
-  a rebuild — there's no server left to re-fetch on request. A rebuild-on-publish webhook from the API is a
-  reasonable follow-up once that becomes annoying.
+- Products and careers are baked into generated pages at build time. Homepage/footer/gallery settings are
+  also included at build time, then refreshed client-side at runtime when `NEXT_PUBLIC_API_URL` is configured.
+  SEO metadata is still build-time for crawlers.
 - `next/image` is never used anywhere in `apps/web` (plain `<img>` throughout) specifically so this doesn't
   also require `images: { unoptimized: true }` — the built-in optimizer needs a server and errors under
   `output: "export"` otherwise.
@@ -126,6 +126,6 @@ Separate Next.js app/deploy target. Auth is a `POST /api/auth/login` call that s
 Website Analytics) plus **Career Roles** — added because the brief's admin section list didn't actually
 include job-posting management, even though the Careers page section explicitly calls for "admin can post
 jobs"; "Job Applications" alone only covers reviewing candidate submissions, a distinct workflow from
-authoring the postings themselves. Products and Career Roles have full working CRUD; the rest render
-`SectionPlaceholder` until their follow-up phase lands (see [ROADMAP.md](./ROADMAP.md)). Dark mode via
-`next-themes`.
+authoring the postings themselves. Products, Career Roles, Contacts, Homepage Content, Gallery Frames, Media,
+SEO, dashboard statistics, and website analytics now have working admin surfaces. Dark mode via `next-themes`.
+

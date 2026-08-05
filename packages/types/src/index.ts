@@ -107,6 +107,64 @@ export interface Setting extends BaseDocument {
   value: unknown;
 }
 
+export interface StorySectionContent {
+  eyebrow: string;
+  title: string;
+  body: string;
+  href?: string;
+  linkLabel?: string;
+}
+
+export interface HomepageContent {
+  heroTitle: string;
+  heroSubtitle: string;
+  primaryCtaLabel: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  storySections: StorySectionContent[];
+}
+
+export interface ContactDetails {
+  email: string;
+  phone?: string;
+  location?: string;
+  address?: string;
+  whatsappUrl?: string;
+  calendlyUrl?: string;
+}
+
+export interface GalleryFrameAssignment {
+  albumKey: `album${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8}`;
+  productSlug: string;
+  label?: string;
+  enabled: boolean;
+}
+
+export interface GalleryFramesSetting {
+  frames: GalleryFrameAssignment[];
+}
+
+export interface SeoRouteSetting {
+  path: string;
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+export interface SeoSettings {
+  defaultTitle: string;
+  defaultDescription: string;
+  ogImage?: string;
+  routes: SeoRouteSetting[];
+}
+
+export interface SiteSettings {
+  homepageContent?: HomepageContent;
+  contactDetails?: ContactDetails;
+  galleryFrames?: GalleryFramesSetting;
+  seo?: SeoSettings;
+}
+
 export interface PaginatedResult<T> {
   items: T[];
   total: number;

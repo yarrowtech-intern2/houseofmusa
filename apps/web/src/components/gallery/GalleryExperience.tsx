@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Product } from "@houseofmusa/types";
 import { useIsTouchDevice } from "@/hooks/useIsTouchDevice";
 import { GalleryUI } from "./GalleryUI";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 import type { MoveInput, LookDelta } from "@/three/gallery/FirstPersonRig";
 
 const GalleryScene = dynamic(() => import("@/three/gallery/GalleryScene").then((m) => m.GalleryScene), {
@@ -26,6 +27,39 @@ export function GalleryExperience({ products }: { products: Product[] }) {
   const [nearbyFrameIndex, setNearbyFrameIndex] = useState<number | null>(null);
   const [activeFrameIndex, setActiveFrameIndex] = useState<number | null>(null);
   const [isReturning, setIsReturning] = useState(false);
+  const [effectiveProducts, setEffectiveProducts] = useState(products);
+
+  useEffect(() => {
+    setEffectiveProducts(products);
+  }, [products]);
+
+  useEffect(() => {
+    if (!CAN_USE_API) return;
+    let cancelled = false;
+
+    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then(
+        (
+          data: {
+            settings?: { galleryFrames?: { frames?: Array<{ enabled: boolean; productSlug: string }> } };
+          } | null,
+        ) => {
+          if (cancelled) return;
+          const assigned =
+            data?.settings?.galleryFrames?.frames
+              ?.filter((frame) => frame.enabled)
+              .map((frame) => products.find((product) => product.slug === frame.productSlug))
+              .filter((product): product is Product => Boolean(product)) ?? [];
+          if (assigned.length > 0) setEffectiveProducts(assigned);
+        },
+      )
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [products]);
 
   const handleInteract = useCallback(() => {
     if (nearbyFrameIndex === null || activeFrameIndex !== null) return;
@@ -48,13 +82,13 @@ export function GalleryExperience({ products }: { products: Product[] }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleInteract, handleClose]);
 
-  const activeProduct = activeFrameIndex !== null ? productForFrame(products, activeFrameIndex) : null;
-  const nearbyProduct = nearbyFrameIndex !== null ? productForFrame(products, nearbyFrameIndex) : null;
+  const activeProduct = activeFrameIndex !== null ? productForFrame(effectiveProducts, activeFrameIndex) : null;
+  const nearbyProduct = nearbyFrameIndex !== null ? productForFrame(effectiveProducts, nearbyFrameIndex) : null;
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-[#0d0d0d]">
       <GalleryScene
-        products={products}
+        products={effectiveProducts}
         isTouchDevice={isTouchDevice}
         activeFrameIndex={activeFrameIndex}
         isReturning={isReturning}

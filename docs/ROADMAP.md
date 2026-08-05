@@ -1,4 +1,4 @@
-# Roadmap
+﻿# Roadmap
 
 ## Phase 1 — Foundation (done)
 
@@ -21,32 +21,16 @@ all 10 sidebar sections as routes).
 - Product content is placeholder copy (`apps/api/src/scripts/seedProducts.ts`) — swap via the admin CRUD
   once real product details exist.
 
-## Phase 3 — 3D Gallery (done)
+## Phase 3 - 3D Gallery (done)
 
-- First-person walkthrough at `/gallery` (`apps/web/src/app/gallery`, a standalone route outside the
-  `(site)` group — full-bleed, no nav/footer/Lenis). Desktop: WASD + pointer-lock mouse-look. Mobile: virtual
-  joystick + drag-to-look, both hand-rolled (see `components/gallery/`).
-  - `E` (desktop) / tap (mobile) opens a product detail panel when within range of a frame; a GSAP camera
-    tween zooms toward the frame on open and eases back to the player on close (`Esc` or the close button).
-  - The room ("balcony museum" — a grand hall with a non-walkable mezzanine ring) is **fully procedural**,
-    not a loaded model — primitive geometry + canvas-generated marble/plaster textures, built once in
-    `MuseumEnvironment.tsx`. `gallery.glb` is no longer used by this route (still on disk, just unreferenced)
-    — this was a deliberate pivot from the first pass, for full control over scale/look and one fewer
-    network fetch (~1.9MB) on load.
-  - 8 frames positioned around the room's perimeter (`lib/galleryLayout.ts`, realistic scale — 1 unit ≈ 1m),
-    one per seeded product, each with real molding, a museum label plaque, its own picture-light spotlight,
-    and a proximity-based emissive glow computed per-frame in its own `useFrame` — no React state/re-renders
-    on the hot path.
-  - Collision is a simple rectangular walk boundary, not per-mesh against the room's geometry — a deliberate
-    first-pass tradeoff, tighten later if it looks off in-browser.
-  - No audio (footsteps/ambient) — no real audio assets exist yet and synthesizing convincing ones wasn't
-    worth the effort for a placeholder pass; drop files in and wire them up whenever real audio exists.
-- Admin Gallery Frames management (assigning specific products to specific frame positions) wasn't built —
-  frames currently map to products by seed order (`order` field, cycling if fewer than 8 products exist).
-  Worth adding once frame-to-product assignment needs to be independent of that.
+- First-person walkthrough at `/gallery` (`apps/web/src/app/gallery`, a standalone route outside the `(site)` group). Desktop uses WASD/arrow keys plus pointer-lock mouse-look. Mobile uses a centered compact analog controller plus full-screen drag-to-look.
+- The environment now loads `gallery2.glb` with local Draco decoder assets. Product cards hang from Blender empties named `album1` through `album8`.
+- `E` (desktop) / `View` (mobile) opens a product detail panel when within range of a frame; a GSAP camera tween zooms toward the frame and eases back to the player on close.
+- Admin Gallery Frames management is built: `/gallery-frames` assigns products to the eight album anchors and `/gallery` consumes that configured product order when settings exist.
+- Collision is still a simple rectangular walk boundary, not per-mesh against the gallery model.
+- No audio yet; add real ambient/footstep assets before wiring sound.
 
 - Visual realism upgrade plan: [GALLERY-REALISM-PLAN.md](./GALLERY-REALISM-PLAN.md).
-
 ## Phase 4 — Careers (done)
 
 - Careers list (`/careers`) and role detail (`/careers/[slug]`, re-added now that real `CareerRole`
@@ -82,15 +66,22 @@ all 10 sidebar sections as routes).
 - Verified with a real submission through the live API (not just a page-render check) — write, admin-side
   read, then cleaned up the test record.
 
-## Phase 6 — Admin depth
+## Phase 6 — Admin depth (mostly done)
 
-Analytics ingestion (page views, conversions) + charts, CSV export, media library with upload, homepage
-content editor (headline/story-section copy without a deploy), statistics dashboards.
+- Admin dashboard summary, contacts, statistics, and website analytics pages are wired to API data.
+- Homepage Content editor persists hero copy, story-section copy, CTAs, and contact details via
+  `/api/settings/*`; the public home page/footer consume those settings with static fallbacks.
+- Gallery Frames editor assigns products to `album1` through `album8`; `/gallery` consumes the configured
+  product order when settings exist.
+- Media Library uploads images/models/Lottie files to `/uploads/media` and records them in the `Media`
+  collection.
+- Still remaining: CSV export for non-contact resources and deeper analytics charts/conversion funnels.
 
-## Phase 7 — SEO
+## Phase 7 — SEO (partial)
 
-`sitemap.xml`, `robots.txt`, JSON-LD (Organization, Product, JobPosting schemas), per-route OpenGraph/
-Twitter cards, canonical URLs, image SEO.
+Admin SEO settings now persist default metadata and per-route snippets; the public root metadata consumes the
+default title/description/OpenGraph image. Still remaining: `sitemap.xml`, `robots.txt`, JSON-LD
+(Organization, Product, JobPosting schemas), canonical URLs, and image SEO.
 
 ## Phase 8 — Accessibility
 
@@ -101,3 +92,4 @@ every animated surface (baseline support already exists — see ARCHITECTURE.md)
 
 Render service configs for `web`/`admin`/`api`, environment/secrets strategy, VPS-compatible Dockerfiles,
 production Mongo Atlas setup.
+

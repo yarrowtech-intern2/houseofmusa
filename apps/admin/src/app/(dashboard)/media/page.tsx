@@ -1,10 +1,9 @@
-import { SectionPlaceholder } from "@/components/layout/SectionPlaceholder";
+import { cookies } from "next/headers";
+import type { Media } from "@houseofmusa/types";
+import { apiFetch } from "@/lib/api";
+import { MediaManager } from "@/components/media/MediaManager";
 
-export default function MediaPage() {
-  return (
-    <SectionPlaceholder
-      title="Media Library"
-      description="Upload and manage images/models used across the site, backed by the Media collection (docs/ROADMAP.md phase 6)."
-    />
-  );
+export default async function MediaPage() {
+  const { items } = await apiFetch<{ items: Media[] }>("/api/media", { cookie: cookies().toString() });
+  return <MediaManager items={items} />;
 }

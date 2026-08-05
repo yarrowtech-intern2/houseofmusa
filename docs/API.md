@@ -55,10 +55,28 @@ Security middleware applied globally: `helmet`, `cors` (origin allowlist via `CO
 | GET | `/api/applications` | admin | Paginated, populates `roleId` → `{ _id, title, department }` |
 | PATCH | `/api/applications/:id/status` | admin | Body: `{ status }`, one of `applicationStatusValues` (new/reviewing/interviewing/offered/rejected/hired) |
 
+## Settings
+
+| Method | Path | Auth | Notes |
+|---|---|---|---|
+| GET | `/api/settings/public` | public | Public settings payload with defaults for homepage content, contact details, gallery frames, and SEO. |
+| GET | `/api/settings/admin` | admin | Same normalized payload plus raw stored setting documents. |
+| GET | `/api/settings/:key` | public | Fetch one setting, falling back to defaults. Keys: `homepage-content`, `contact-details`, `gallery-frames`, `seo`. |
+| PATCH | `/api/settings/:key` | admin | Upserts one setting. Body can be the setting object or `{ value }`; validated by `@houseofmusa/schemas`. |
+
+## Media
+
+| Method | Path | Auth | Notes |
+|---|---|---|---|
+| GET | `/api/media` | admin | Lists uploaded media. Optional `category` filter. |
+| POST | `/api/media` | admin | Creates a media registry row for an already-hosted URL. |
+| POST | `/api/media/upload` | admin | `multipart/form-data`: `file` plus optional `category` (`product`, `gallery-frame`, `homepage`, `misc`). Accepts images, GLB/GLTF, and Lottie files up to 25MB. |
+| DELETE | `/api/media/:id` | admin | Deletes the media row and removes local uploaded files when applicable. |
+
 ## Static
 
 Uploaded files served from `/uploads/*` (disk storage under `apps/api/uploads/`, gitignored).
 
 ## Not yet built (see [ROADMAP.md](./ROADMAP.md))
 
-Gallery-frame management, homepage content editing, media library, analytics ingestion endpoint, CSV export.
+Sitemap/robots generation, JSON-LD, keyboard-only gallery traversal audit, and production deployment configs.

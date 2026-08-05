@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
+import type { ContactDetails } from "@houseofmusa/types";
 import { contactSchema, contactBudgetValues, projectTypeValues, type ContactInput } from "@houseofmusa/schemas";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, Button, Input, Label, Textarea } from "@houseofmusa/ui";
 import { API_URL, CAN_USE_API } from "@/lib/api";
@@ -12,7 +13,15 @@ import { BUDGET_LABELS, CONTACT_PROJECT_TYPE_LABELS } from "@/lib/contactLabels"
 const selectClassName =
   "flex h-12 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 text-sm text-foreground backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
 
-export function ContactModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export function ContactModal({
+  open,
+  onOpenChange,
+  contactDetails = { email: "hello@houseofmusa.com" },
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  contactDetails?: ContactDetails;
+}) {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const {
@@ -57,9 +66,10 @@ export function ContactModal({ open, onOpenChange }: { open: boolean; onOpenChan
           <DialogDescription>Tell us about your project.</DialogDescription>
           <div className="mt-6 flex flex-col gap-3 text-sm text-foreground/60">
             <p>Reach us directly:</p>
-            <a href="mailto:hello@houseofmusa.com" className="font-medium text-secondary hover:text-primary">
-              hello@houseofmusa.com
+            <a href={`mailto:${contactDetails.email}`} className="font-medium text-secondary hover:text-primary">
+              {contactDetails.email}
             </a>
+            {contactDetails.phone && <span>{contactDetails.phone}</span>}
           </div>
           <Button className="mt-8 w-full" variant="primary" onClick={() => onOpenChange(false)}>
             Close

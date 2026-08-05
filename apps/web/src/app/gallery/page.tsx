@@ -3,6 +3,7 @@ import type { Product, PaginatedResult } from "@houseofmusa/types";
 import { apiGet } from "@/lib/api";
 import { GalleryExperience } from "@/components/gallery/GalleryExperience";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
+import { getPublicSiteSettings } from "@/lib/siteSettings";
 
 export const metadata: Metadata = {
   title: "3D Gallery",
@@ -13,9 +14,18 @@ export const metadata: Metadata = {
 // and runs its own first-person camera, so it skips SiteNav/SiteFooter and
 // the Lenis smooth-scroll provider entirely.
 export default async function GalleryPage() {
-  const { items: products } = await apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
+  const [{ items: products }, settings] = await Promise.all([
+    apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
     () => toPaginatedResult(STATIC_PRODUCTS),
-  );
+    ),
+    getPublicSiteSettings(),
+  ]);
 
-  return <GalleryExperience products={products} />;
+  const assignedProducts =
+    settings.galleryFrames?.frames
+      .filter((frame) => frame.enabled)
+      .map((frame) => products.find((product) => product.slug === frame.productSlug))
+      .filter((product): product is Product => Boolean(product)) ?? [];
+
+  return <GalleryExperience products={assignedProducts.length > 0 ? assignedProducts : products} />;
 }

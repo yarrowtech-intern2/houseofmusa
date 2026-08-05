@@ -11,7 +11,7 @@ import { Logo } from "./Logo";
 export function DashboardTopbar({ admin }: { admin: AdminSession }) {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  const displayEmail = admin.email === "you@example.com" ? "admin@houseofmusa.com" : admin.email;
+  const displayEmail = admin.email.endsWith("@example.com") ? "admin@houseofmusa.com" : admin.email;
 
   const handleLogout = async () => {
     await apiFetch("/api/auth/logout", { method: "POST" });

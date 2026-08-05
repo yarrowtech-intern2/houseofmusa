@@ -3,3 +3,4 @@ export * from "./product";
 export * from "./career";
 export * from "./auth";
 export * from "./analytics";
+export * from "./settings";

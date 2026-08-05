@@ -1,10 +1,16 @@
-import { SectionPlaceholder } from "@/components/layout/SectionPlaceholder";
+import { cookies } from "next/headers";
+import type { SiteSettings } from "@houseofmusa/types";
+import { apiFetch } from "@/lib/api";
+import { SeoSettingsEditor } from "@/components/settings/SeoSettingsEditor";
 
-export default function SeoPage() {
-  return (
-    <SectionPlaceholder
-      title="SEO Settings"
-      description="Per-route metadata, OpenGraph images, and sitemap controls (docs/ROADMAP.md phase 7)."
-    />
-  );
+export default async function SeoPage() {
+  const { settings } = await apiFetch<{ settings: SiteSettings }>("/api/settings/admin", {
+    cookie: cookies().toString(),
+  });
+
+  if (!settings.seo) {
+    throw new Error("SEO settings payload is incomplete");
+  }
+
+  return <SeoSettingsEditor seo={settings.seo} />;
 }

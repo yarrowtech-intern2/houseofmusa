@@ -2,11 +2,32 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { ContactDetails } from "@houseofmusa/types";
 import { cn } from "@houseofmusa/ui";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 
-export function SiteFooter() {
+export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [liveContactDetails, setLiveContactDetails] = useState(contactDetails);
+  const email = liveContactDetails?.email ?? "hello@houseofmusa.com";
+
+  useEffect(() => {
+    if (!CAN_USE_API) return;
+    let cancelled = false;
+
+    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { settings?: { contactDetails?: ContactDetails } } | null) => {
+        if (!cancelled && data?.settings?.contactDetails) setLiveContactDetails(data.settings.contactDetails);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <footer
@@ -24,8 +45,15 @@ export function SiteFooter() {
             className="h-14 w-auto sm:h-16"
           />
           <p className={cn("mt-3 max-w-xs text-sm", isHome ? "text-white/75" : "text-foreground/50")}>
-            Enterprise ERP, SaaS, and AI-ready infrastructure — engineered from a single digital headquarters.
+            Enterprise ERP, SaaS, and AI-ready infrastructure - engineered from a single digital headquarters.
           </p>
+          <div className={cn("mt-4 flex flex-col gap-1 text-sm", isHome ? "text-white/70" : "text-foreground/55")}>
+            <a href={`mailto:${email}`} className="hover:text-primary">
+              {email}
+            </a>
+            {liveContactDetails?.phone && <span>{liveContactDetails.phone}</span>}
+            {liveContactDetails?.location && <span>{liveContactDetails.location}</span>}
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-8 text-sm sm:flex sm:gap-12">
           <div className="flex flex-col gap-3">
@@ -75,7 +103,7 @@ export function SiteFooter() {
         </div>
       </div>
       <p className={cn("mx-auto mt-16 max-w-5xl text-xs", isHome ? "text-white/50" : "text-foreground/40")}>
-        © {new Date().getFullYear()} House of Musa. All rights reserved.
+        &copy; {new Date().getFullYear()} House of Musa. All rights reserved.
       </p>
     </footer>
   );

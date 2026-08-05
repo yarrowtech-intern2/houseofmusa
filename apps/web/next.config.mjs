@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export: no Node server on the host (Render Static Site), the
-  // API lives on a separate VPS. Every dynamic route needs
-  // generateStaticParams as a result — see products/[slug] and
-  // careers/[slug]. Content edited via the admin dashboard only appears on
-  // the live site after a rebuild (docs/ARCHITECTURE.md).
+  // Static export: no Node server on the host. Dynamic public settings are
+  // baked at build time and refreshed client-side when NEXT_PUBLIC_API_URL is configured.
   output: "export",
   reactStrictMode: true,
   transpilePackages: ["@houseofmusa/ui", "@houseofmusa/types", "@houseofmusa/schemas"],
