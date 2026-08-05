@@ -1,24 +1,50 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import type { Product, ProjectType } from "@houseofmusa/types";
+import type { Product, ProjectType, PaginatedResult } from "@houseofmusa/types";
 import { Input, cn } from "@houseofmusa/ui";
 import { ProductCard } from "@/components/products/ProductCard";
+import { API_URL, CAN_USE_API } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 
 export function ProductsExplorer({ products }: { products: Product[] }) {
+  const [liveProducts, setLiveProducts] = useState(products);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<ProjectType | "all">("all");
 
-  const categories = useMemo(() => {
-    const present = new Set(products.map((p) => p.category));
-    return (Object.keys(CATEGORY_LABELS) as ProjectType[]).filter((c) => present.has(c));
+  useEffect(() => {
+    setLiveProducts(products);
   }, [products]);
+
+  useEffect(() => {
+    if (!CAN_USE_API) return;
+
+    let cancelled = false;
+
+    fetch(`${API_URL}/api/products?pageSize=50`, { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
+        return res.json() as Promise<PaginatedResult<Product>>;
+      })
+      .then((data) => {
+        if (!cancelled) setLiveProducts(data.items);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const categories = useMemo(() => {
+    const present = new Set(liveProducts.map((p) => p.category));
+    return (Object.keys(CATEGORY_LABELS) as ProjectType[]).filter((c) => present.has(c));
+  }, [liveProducts]);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return products.filter((product) => {
+    return liveProducts.filter((product) => {
       const matchesCategory = category === "all" || product.category === category;
       const matchesSearch =
         query === "" ||
@@ -27,7 +53,7 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
         product.techStack.some((t) => t.toLowerCase().includes(query));
       return matchesCategory && matchesSearch;
     });
-  }, [products, search, category]);
+  }, [liveProducts, search, category]);
 
   return (
     <div>
@@ -70,7 +96,7 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
       {filtered.length === 0 ? (
         <p className="mt-24 text-center text-sm text-foreground/50">No products match that search.</p>
       ) : (
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
           {filtered.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}

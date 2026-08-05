@@ -88,4 +88,4 @@ Avoid solving realism by adding many expensive realtime effects.
 - The space has believable materials, lighting, scale, and architectural detail.
 - Product frames look intentionally designed, not like color placeholders.
 - Movement remains smooth on low/mid devices.
-- The page still works as a static-export Next route on Render.
+- The page still works as a dynamic Next route on the public web service.

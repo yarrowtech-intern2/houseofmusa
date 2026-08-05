@@ -22,14 +22,22 @@ export function SiteNav() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   useEffect(() => {
+    const handleExternalLogoTone = (event: Event) => {
+      const detail = (event as CustomEvent<{ overDark: boolean }>).detail;
+      if (typeof detail?.overDark === "boolean") setLogoOverDark(detail.overDark);
+    };
+
     const updateLogoTone = () => {
+      if (pathname === "/about2") return;
       setLogoOverDark(pathname === "/" && window.scrollY > window.innerHeight * 0.72);
     };
 
     updateLogoTone();
+    window.addEventListener("houseofmusa:nav-logo-tone", handleExternalLogoTone);
     window.addEventListener("scroll", updateLogoTone, { passive: true });
     window.addEventListener("resize", updateLogoTone);
     return () => {
+      window.removeEventListener("houseofmusa:nav-logo-tone", handleExternalLogoTone);
       window.removeEventListener("scroll", updateLogoTone);
       window.removeEventListener("resize", updateLogoTone);
     };

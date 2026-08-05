@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import type { Product, PaginatedResult } from "@houseofmusa/types";
-import { apiGet } from "@/lib/api";
-import { RevealText } from "@/components/motion/RevealText";
+import type { PaginatedResult, Product } from "@houseofmusa/types";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
+import { RevealText } from "@/components/motion/RevealText";
+import { apiGet } from "@/lib/api";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -27,18 +29,12 @@ export default async function ProductsPage() {
           className="mt-4 max-w-3xl font-display text-display-lg font-medium tracking-tight text-foreground"
         />
         <p className="mt-6 max-w-xl text-base text-foreground/60">
-          ERP systems, SaaS platforms, AI infrastructure, and everything between — each built and maintained
-          by the same team.
+          ERP systems, SaaS platforms, AI infrastructure, and everything between - each built and maintained by the
+          same team.
         </p>
 
         <div className="mt-16">
-          {products.length === 0 ? (
-            <p className="text-sm text-foreground/50">
-              Products are being added — check back shortly, or visit the admin dashboard to publish some.
-            </p>
-          ) : (
-            <ProductsExplorer products={products} />
-          )}
+          <ProductsExplorer products={products} />
         </div>
       </div>
     </section>

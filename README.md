@@ -36,8 +36,7 @@ setting up the repo needs their own `MONGODB_URI`.
 
 ## Render deployment
 
-The public web app is a static export. If `NEXT_PUBLIC_API_URL` is unset, it builds with bundled placeholder
-products and career roles, and runtime submissions that need the API are disabled. Leave it unset until the
-API exists; do not set it to `localhost` on Render. Once the API exists, set `NEXT_PUBLIC_API_URL` on the
-Render Static Site to the public, reachable API origin without a trailing slash, for example
-`https://houseofmusa-api.onrender.com`.
+The public web app now runs as a Next.js server app, not a static export. Deploy `apps/web` as a Web Service
+with `pnpm --filter @houseofmusa/web build` as the build command and
+`pnpm --filter @houseofmusa/web start` as the start command. Set `NEXT_PUBLIC_API_URL` to the public,
+reachable API origin without a trailing slash, for example `https://houseofmusa-api.onrender.com`.

@@ -6,7 +6,6 @@ import type { ContactDetails, HomepageContent } from "@houseofmusa/types";
 import { ArrivalSequence } from "@/components/loader/ArrivalSequence";
 import { HeroOverlay } from "@/components/home/HeroOverlay";
 import { StorySection } from "@/components/home/StorySection";
-import { ContactModal } from "@/components/contact/ContactModal";
 import { API_URL, CAN_USE_API } from "@/lib/api";
 
 const HeroCanvas = dynamic(() => import("@/three/scenes/HeroCanvas").then((m) => m.HeroCanvas), {
@@ -24,7 +23,6 @@ export function HomeExperience({
 }) {
   const [ready, setReady] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
   const [liveHomepageContent, setLiveHomepageContent] = useState(homepageContent);
   const [liveContactDetails, setLiveContactDetails] = useState(contactDetails);
   const storyContainerRef = useRef<HTMLDivElement>(null);
@@ -63,7 +61,7 @@ export function HomeExperience({
       </div>
 
       <div className="relative z-0 flex min-h-screen items-end">
-        <HeroOverlay content={liveHomepageContent} onBookConsultation={() => setContactOpen(true)} />
+        <HeroOverlay content={liveHomepageContent} contactDetails={liveContactDetails} />
       </div>
 
       <div ref={storyContainerRef} className="relative z-0">
@@ -71,8 +69,6 @@ export function HomeExperience({
           <StorySection key={`${section.eyebrow}-${index}`} {...section} />
         ))}
       </div>
-
-      <ContactModal open={contactOpen} onOpenChange={setContactOpen} contactDetails={liveContactDetails} />
     </main>
   );
 }

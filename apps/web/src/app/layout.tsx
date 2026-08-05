@@ -3,6 +3,9 @@ import { Onest } from "next/font/google";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 import "./globals.css";
+import "@/components/about/about3-hero.css";
+
+export const dynamic = "force-dynamic";
 
 const onest = Onest({
   subsets: ["latin"],

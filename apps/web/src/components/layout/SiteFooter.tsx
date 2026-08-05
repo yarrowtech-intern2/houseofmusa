@@ -29,6 +29,8 @@ export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails
     };
   }, []);
 
+  if (pathname === "/about2") return null;
+
   return (
     <footer
       className={cn(
@@ -76,6 +78,12 @@ export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails
               className={cn(isHome ? "text-white/85 hover:text-white" : "text-foreground/70 hover:text-foreground")}
             >
               Careers
+            </Link>
+            <Link
+              href="/contact"
+              className={cn(isHome ? "text-white/85 hover:text-white" : "text-foreground/70 hover:text-foreground")}
+            >
+              Contact
             </Link>
           </div>
           <div className="flex flex-col gap-3">

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Product } from "@houseofmusa/types";
+import type { PaginatedResult, Product } from "@houseofmusa/types";
 import { useIsTouchDevice } from "@/hooks/useIsTouchDevice";
 import { GalleryUI } from "./GalleryUI";
 import { API_URL, CAN_USE_API } from "@/lib/api";
@@ -11,6 +11,10 @@ import type { MoveInput, LookDelta } from "@/three/gallery/FirstPersonRig";
 const GalleryScene = dynamic(() => import("@/three/gallery/GalleryScene").then((m) => m.GalleryScene), {
   ssr: false,
 });
+
+type PublicSettingsResponse = {
+  settings?: { galleryFrames?: { frames?: Array<{ enabled: boolean; productSlug: string }> } };
+} | null;
 
 function productForFrame(products: Product[], index: number): Product | null {
   if (products.length === 0) return null;
@@ -37,24 +41,34 @@ export function GalleryExperience({ products }: { products: Product[] }) {
     if (!CAN_USE_API) return;
     let cancelled = false;
 
-    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then(
-        (
-          data: {
-            settings?: { galleryFrames?: { frames?: Array<{ enabled: boolean; productSlug: string }> } };
-          } | null,
-        ) => {
-          if (cancelled) return;
-          const assigned =
-            data?.settings?.galleryFrames?.frames
-              ?.filter((frame) => frame.enabled)
-              .map((frame) => products.find((product) => product.slug === frame.productSlug))
-              .filter((product): product is Product => Boolean(product)) ?? [];
-          if (assigned.length > 0) setEffectiveProducts(assigned);
-        },
-      )
-      .catch(() => undefined);
+    Promise.all([
+      fetch(`${API_URL}/api/products?pageSize=50`, { cache: "no-store" })
+        .then((res) => {
+          if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
+          return res.json() as Promise<PaginatedResult<Product>>;
+        })
+        .then((data) => data.items),
+      fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
+        .then((res) => (res.ok ? (res.json() as Promise<PublicSettingsResponse>) : null))
+        .catch(() => null),
+    ])
+      .then(([liveProducts, data]) => {
+        if (cancelled) return;
+
+        const sourceProducts = liveProducts.length > 0 ? liveProducts : products;
+        const assigned =
+          data?.settings?.galleryFrames?.frames
+            ?.filter((frame) => frame.enabled)
+            .map((frame) => sourceProducts.find((product) => product.slug === frame.productSlug))
+            .filter((product): product is Product => Boolean(product)) ?? [];
+
+        setEffectiveProducts(assigned.length > 0 ? assigned : sourceProducts);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setEffectiveProducts(products);
+        }
+      });
 
     return () => {
       cancelled = true;

@@ -15,7 +15,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   const pathname = usePathname();
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || pathname === "/about2") return;
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -37,7 +37,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, [reducedMotion]);
+  }, [pathname, reducedMotion]);
 
   useEffect(() => {
     // The (site) layout — and this Lenis instance — persists across

@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import type { HomepageContent } from "@houseofmusa/types";
+import type { ContactDetails, HomepageContent } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
 import { RevealText } from "@/components/motion/RevealText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { BookConsultationButton } from "@/components/contact/BookConsultationButton";
 
 export function HeroOverlay({
   content,
-  onBookConsultation,
+  contactDetails,
 }: {
   content: HomepageContent;
-  onBookConsultation: () => void;
+  contactDetails?: ContactDetails;
 }) {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col items-center gap-8 px-6 pb-20 text-center sm:pb-28">
@@ -29,9 +30,11 @@ export function HeroOverlay({
       </p>
       <div className="pointer-events-auto flex w-full max-w-56 flex-col items-center gap-4 sm:w-auto sm:max-w-none sm:flex-row">
         <MagneticButton className="w-full sm:w-auto">
-          <Button size="lg" variant="primary" className="w-full sm:w-auto" onClick={onBookConsultation}>
-            {content.primaryCtaLabel}
-          </Button>
+          <BookConsultationButton
+            label={content.primaryCtaLabel}
+            contactDetails={contactDetails}
+            className="w-full sm:w-auto"
+          />
         </MagneticButton>
         <MagneticButton className="w-full sm:w-auto">
           <Button size="lg" variant="glass" className="w-full sm:w-auto" asChild>

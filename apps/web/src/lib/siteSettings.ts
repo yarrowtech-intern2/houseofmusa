@@ -66,9 +66,9 @@ export const defaultSeoSettings: SeoSettings = {
 };
 
 export async function getPublicSiteSettings(): Promise<SiteSettings> {
-  const data: { settings: SiteSettings } = await apiGet<{ settings: SiteSettings }>("/api/settings/public", {
-    next: { revalidate: 60 },
-  }).catch(() => ({ settings: {} }));
+  const data: { settings: SiteSettings } = await apiGet<{ settings: SiteSettings }>("/api/settings/public").catch(
+    () => ({ settings: {} }),
+  );
 
   return {
     homepageContent: data.settings.homepageContent ?? defaultHomepageContent,

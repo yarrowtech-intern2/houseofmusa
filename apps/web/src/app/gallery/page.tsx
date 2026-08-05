@@ -5,6 +5,8 @@ import { GalleryExperience } from "@/components/gallery/GalleryExperience";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "3D Gallery",
   description: "Walk through a first-person art gallery showcasing every House of Musa product.",

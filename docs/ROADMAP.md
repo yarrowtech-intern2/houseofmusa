@@ -33,15 +33,13 @@ all 10 sidebar sections as routes).
 - Visual realism upgrade plan: [GALLERY-REALISM-PLAN.md](./GALLERY-REALISM-PLAN.md).
 ## Phase 4 — Careers (done)
 
-- Careers list (`/careers`) and role detail (`/careers/[slug]`, re-added now that real `CareerRole`
-  documents exist to satisfy static export's `generateStaticParams` requirement) — 6 placeholder roles
+- Careers list (`/careers`) and role detail (`/careers/[slug]`) — 6 placeholder roles
   seeded across Engineering/Design/Sales/People (`apps/api/src/scripts/seedCareerRoles.ts`), clearly generic
   copy, swap via the admin CRUD once real openings exist.
 - Full application form (`components/careers/ApplicationForm.tsx`) embedded on the role detail page —
   resume (required) + cover letter (optional) upload, LinkedIn/GitHub/portfolio, expected salary, experience,
   comma-separated skills, availability. Submits as `FormData` directly from the browser to
-  `POST /api/applications` (not through a Next.js server action — stays compatible with static export, since
-  it's a client-side fetch at runtime, not a build-time concern).
+  `POST /api/applications` directly from the browser.
 - Admin: full CareerRole CRUD (`/career-roles`, `/career-roles/new`, `/career-roles/[id]`) mirroring the
   Products admin pattern; Applications review (`/applications`) with resume/cover-letter download links and
   a per-row status dropdown (new → reviewing → interviewing → offered/rejected/hired) wired to the new
@@ -58,9 +56,9 @@ all 10 sidebar sections as routes).
   (name, email, phone, company, budget, project type, message), submits directly to `POST /api/contacts`,
   success state (checkmark + message) instead of closing immediately, form resets on reopen so a second visit
   never shows a stale success screen.
-- Respects the `CAN_USE_API` fallback pattern (`lib/api.ts`) the rest of the site now uses for
-  static-placeholder deploys: when no real API is configured in production, the modal falls back to the
-  original "email us directly" content instead of rendering a form with nowhere to submit.
+- Respects the `CAN_USE_API` fallback pattern (`lib/api.ts`): when no real API is configured in production,
+  the modal falls back to the original "email us directly" content instead of rendering a form with nowhere
+  to submit.
 - Admin **Contacts** list is still a placeholder — deliberately left for phase 6, which already scopes the
   search/filter/CSV export work it needs; `GET /api/contacts` has worked since phase 1.
 - Verified with a real submission through the live API (not just a page-render check) — write, admin-side

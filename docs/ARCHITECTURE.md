@@ -99,23 +99,19 @@ tweens/ScrollTriggers across navigations.
 `multer` upload) → `controllers` → `routes`, assembled in `app.ts`. See [API.md](./API.md) for the endpoint
 list and [DATABASE.md](./DATABASE.md) for schemas.
 
-## Static export
+## Dynamic public web app
 
-`apps/web` builds with `output: "export"` (`next.config.mjs`) — no Node server on the host; it's deployed as
-a static site (Render Static Site), with the API on a separate VPS. Consequences worth knowing:
+`apps/web` runs as a Next.js server app. Public pages that depend on admin-managed content use
+`dynamic = "force-dynamic"` and `cache: "no-store"` API reads, so product, career, gallery, contact, homepage,
+and SEO edits can show without a rebuild.
 
-- Every dynamic route needs `generateStaticParams`; products and careers fetch slugs from the API at build
-  time when `NEXT_PUBLIC_API_URL` is configured, and otherwise use bundled placeholder content from
-  `apps/web/src/lib/staticContent.ts` so Render can deploy the static site before the API exists.
-- Products and careers are baked into generated pages at build time. Homepage/footer/gallery settings are
-  also included at build time, then refreshed client-side at runtime when `NEXT_PUBLIC_API_URL` is configured.
-  SEO metadata is still build-time for crawlers.
-- `next/image` is never used anywhere in `apps/web` (plain `<img>` throughout) specifically so this doesn't
-  also require `images: { unoptimized: true }` — the built-in optimizer needs a server and errors under
-  `output: "export"` otherwise.
-- To render live API content, `NEXT_PUBLIC_API_URL` must be reachable from wherever the build runs (Render's
-  build environment), not just from end users' browsers. If it is unset in production, the public site uses
-  bundled placeholder content and disables runtime submissions that require the API.
+- Product and career detail routes resolve slugs at request time. New slugs created in admin work immediately
+  as long as the API is reachable.
+- Bundled placeholder content in `apps/web/src/lib/staticContent.ts` remains only as a local/API-down
+  fallback, not as the normal production data source.
+- `NEXT_PUBLIC_API_URL` must be configured in production and point to the public API origin without a trailing
+  slash.
+- Deploy `apps/web` as a Node/Next Web Service (`next start`), not a Render Static Site.
 
 ## Admin app (`apps/admin`)
 
