@@ -2,9 +2,16 @@
   "name": "@houseofmusa/schemas",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
   }
 }
