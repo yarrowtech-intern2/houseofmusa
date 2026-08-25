@@ -1,10 +1,21 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/auth";
+import { ApiRequestError } from "@/lib/api";
+import { ApiUnavailable } from "@/components/layout/ApiUnavailable";
 import { DashboardSidebar } from "@/components/layout/DashboardSidebar";
 import { DashboardTopbar } from "@/components/layout/DashboardTopbar";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const admin = await getServerSession();
+  let admin: Awaited<ReturnType<typeof getServerSession>>;
+  try {
+    admin = await getServerSession();
+  } catch (err) {
+    if (err instanceof ApiRequestError && err.status === 503) {
+      return <ApiUnavailable message={err.message} />;
+    }
+    throw err;
+  }
+
   if (!admin) redirect("/login");
 
   return (

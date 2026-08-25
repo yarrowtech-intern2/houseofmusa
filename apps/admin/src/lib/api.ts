@@ -1,4 +1,4 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "http://localhost:4000";
 
 export class ApiRequestError extends Error {
   status: number;
@@ -16,15 +16,21 @@ export async function apiFetch<T>(
   options: RequestInit & { cookie?: string } = {},
 ): Promise<T> {
   const { cookie, ...init } = options;
-  const res = await fetch(`${API_URL}${path}`, {
-    ...init,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...(cookie ? { cookie } : {}),
-      ...init.headers,
-    },
-  });
+  let res: Response;
+
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      ...init,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookie ? { cookie } : {}),
+        ...init.headers,
+      },
+    });
+  } catch {
+    throw new ApiRequestError(503, `Unable to reach the API server at ${API_URL}.`);
+  }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
