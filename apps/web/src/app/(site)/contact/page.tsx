@@ -3,8 +3,6 @@ import { ContactDetailsInline } from "@/components/contact/ContactDetailsInline"
 import { ConsultationForm } from "@/components/contact/ConsultationForm";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Book a Consultation",
   description: "Tell House of Musa about your project and request a consultation.",

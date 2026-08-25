@@ -3,8 +3,6 @@ import path from "node:path";
 import { HomeExperience } from "@/components/home/HomeExperience";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 
-export const dynamic = "force-dynamic";
-
 export default async function HomePage() {
   const hasModel = fs.existsSync(path.join(process.cwd(), "public/models/house.glb"));
   const settings = await getPublicSiteSettings();

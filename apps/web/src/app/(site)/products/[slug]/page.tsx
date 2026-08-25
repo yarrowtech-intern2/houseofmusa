@@ -5,7 +5,11 @@ import { ProductDetailClient } from "@/components/products/ProductDetailClient";
 import { API_URL, CAN_USE_API } from "@/lib/api";
 import { STATIC_PRODUCTS } from "@/lib/staticContent";
 
-export const dynamic = "force-dynamic";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return STATIC_PRODUCTS.map((product) => ({ slug: product.slug }));
+}
 
 async function getProduct(slug: string): Promise<Product | null> {
   const staticProduct = STATIC_PRODUCTS.find((product) => product.slug === slug) ?? null;

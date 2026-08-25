@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { About2Experience } from "@/components/about/About2Experience";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "About 2",
   description: "A cinematic House of Musa about page focused on systems, products, and digital legacies.",

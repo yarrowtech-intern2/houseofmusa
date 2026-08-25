@@ -36,15 +36,17 @@ setting up the repo needs their own `MONGODB_URI`.
 
 ## Render deployment
 
-The public web app now runs as a Next.js server app, not a static export. Deploy `apps/web` as a Render
-Web Service, not a Static Site. Static Site deploys expect `apps/web/out`, which this app does not produce.
+The public web app is configured for a Render Static Site. `next build` produces `apps/web/out`.
 
 Use these Render commands:
 
 ```
 Build Command: pnpm install --frozen-lockfile && pnpm --filter @houseofmusa/web build
-Start Command: pnpm --filter @houseofmusa/web start:render
+Publish Directory: apps/web/out
 ```
 
 Set `NEXT_PUBLIC_API_URL` to the public, reachable API origin without a trailing slash, for example
 `https://houseofmusa-api.onrender.com`.
+
+Because this is a static export, product and career detail pages are generated at build time. If new slugs are
+added in the admin backend, redeploy the static site so those detail pages are generated.

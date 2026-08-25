@@ -5,7 +5,11 @@ import { CareerDetailClient } from "@/components/careers/CareerDetailClient";
 import { API_URL, CAN_USE_API } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
-export const dynamic = "force-dynamic";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return STATIC_CAREER_ROLES.map((role) => ({ slug: role.slug }));
+}
 
 async function getCareerRole(slug: string): Promise<CareerRole | null> {
   const staticRole = STATIC_CAREER_ROLES.find((role) => role.slug === slug) ?? null;

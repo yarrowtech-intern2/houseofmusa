@@ -5,8 +5,6 @@ import { RevealText } from "@/components/motion/RevealText";
 import { apiGet } from "@/lib/api";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Products",
   description: "ERP, SaaS, and cloud infrastructure products built by House of Musa.",

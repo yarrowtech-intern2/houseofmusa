@@ -5,8 +5,6 @@ import { RevealText } from "@/components/motion/RevealText";
 import { apiGet } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Careers",
   description: "Open roles at House of Musa.",

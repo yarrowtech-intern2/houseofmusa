@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Onest } from "next/font/google";
+import localFont from "next/font/local";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 import "./globals.css";
 import "@/components/about/about3-hero.css";
 
-export const dynamic = "force-dynamic";
-
-const onest = Onest({
-  subsets: ["latin"],
+const onest = localFont({
+  src: "../../public/font/Inertia.woff2",
   variable: "--font-onest",
-  weight: "variable",
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
