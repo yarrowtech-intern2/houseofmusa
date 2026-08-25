@@ -17,7 +17,7 @@ async function getCareerRole(slug: string): Promise<CareerRole | null> {
   if (!CAN_USE_API) return staticRole;
 
   try {
-    const res = await fetch(`${API_URL}/api/career-roles/${slug}`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/career-roles/${slug}`, { cache: "force-cache" });
     if (res.status === 404) return null;
     if (!res.ok) throw new Error(`Failed to load role: ${res.status}`);
     const data = (await res.json()) as { item: CareerRole };

@@ -9,7 +9,7 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
     throw new Error("NEXT_PUBLIC_API_URL is not configured.");
   }
 
-  const res = await fetch(`${API_URL}${path}`, { cache: "no-store", ...init });
+  const res = await fetch(`${API_URL}${path}`, { cache: "force-cache", ...init });
   if (!res.ok) {
     throw new Error(`API request failed: ${res.status} ${path}`);
   }
