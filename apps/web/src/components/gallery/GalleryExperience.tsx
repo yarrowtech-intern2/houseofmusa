@@ -2,10 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { PaginatedResult, Product } from "@houseofmusa/types";
+import type { Product } from "@houseofmusa/types";
 import { useIsTouchDevice } from "@/hooks/useIsTouchDevice";
 import { GalleryUI } from "./GalleryUI";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getPublicSettings, listProducts } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import type { MoveInput, LookDelta } from "@/three/gallery/FirstPersonRig";
 
 const GalleryScene = dynamic(() => import("@/three/gallery/GalleryScene").then((m) => m.GalleryScene), {
@@ -42,14 +43,9 @@ export function GalleryExperience({ products }: { products: Product[] }) {
     let cancelled = false;
 
     Promise.all([
-      fetch(`${API_URL}/api/products?pageSize=50`, { cache: "no-store" })
-        .then((res) => {
-          if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
-          return res.json() as Promise<PaginatedResult<Product>>;
-        })
-        .then((data) => data.items),
-      fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
-        .then((res) => (res.ok ? (res.json() as Promise<PublicSettingsResponse>) : null))
+      listProducts(getDb(), { pageSize: 50 }).then((data) => data.items),
+      getPublicSettings(getDb())
+        .then((settings): PublicSettingsResponse => ({ settings }))
         .catch(() => null),
     ])
       .then(([liveProducts, data]) => {

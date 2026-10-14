@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Moon, Sun, LogOut, UserCircle2 } from "lucide-react";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { getBrowserDb } from "@/lib/supabase/browser";
 import type { AdminSession } from "@/lib/auth";
 import { Logo } from "./Logo";
 
@@ -14,7 +14,7 @@ export function DashboardTopbar({ admin }: { admin: AdminSession }) {
   const displayEmail = admin.email.endsWith("@example.com") ? "admin@houseofmusa.com" : admin.email;
 
   const handleLogout = async () => {
-    await apiFetch("/api/auth/logout", { method: "POST" });
+    await getBrowserDb().auth.signOut();
     router.push("/login");
     router.refresh();
   };

@@ -8,7 +8,8 @@ import type { z } from "zod";
 import { contactAdminUpdateSchema, contactBudgetValues, contactStatusValues, projectTypeValues } from "@houseofmusa/schemas";
 import type { Contact } from "@houseofmusa/types";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, updateContact } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 import {
   CONTACT_BUDGET_LABELS,
   CONTACT_PROJECT_TYPE_LABELS,
@@ -45,11 +46,11 @@ export function ContactForm({ contact }: { contact: Contact }) {
   const onSubmit = async (values: ContactFormValues) => {
     setServerError(null);
     try {
-      await apiFetch(`/api/contacts/${contact._id}`, { method: "PATCH", body: JSON.stringify(values) });
+      await updateContact(getBrowserDb(), contact._id, values);
       router.push("/contacts");
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiRequestError ? err.message : "Something went wrong");
+      setServerError(err instanceof DataError ? err.message : "Something went wrong");
     }
   };
 

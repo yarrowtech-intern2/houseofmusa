@@ -1,9 +1,8 @@
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { Pencil } from "lucide-react";
-import type { Contact, PaginatedResult } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { listContacts } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import {
   CONTACT_BUDGET_LABELS,
   CONTACT_PROJECT_TYPE_LABELS,
@@ -35,10 +34,7 @@ export default async function ContactsPage({
   const page = Number(searchParams?.page ?? 1);
   const search = searchParams?.search?.trim() ?? "";
   const status = searchParams?.status ?? "";
-  const data = await apiFetch<PaginatedResult<Contact>>(
-    `/api/contacts${queryString({ page, pageSize: 50, search, status })}`,
-    { cookie: cookies().toString() },
-  );
+  const data = await listContacts(getServerDb(), { page, pageSize: 50, search, status });
 
   return (
     <div className="space-y-5">

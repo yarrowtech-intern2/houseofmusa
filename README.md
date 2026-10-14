@@ -1,29 +1,32 @@
 # House of Musa
 
 Ultra-premium IT company website — cinematic 3D hero, first-person product gallery, and a full
-content/ops backend. pnpm monorepo: `apps/web` (public site), `apps/admin` (dashboard), `apps/api`
-(REST API), `packages/*` (shared types/schemas/ui/config).
+content/ops backend. pnpm monorepo: `apps/web` (public site) and `apps/admin` (dashboard), both Next.js on
+Vercel; the database, auth and file storage live in Supabase. `packages/*` hold the shared
+types/schemas/ui/config plus `@houseofmusa/data`, the typed Supabase data layer both apps use.
 
 Full documentation lives in [`docs/`](./docs):
 [PRD](./docs/PRD.md) · [Architecture](./docs/ARCHITECTURE.md) · [Design System](./docs/DESIGN-SYSTEM.md) ·
-[Database](./docs/DATABASE.md) · [API](./docs/API.md) · [Roadmap](./docs/ROADMAP.md)
+[Supabase setup & deploy](./docs/SUPABASE.md) · [Database](./docs/DATABASE.md) · [API](./docs/API.md) · [Roadmap](./docs/ROADMAP.md)
 
 The original brief is preserved verbatim in [`prompt.md`](./prompt.md).
 
 ## Getting started
 
+Set up the Supabase project first (schema, buckets, first admin) — see [`docs/SUPABASE.md`](./docs/SUPABASE.md).
+
 ```
 pnpm install
-cp apps/web/.env.example apps/web/.env.local
+cp apps/web/.env.example apps/web/.env.local       # NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY
 cp apps/admin/.env.example apps/admin/.env.local
-cp apps/api/.env.example apps/api/.env
+cp supabase/.env.example supabase/.env             # service-role key, used only by the seed scripts
 
-pnpm dev:api      # http://localhost:4000 — needs a running MongoDB (MONGODB_URI in apps/api/.env)
 pnpm dev:web      # http://localhost:3000
 pnpm dev:admin    # http://localhost:3001
 
-# create your first admin login:
-pnpm --filter @houseofmusa/api seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
+pnpm seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
+pnpm seed:products
+pnpm seed:career-roles
 ```
 
 The headquarters model (`house.glb`), the gallery environment (`gallery.glb`), and both logo variants are
@@ -31,22 +34,11 @@ already in place under `apps/web/public/` (and `apps/admin/public/logo/`) — se
 [`apps/web/public/models/README.md`](./apps/web/public/models/README.md) if the house model's scale/position
 needs tuning once viewed in-browser.
 
-`apps/api/.env` is pre-configured to a MongoDB Atlas cluster — not committed (gitignored), so anyone else
-setting up the repo needs their own `MONGODB_URI`.
+## Deployment (Vercel + Supabase)
 
-## Render deployment
+Both apps deploy to Vercel as separate projects from this repo (Root Directory `apps/web` and `apps/admin`,
+"Include source files outside of the Root Directory" enabled). Each only needs
+`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Details in [`docs/SUPABASE.md`](./docs/SUPABASE.md).
 
-The public web app is configured for a Render Static Site. `next build` produces `apps/web/out`.
-
-Use these Render commands:
-
-```
-Build Command: pnpm install --frozen-lockfile && pnpm --filter @houseofmusa/web build
-Publish Directory: apps/web/out
-```
-
-Set `NEXT_PUBLIC_API_URL` to the public, reachable API origin without a trailing slash, for example
-`https://houseofmusa-api.onrender.com`.
-
-Because this is a static export, product and career detail pages are generated at build time. If new slugs are
-added in the admin backend, redeploy the static site so those detail pages are generated.
+Because `apps/web` is a static export, product and career detail pages are generated at build time. If new
+slugs are added in the admin, redeploy the web project so those detail pages are generated.

@@ -1,17 +1,21 @@
-const configuredApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "") ?? "";
+import { createClient } from "@supabase/supabase-js";
+import type { Db } from "@houseofmusa/data";
 
-export const HAS_CONFIGURED_API_URL = Boolean(configuredApiUrl);
-export const CAN_USE_API = HAS_CONFIGURED_API_URL || process.env.NODE_ENV !== "production";
-export const API_URL = configuredApiUrl || "http://localhost:4000";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ?? "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ?? "";
 
-export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
+/** False until NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set; the site then serves its static content. */
+export const CAN_USE_API = Boolean(supabaseUrl && supabaseAnonKey);
+
+let client: Db | null = null;
+
+/** Anonymous Supabase client — RLS limits it to published content and the public submission forms. */
+export function getDb(): Db {
   if (!CAN_USE_API) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured.");
+    throw new Error("NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY are not configured.");
   }
-
-  const res = await fetch(`${API_URL}${path}`, { cache: "force-cache", ...init });
-  if (!res.ok) {
-    throw new Error(`API request failed: ${res.status} ${path}`);
-  }
-  return res.json() as Promise<T>;
+  client ??= createClient(supabaseUrl, supabaseAnonKey, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  });
+  return client;
 }

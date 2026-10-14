@@ -1,7 +1,6 @@
-import { cookies } from "next/headers";
 import { BriefcaseBusiness, CheckCircle2, ClipboardList, MailCheck } from "lucide-react";
-import { apiFetch } from "@/lib/api";
-import type { DashboardSummary } from "@/lib/dashboardTypes";
+import { getDashboardSummary } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Panel } from "@/components/dashboard/Panel";
@@ -17,9 +16,7 @@ const APPLICATION_STATUS_LABELS: Record<string, string> = {
 };
 
 export default async function StatisticsPage() {
-  const summary = await apiFetch<DashboardSummary>("/api/dashboard/summary", {
-    cookie: cookies().toString(),
-  });
+  const summary = await getDashboardSummary(getServerDb());
   const contactConversion =
     summary.totals.contacts === 0
       ? 0

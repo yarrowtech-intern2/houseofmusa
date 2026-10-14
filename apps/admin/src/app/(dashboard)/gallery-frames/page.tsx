@@ -1,13 +1,12 @@
-import { cookies } from "next/headers";
-import type { PaginatedResult, Product, SiteSettings } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { listProductsAdmin, listSettingsAdmin } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { GalleryFramesEditor } from "@/components/settings/GalleryFramesEditor";
 
 export default async function GalleryFramesPage() {
-  const cookie = cookies().toString();
+  const db = getServerDb();
   const [{ settings }, products] = await Promise.all([
-    apiFetch<{ settings: SiteSettings }>("/api/settings/admin", { cookie }),
-    apiFetch<PaginatedResult<Product>>("/api/products/admin?pageSize=50", { cookie }),
+    listSettingsAdmin(db),
+    listProductsAdmin(db, { pageSize: 50 }),
   ]);
 
   if (!settings.galleryFrames) {

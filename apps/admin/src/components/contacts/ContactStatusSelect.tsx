@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import type { Contact } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { updateContactStatus } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 
 const statusOptions = Object.entries(CONTACT_STATUS_LABELS) as [Contact["status"], string][];
@@ -11,10 +12,7 @@ export function ContactStatusSelect({ id, status }: { id: string; status: Contac
   const router = useRouter();
 
   const handleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    await apiFetch(`/api/contacts/${id}/status`, {
-      method: "PATCH",
-      body: JSON.stringify({ status: event.target.value }),
-    });
+    await updateContactStatus(getBrowserDb(), id, event.target.value as Contact["status"]);
     router.refresh();
   };
 

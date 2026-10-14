@@ -1,3 +1,5 @@
+> **Superseded.** The Express/MongoDB backend described below was replaced by Supabase (Postgres + RLS + Auth + Storage). See [SUPABASE.md](./SUPABASE.md) for the current setup. This page is kept for reference on the original REST API.
+
 # REST API — `apps/api`
 
 Base URL: `http://localhost:4000` in dev. All admin-only routes require the `hom_admin_token` httpOnly

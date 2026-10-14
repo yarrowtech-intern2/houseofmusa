@@ -8,7 +8,8 @@ import { z } from "zod";
 import { productCategoryValues } from "@houseofmusa/schemas";
 import type { Product } from "@houseofmusa/types";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, createProduct, updateProduct } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 // Mirrors @houseofmusa/schemas' productSchema but keeps techStack as a raw
 // comma-separated string for a plain text input — split into an array only
@@ -76,14 +77,14 @@ export function ProductForm({ product }: { product?: Product }) {
 
     try {
       if (isEditing && product) {
-        await apiFetch(`/api/products/${product._id}`, { method: "PATCH", body: JSON.stringify(payload) });
+        await updateProduct(getBrowserDb(), product._id, payload);
       } else {
-        await apiFetch("/api/products", { method: "POST", body: JSON.stringify(payload) });
+        await createProduct(getBrowserDb(), payload);
       }
       router.push("/products");
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiRequestError ? err.message : "Something went wrong");
+      setServerError(err instanceof DataError ? err.message : "Something went wrong");
     }
   };
 

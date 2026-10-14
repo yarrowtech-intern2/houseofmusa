@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import type { Product, ProjectType, PaginatedResult } from "@houseofmusa/types";
+import type { Product, ProjectType } from "@houseofmusa/types";
 import { Input, cn } from "@houseofmusa/ui";
 import { ProductCard } from "@/components/products/ProductCard";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { listProducts } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 
 export function ProductsExplorer({ products }: { products: Product[] }) {
@@ -22,11 +23,7 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/products?pageSize=50`, { cache: "no-store" })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
-        return res.json() as Promise<PaginatedResult<Product>>;
-      })
+    listProducts(getDb(), { pageSize: 50 })
       .then((data) => {
         if (!cancelled) setLiveProducts(data.items);
       })

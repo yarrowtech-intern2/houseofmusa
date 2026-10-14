@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import type { CareerRole } from "@houseofmusa/types";
 import { CareersListClient } from "@/components/careers/CareersListClient";
 import { RevealText } from "@/components/motion/RevealText";
-import { apiGet } from "@/lib/api";
+import { listCareerRoles } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function CareersPage() {
-  const { items: roles } = await apiGet<{ items: CareerRole[] }>("/api/career-roles").catch(() => ({
-    items: STATIC_CAREER_ROLES,
-  }));
+  const roles: CareerRole[] = CAN_USE_API
+    ? await listCareerRoles(getDb()).catch(() => STATIC_CAREER_ROLES)
+    : STATIC_CAREER_ROLES;
 
   return (
     <section className="min-h-screen px-6 pb-24 pt-32 sm:px-12 lg:px-24">

@@ -7,7 +7,8 @@ import { CheckCircle2 } from "lucide-react";
 import type { ContactDetails } from "@houseofmusa/types";
 import { contactSchema, contactBudgetValues, projectTypeValues, type ContactInput } from "@houseofmusa/schemas";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { DataError, getPublicSettings, submitContact } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { BUDGET_LABELS, CONTACT_PROJECT_TYPE_LABELS } from "@/lib/contactLabels";
 
 const selectClassName =
@@ -45,10 +46,9 @@ export function ConsultationForm({
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: { settings?: { contactDetails?: ContactDetails } } | null) => {
-        if (!cancelled && data?.settings?.contactDetails) setLiveContactDetails(data.settings.contactDetails);
+    getPublicSettings(getDb())
+      .then((settings) => {
+        if (!cancelled && settings.contactDetails) setLiveContactDetails(settings.contactDetails);
       })
       .catch(() => undefined);
 
@@ -60,19 +60,13 @@ export function ConsultationForm({
   const onSubmit = async (values: ContactInput) => {
     setServerError(null);
     try {
-      const res = await fetch(`${API_URL}/api/contacts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.message ?? "Something went wrong - please try again.");
-      }
+      await submitContact(getDb(), values);
       setSubmitted(true);
       reset();
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : "Something went wrong - please try again.");
+      setServerError(
+        err instanceof DataError && err.status < 500 ? err.message : "Something went wrong - please try again.",
+      );
     }
   };
 

@@ -6,7 +6,8 @@ import { ImageIcon, Trash2, Upload } from "lucide-react";
 import type { Media } from "@houseofmusa/types";
 import { mediaCategoryValues } from "@houseofmusa/schemas";
 import { Button, Label } from "@houseofmusa/ui";
-import { API_URL, apiFetch } from "@/lib/api";
+import { deleteMedia, uploadMedia } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 function formatSize(size: number) {
   if (size < 1024) return `${size} B`;
@@ -30,20 +31,9 @@ export function MediaManager({ items }: { items: Media[] }) {
 
     setIsUploading(true);
     setMessage(null);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("category", category);
 
     try {
-      const res = await fetch(`${API_URL}/api/media/upload`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.message ?? "Upload failed");
-      }
+      await uploadMedia(getBrowserDb(), file, category);
       if (fileRef.current) fileRef.current.value = "";
       setMessage("Uploaded media asset.");
       router.refresh();
@@ -56,7 +46,7 @@ export function MediaManager({ items }: { items: Media[] }) {
 
   const remove = async (item: Media) => {
     if (!confirm(`Delete "${item.filename}"?`)) return;
-    await apiFetch(`/api/media/${item._id}`, { method: "DELETE" });
+    await deleteMedia(getBrowserDb(), item._id);
     router.refresh();
   };
 

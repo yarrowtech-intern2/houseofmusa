@@ -1,5 +1,6 @@
 import type { ContactDetails, HomepageContent, SeoSettings, SiteSettings } from "@houseofmusa/types";
-import { apiGet } from "@/lib/api";
+import { getPublicSettings } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 
 export const defaultHomepageContent: HomepageContent = {
   heroTitle: "Engineering Tomorrow.",
@@ -66,14 +67,12 @@ export const defaultSeoSettings: SeoSettings = {
 };
 
 export async function getPublicSiteSettings(): Promise<SiteSettings> {
-  const data: { settings: SiteSettings } = await apiGet<{ settings: SiteSettings }>("/api/settings/public").catch(
-    () => ({ settings: {} }),
-  );
+  const settings: SiteSettings = CAN_USE_API ? await getPublicSettings(getDb()).catch(() => ({})) : {};
 
   return {
-    homepageContent: data.settings.homepageContent ?? defaultHomepageContent,
-    contactDetails: data.settings.contactDetails ?? defaultContactDetails,
-    galleryFrames: data.settings.galleryFrames,
-    seo: data.settings.seo ?? defaultSeoSettings,
+    homepageContent: settings.homepageContent ?? defaultHomepageContent,
+    contactDetails: settings.contactDetails ?? defaultContactDetails,
+    galleryFrames: settings.galleryFrames,
+    seo: settings.seo ?? defaultSeoSettings,
   };
 }

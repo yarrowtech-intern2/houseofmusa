@@ -7,7 +7,8 @@ import type { Product } from "@houseofmusa/types";
 import { Badge, Button } from "@houseofmusa/ui";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RevealText } from "@/components/motion/RevealText";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getProductBySlug } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 
 const COVER_GRADIENTS: Record<string, string> = {
@@ -39,13 +40,9 @@ export function ProductDetailClient({ initialProduct }: { initialProduct: Produc
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/products/${initialProduct.slug}`, { cache: "no-store" })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load product: ${res.status}`);
-        return res.json() as Promise<{ item: Product }>;
-      })
-      .then((data) => {
-        if (!cancelled) setProduct(data.item);
+    getProductBySlug(getDb(), initialProduct.slug)
+      .then((item) => {
+        if (!cancelled && item) setProduct(item);
       })
       .catch(() => undefined);
 

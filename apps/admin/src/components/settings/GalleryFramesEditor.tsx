@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
 import type { GalleryFrameAssignment, GalleryFramesSetting, Product } from "@houseofmusa/types";
 import { Button, Input, Label } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, updateSetting } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 const albumKeys = ["album1", "album2", "album3", "album4", "album5", "album6", "album7", "album8"] as const;
 
@@ -41,14 +42,11 @@ export function GalleryFramesEditor({
     setIsSaving(true);
     setMessage(null);
     try {
-      await apiFetch("/api/settings/gallery-frames", {
-        method: "PATCH",
-        body: JSON.stringify({ value: { frames } }),
-      });
+      await updateSetting(getBrowserDb(), "gallery-frames", { frames });
       setMessage("Saved gallery frame assignments.");
       router.refresh();
     } catch (err) {
-      setMessage(err instanceof ApiRequestError ? err.message : "Save failed");
+      setMessage(err instanceof DataError ? err.message : "Save failed");
     } finally {
       setIsSaving(false);
     }

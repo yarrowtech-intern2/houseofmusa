@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
-import type { SiteSettings } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { listSettingsAdmin } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { SeoSettingsEditor } from "@/components/settings/SeoSettingsEditor";
 
 export default async function SeoPage() {
-  const { settings } = await apiFetch<{ settings: SiteSettings }>("/api/settings/admin", {
-    cookie: cookies().toString(),
-  });
+  const { settings } = await listSettingsAdmin(getServerDb());
 
   if (!settings.seo) {
     throw new Error("SEO settings payload is incomplete");

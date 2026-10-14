@@ -1,5 +1,4 @@
 import { AlertTriangle } from "lucide-react";
-import { API_URL } from "@/lib/api";
 import { Logo } from "./Logo";
 
 export function ApiUnavailable({ message }: { message?: string }) {
@@ -13,13 +12,13 @@ export function ApiUnavailable({ message }: { message?: string }) {
           </div>
           <div>
             <h1 className="font-display text-xl font-semibold tracking-tight text-foreground dark:text-white">
-              API unavailable
+              Supabase not configured
             </h1>
             <p className="mt-2 text-sm leading-6 text-foreground/60 dark:text-white/60">
-              {message ?? `Unable to reach the API server at ${API_URL}.`}
+              {message ?? "Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, then restart the admin app."}
             </p>
             <p className="mt-4 rounded-md bg-foreground/5 px-3 py-2 font-mono text-xs text-foreground/60 dark:bg-white/5 dark:text-white/60">
-              pnpm dev:api
+              apps/admin/.env.local
             </p>
           </div>
         </div>

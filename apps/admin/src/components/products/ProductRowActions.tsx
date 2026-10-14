@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import type { Product } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { deleteProduct, updateProduct } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 export function ProductRowActions({ product }: { product: Product }) {
   const router = useRouter();
@@ -15,10 +16,7 @@ export function ProductRowActions({ product }: { product: Product }) {
   const togglePublished = async () => {
     setIsPending(true);
     try {
-      await apiFetch(`/api/products/${product._id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ published: !product.published }),
-      });
+      await updateProduct(getBrowserDb(), product._id, { published: !product.published });
       router.refresh();
     } finally {
       setIsPending(false);
@@ -29,7 +27,7 @@ export function ProductRowActions({ product }: { product: Product }) {
     if (!confirm(`Delete "${product.name}"? This can't be undone.`)) return;
     setIsPending(true);
     try {
-      await apiFetch(`/api/products/${product._id}`, { method: "DELETE" });
+      await deleteProduct(getBrowserDb(), product._id);
       router.refresh();
     } finally {
       setIsPending(false);

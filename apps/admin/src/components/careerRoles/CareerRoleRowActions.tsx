@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import type { CareerRole } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { deleteCareerRole, updateCareerRole } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 export function CareerRoleRowActions({ role }: { role: CareerRole }) {
   const router = useRouter();
@@ -15,10 +16,7 @@ export function CareerRoleRowActions({ role }: { role: CareerRole }) {
   const togglePublished = async () => {
     setIsPending(true);
     try {
-      await apiFetch(`/api/career-roles/${role._id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ published: !role.published }),
-      });
+      await updateCareerRole(getBrowserDb(), role._id, { published: !role.published });
       router.refresh();
     } finally {
       setIsPending(false);
@@ -29,7 +27,7 @@ export function CareerRoleRowActions({ role }: { role: CareerRole }) {
     if (!confirm(`Delete "${role.title}"? This can't be undone.`)) return;
     setIsPending(true);
     try {
-      await apiFetch(`/api/career-roles/${role._id}`, { method: "DELETE" });
+      await deleteCareerRole(getBrowserDb(), role._id);
       router.refresh();
     } finally {
       setIsPending(false);

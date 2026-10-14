@@ -1,15 +1,13 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { Plus } from "lucide-react";
 import type { CareerRole } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { listCareerRolesAdmin } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { CareerRoleRowActions } from "@/components/careerRoles/CareerRoleRowActions";
 
 export default async function CareerRolesAdminPage() {
-  const data = await apiFetch<{ items: CareerRole[] }>("/api/career-roles/admin", {
-    cookie: cookies().toString(),
-  });
+  const data: { items: CareerRole[] } = { items: await listCareerRolesAdmin(getServerDb()) };
 
   return (
     <div>

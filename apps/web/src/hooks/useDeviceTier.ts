@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FunctionCallNode } from "three/webgpu";
 
 export type DeviceTier = "low" | "mid" | "high";
 

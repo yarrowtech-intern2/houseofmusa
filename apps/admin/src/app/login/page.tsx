@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@houseofmusa/schemas";
 import { Button, Input, Label } from "@houseofmusa/ui";
-import { apiFetch, ApiRequestError } from "@/lib/api";
+import { getBrowserDb } from "@/lib/supabase/browser";
 import { Logo } from "@/components/layout/Logo";
 
 function getPublicHomeUrl() {
@@ -32,11 +32,25 @@ export default function LoginPage() {
   const onSubmit = async (values: LoginInput) => {
     setServerError(null);
     try {
-      await apiFetch("/api/auth/login", { method: "POST", body: JSON.stringify(values) });
+      const db = getBrowserDb();
+      const { data, error } = await db.auth.signInWithPassword(values);
+      if (error || !data.user) {
+        setServerError("Invalid email or password");
+        return;
+      }
+
+      // Signing in only proves the account exists; admins also need an admin_profiles row.
+      const { data: profile } = await db.from("admin_profiles").select("id").eq("id", data.user.id).maybeSingle();
+      if (!profile) {
+        await db.auth.signOut();
+        setServerError("This account does not have admin access");
+        return;
+      }
+
       router.push("/");
       router.refresh();
-    } catch (err) {
-      setServerError(err instanceof ApiRequestError ? err.message : "Something went wrong");
+    } catch {
+      setServerError("Something went wrong");
     }
   };
 

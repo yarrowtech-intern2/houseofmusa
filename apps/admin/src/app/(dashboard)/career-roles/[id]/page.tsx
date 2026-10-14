@@ -1,18 +1,15 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import type { CareerRole } from "@houseofmusa/types";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, getCareerRoleById } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { CareerRoleForm } from "@/components/careerRoles/CareerRoleForm";
 
 export default async function EditCareerRolePage({ params }: { params: { id: string } }) {
   let role: CareerRole;
   try {
-    const data = await apiFetch<{ item: CareerRole }>(`/api/career-roles/admin/${params.id}`, {
-      cookie: cookies().toString(),
-    });
-    role = data.item;
+    role = await getCareerRoleById(getServerDb(), params.id);
   } catch (err) {
-    if (err instanceof ApiRequestError && err.status === 404) notFound();
+    if (err instanceof DataError && err.status === 404) notFound();
     throw err;
   }
 

@@ -8,7 +8,8 @@ import { z } from "zod";
 import { employmentTypeValues } from "@houseofmusa/schemas";
 import type { CareerRole } from "@houseofmusa/types";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, createCareerRole, updateCareerRole } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 // Mirrors @houseofmusa/schemas' careerRoleSchema but keeps responsibilities/
 // requirements as newline-separated text for plain textareas — split into
@@ -75,14 +76,14 @@ export function CareerRoleForm({ role }: { role?: CareerRole }) {
 
     try {
       if (isEditing && role) {
-        await apiFetch(`/api/career-roles/${role._id}`, { method: "PATCH", body: JSON.stringify(payload) });
+        await updateCareerRole(getBrowserDb(), role._id, payload);
       } else {
-        await apiFetch("/api/career-roles", { method: "POST", body: JSON.stringify(payload) });
+        await createCareerRole(getBrowserDb(), payload);
       }
       router.push("/career-roles");
       router.refresh();
     } catch (err) {
-      setServerError(err instanceof ApiRequestError ? err.message : "Something went wrong");
+      setServerError(err instanceof DataError ? err.message : "Something went wrong");
     }
   };
 

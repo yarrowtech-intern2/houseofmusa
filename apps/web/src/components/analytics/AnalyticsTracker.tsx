@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { trackEvent } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 
 function eventTypeForPath(path: string) {
   if (path === "/gallery") return "gallery-visit";
@@ -16,26 +17,13 @@ export function AnalyticsTracker() {
   useEffect(() => {
     if (!CAN_USE_API) return;
 
-    const body = JSON.stringify({
+    trackEvent(getDb(), {
       type: eventTypeForPath(pathname),
       path: pathname,
       meta: {
         referrer: document.referrer || undefined,
         viewport: `${window.innerWidth}x${window.innerHeight}`,
       },
-    });
-
-    if (navigator.sendBeacon) {
-      const blob = new Blob([body], { type: "application/json" });
-      navigator.sendBeacon(`${API_URL}/api/analytics`, blob);
-      return;
-    }
-
-    fetch(`${API_URL}/api/analytics`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body,
-      keepalive: true,
     }).catch(() => undefined);
   }, [pathname]);
 

@@ -6,7 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle2 } from "lucide-react";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { DataError, submitApplication } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 
 const applicationFormSchema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(120),
@@ -49,30 +50,34 @@ export function ApplicationForm({ roleId, roleTitle }: { roleId: string; roleTit
       return;
     }
 
-    const formData = new FormData();
-    formData.append("roleId", roleId);
-    formData.append("fullName", values.fullName);
-    formData.append("email", values.email);
-    formData.append("phone", values.phone);
-    formData.append("linkedinUrl", values.linkedinUrl ?? "");
-    formData.append("githubUrl", values.githubUrl ?? "");
-    formData.append("portfolioUrl", values.portfolioUrl ?? "");
-    formData.append("expectedSalary", values.expectedSalary ?? "");
-    formData.append("experienceYears", String(values.experienceYears));
-    formData.append("skills", values.skills);
-    formData.append("availability", values.availability);
-    formData.append("resume", resumeFile);
-    if (values.coverLetter?.[0]) formData.append("coverLetter", values.coverLetter[0]);
-
     try {
-      const res = await fetch(`${API_URL}/api/applications`, { method: "POST", body: formData });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.message ?? "Something went wrong — please try again.");
-      }
+      await submitApplication(
+        getDb(),
+        {
+          roleId,
+          fullName: values.fullName,
+          email: values.email,
+          phone: values.phone,
+          linkedinUrl: values.linkedinUrl ?? "",
+          githubUrl: values.githubUrl ?? "",
+          portfolioUrl: values.portfolioUrl ?? "",
+          expectedSalary: values.expectedSalary ?? "",
+          experienceYears: values.experienceYears,
+          skills: values.skills
+            .split(",")
+            .map((skill) => skill.trim())
+            .filter(Boolean),
+          availability: values.availability,
+        },
+        { resume: resumeFile, coverLetter: values.coverLetter?.[0] ?? null },
+      );
       setSubmitted(true);
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : "Something went wrong — please try again.");
+      setServerError(
+        err instanceof DataError && err.status < 500
+          ? err.message
+          : "Something went wrong — please try again.",
+      );
     }
   };
 

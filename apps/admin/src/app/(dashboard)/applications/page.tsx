@@ -1,21 +1,11 @@
-import { cookies } from "next/headers";
 import { FileText, FileCheck } from "lucide-react";
-import type { Application, PaginatedResult } from "@houseofmusa/types";
-import { apiFetch, API_URL } from "@/lib/api";
+import { listApplications } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { ApplicationStatusSelect } from "@/components/applications/ApplicationStatusSelect";
 
-// GET /api/applications populates roleId with { _id, title, department } —
-// packages/types' Application#roleId is typed as a plain string (the
-// un-populated shape) since that's what the write side (submission) deals
-// with; this is the read-side shape specific to this admin view.
-type ApplicationWithRole = Omit<Application, "roleId"> & {
-  roleId: { _id: string; title: string; department: string } | null;
-};
-
+// resumeUrl / coverLetterUrl are short-lived signed links to the private "applications" storage bucket.
 export default async function ApplicationsAdminPage() {
-  const data = await apiFetch<PaginatedResult<ApplicationWithRole>>("/api/applications?pageSize=50", {
-    cookie: cookies().toString(),
-  });
+  const data = await listApplications(getServerDb(), { pageSize: 50 });
 
   return (
     <div>
@@ -55,7 +45,7 @@ export default async function ApplicationsAdminPage() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <a
-                      href={`${API_URL}${application.resumeUrl}`}
+                      href={application.resumeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-medium text-secondary hover:text-primary"
@@ -65,7 +55,7 @@ export default async function ApplicationsAdminPage() {
                     </a>
                     {application.coverLetterUrl && (
                       <a
-                        href={`${API_URL}${application.coverLetterUrl}`}
+                        href={application.coverLetterUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs font-medium text-secondary hover:text-primary"

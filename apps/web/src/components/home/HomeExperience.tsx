@@ -6,7 +6,8 @@ import type { ContactDetails, HomepageContent } from "@houseofmusa/types";
 import { ArrivalSequence } from "@/components/loader/ArrivalSequence";
 import { HeroOverlay } from "@/components/home/HeroOverlay";
 import { StorySection } from "@/components/home/StorySection";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getPublicSettings } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 
 const HeroCanvas = dynamic(() => import("@/three/scenes/HeroCanvas").then((m) => m.HeroCanvas), {
   ssr: false,
@@ -33,12 +34,11 @@ export function HomeExperience({
     if (!CAN_USE_API) return;
     let cancelled = false;
 
-    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: { settings?: { homepageContent?: HomepageContent; contactDetails?: ContactDetails } } | null) => {
-        if (cancelled || !data?.settings) return;
-        if (data.settings.homepageContent) setLiveHomepageContent(data.settings.homepageContent);
-        if (data.settings.contactDetails) setLiveContactDetails(data.settings.contactDetails);
+    getPublicSettings(getDb())
+      .then((settings) => {
+        if (cancelled) return;
+        if (settings.homepageContent) setLiveHomepageContent(settings.homepageContent);
+        if (settings.contactDetails) setLiveContactDetails(settings.contactDetails);
       })
       .catch(() => undefined);
 

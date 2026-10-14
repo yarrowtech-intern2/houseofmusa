@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Product } from "@houseofmusa/types";
 import { ProductDetailClient } from "@/components/products/ProductDetailClient";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getProductBySlug } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_PRODUCTS } from "@/lib/staticContent";
 
 export const dynamicParams = false;
@@ -17,11 +18,7 @@ async function getProduct(slug: string): Promise<Product | null> {
   if (!CAN_USE_API) return staticProduct;
 
   try {
-    const res = await fetch(`${API_URL}/api/products/${slug}`, { cache: "force-cache" });
-    if (res.status === 404) return null;
-    if (!res.ok) throw new Error(`Failed to load product: ${res.status}`);
-    const data = (await res.json()) as { item: Product };
-    return data.item;
+    return await getProductBySlug(getDb(), slug);
   } catch {
     return staticProduct;
   }

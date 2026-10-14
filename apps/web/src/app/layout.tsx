@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
+import { Onest } from "next/font/google";
 import localFont from "next/font/local";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
 import "./globals.css";
 import "@/components/about/about3-hero.css";
 
-const onest = localFont({
+const inertia = localFont({
   src: "../../public/font/Inertia.woff2",
+  variable: "--font-inertia",
+  display: "swap",
+});
+
+const onest = Onest({
+  subsets: ["latin"],
   variable: "--font-onest",
+  weight: "variable",
   display: "swap",
 });
 
@@ -31,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={onest.variable}>
+    <html lang="en" className={`${inertia.variable} ${onest.variable}`}>
       <body className="font-sans antialiased">
         <AnalyticsTracker />
         {children}

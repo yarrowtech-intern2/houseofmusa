@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import type { PaginatedResult, Product } from "@houseofmusa/types";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
 import { RevealText } from "@/components/motion/RevealText";
-import { apiGet } from "@/lib/api";
+import { listProducts } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const { items: products } = await apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
-    () => toPaginatedResult(STATIC_PRODUCTS),
-  );
+  const { items: products }: PaginatedResult<Product> = CAN_USE_API
+    ? await listProducts(getDb(), { pageSize: 50 }).catch(() => toPaginatedResult(STATIC_PRODUCTS))
+    : toPaginatedResult(STATIC_PRODUCTS);
 
   return (
     <section className="min-h-screen px-6 pb-24 pt-32 sm:px-12 lg:px-24">

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { applicationStatusValues } from "@houseofmusa/schemas";
 import type { ApplicationStatus } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { updateApplicationStatus } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 const STATUS_LABELS: Record<ApplicationStatus, string> = {
   new: "New",
@@ -22,10 +23,7 @@ export function ApplicationStatusSelect({ id, status }: { id: string; status: Ap
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIsPending(true);
     try {
-      await apiFetch(`/api/applications/${id}/status`, {
-        method: "PATCH",
-        body: JSON.stringify({ status: e.target.value }),
-      });
+      await updateApplicationStatus(getBrowserDb(), id, e.target.value as ApplicationStatus);
       router.refresh();
     } finally {
       setIsPending(false);

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Plus, Save, Trash2 } from "lucide-react";
 import type { SeoRouteSetting, SeoSettings } from "@houseofmusa/types";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, updateSetting } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 const emptyRoute: SeoRouteSetting = { path: "/", title: "", description: "", ogImage: "" };
 
@@ -26,11 +27,11 @@ export function SeoSettingsEditor({ seo }: { seo: SeoSettings }) {
     setIsSaving(true);
     setMessage(null);
     try {
-      await apiFetch("/api/settings/seo", { method: "PATCH", body: JSON.stringify({ value }) });
+      await updateSetting(getBrowserDb(), "seo", value);
       setMessage("Saved SEO settings.");
       router.refresh();
     } catch (err) {
-      setMessage(err instanceof ApiRequestError ? err.message : "Save failed");
+      setMessage(err instanceof DataError ? err.message : "Save failed");
     } finally {
       setIsSaving(false);
     }

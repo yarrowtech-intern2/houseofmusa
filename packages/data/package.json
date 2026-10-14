@@ -1,0 +1,27 @@
+{
+  "name": "@houseofmusa/data",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "seed:admin": "tsx --env-file=../../supabase/.env scripts/seedAdmin.ts",
+    "seed:products": "tsx --env-file=../../supabase/.env scripts/seedProducts.ts",
+    "seed:career-roles": "tsx --env-file=../../supabase/.env scripts/seedCareerRoles.ts"
+  },
+  "dependencies": {
+    "@houseofmusa/schemas": "workspace:*",
+    "@houseofmusa/types": "workspace:*",
+    "zod": "^3.25.76"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "@types/node": "^22.20.1",
+    "tsx": "^4.23.5",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,11 +1,12 @@
-import { cookies } from "next/headers";
-import type { Contact } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { notFound } from "next/navigation";
+import { DataError, getContactById } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { ContactForm } from "@/components/contacts/ContactForm";
 
 export default async function EditContactPage({ params }: { params: { id: string } }) {
-  const data = await apiFetch<{ item: Contact }>(`/api/contacts/${params.id}`, {
-    cookie: cookies().toString(),
+  const contact = await getContactById(getServerDb(), params.id).catch((err) => {
+    if (err instanceof DataError && err.status === 404) notFound();
+    throw err;
   });
 
   return (
@@ -18,7 +19,7 @@ export default async function EditContactPage({ params }: { params: { id: string
           Update the request details, project context, and pipeline status.
         </p>
       </div>
-      <ContactForm contact={data.item} />
+      <ContactForm contact={contact} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Product, PaginatedResult } from "@houseofmusa/types";
-import { apiGet } from "@/lib/api";
+import { listProducts } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { GalleryExperience } from "@/components/gallery/GalleryExperience";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 import { getPublicSiteSettings } from "@/lib/siteSettings";
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
 // the Lenis smooth-scroll provider entirely.
 export default async function GalleryPage() {
   const [{ items: products }, settings] = await Promise.all([
-    apiGet<PaginatedResult<Product>>("/api/products?pageSize=50").catch(
-    () => toPaginatedResult(STATIC_PRODUCTS),
-    ),
+    (CAN_USE_API
+      ? listProducts(getDb(), { pageSize: 50 }).catch(() => toPaginatedResult(STATIC_PRODUCTS))
+      : Promise.resolve(toPaginatedResult(STATIC_PRODUCTS))) as Promise<PaginatedResult<Product>>,
     getPublicSiteSettings(),
   ]);
 

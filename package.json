@@ -2,16 +2,17 @@
   "name": "houseofmusa",
   "private": true,
   "version": "0.1.0",
-  "description": "House of Musa — ultra-premium IT company website (monorepo)",
+  "description": "House of Musa — ultra-premium IT company website (monorepo: Next.js on Vercel, Supabase backend)",
   "scripts": {
-    "dev": "pnpm --parallel --filter @houseofmusa/api --filter @houseofmusa/web --filter @houseofmusa/admin dev",
-    "dev:frontend": "pnpm --parallel --filter @houseofmusa/web --filter @houseofmusa/admin dev",
+    "dev": "pnpm --parallel --filter @houseofmusa/web --filter @houseofmusa/admin dev",
     "dev:web": "pnpm --filter @houseofmusa/web dev",
-    "dev:api": "pnpm --filter @houseofmusa/api dev",
     "dev:admin": "pnpm --filter @houseofmusa/admin dev",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "seed:admin": "pnpm --filter @houseofmusa/data seed:admin",
+    "seed:products": "pnpm --filter @houseofmusa/data seed:products",
+    "seed:career-roles": "pnpm --filter @houseofmusa/data seed:career-roles"
   },
   "engines": {
     "node": ">=20"

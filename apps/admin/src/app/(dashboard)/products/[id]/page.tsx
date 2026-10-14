@@ -1,18 +1,15 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import type { Product } from "@houseofmusa/types";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, getProductById } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/products/ProductForm";
 
 export default async function EditProductPage({ params }: { params: { id: string } }) {
   let product: Product;
   try {
-    const data = await apiFetch<{ item: Product }>(`/api/products/admin/${params.id}`, {
-      cookie: cookies().toString(),
-    });
-    product = data.item;
+    product = await getProductById(getServerDb(), params.id);
   } catch (err) {
-    if (err instanceof ApiRequestError && err.status === 404) notFound();
+    if (err instanceof DataError && err.status === 404) notFound();
     throw err;
   }
 

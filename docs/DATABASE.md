@@ -1,3 +1,5 @@
+> **Superseded.** The Express/MongoDB backend described below was replaced by Supabase (Postgres + RLS + Auth + Storage). See [SUPABASE.md](./SUPABASE.md) for the current setup. This page is kept for reference on the original MongoDB schema.
+
 # Database — MongoDB Collections
 
 Defined in `apps/api/src/models/*.ts` (Mongoose), typed in `packages/types/src/index.ts`, validated on

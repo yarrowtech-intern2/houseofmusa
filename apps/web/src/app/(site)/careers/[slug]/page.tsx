@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { CareerRole } from "@houseofmusa/types";
 import { CareerDetailClient } from "@/components/careers/CareerDetailClient";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getCareerRoleBySlug } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
 export const dynamicParams = false;
@@ -17,11 +18,7 @@ async function getCareerRole(slug: string): Promise<CareerRole | null> {
   if (!CAN_USE_API) return staticRole;
 
   try {
-    const res = await fetch(`${API_URL}/api/career-roles/${slug}`, { cache: "force-cache" });
-    if (res.status === 404) return null;
-    if (!res.ok) throw new Error(`Failed to load role: ${res.status}`);
-    const data = (await res.json()) as { item: CareerRole };
-    return data.item;
+    return await getCareerRoleBySlug(getDb(), slug);
   } catch {
     return staticRole;
   }

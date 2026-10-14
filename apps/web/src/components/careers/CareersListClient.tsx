@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { CareerRole } from "@houseofmusa/types";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { listCareerRoles } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
 
 export function CareersListClient({ roles }: { roles: CareerRole[] }) {
@@ -18,13 +19,9 @@ export function CareersListClient({ roles }: { roles: CareerRole[] }) {
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/career-roles`, { cache: "no-store" })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load career roles: ${res.status}`);
-        return res.json() as Promise<{ items: CareerRole[] }>;
-      })
-      .then((data) => {
-        if (!cancelled) setLiveRoles(data.items);
+    listCareerRoles(getDb())
+      .then((items) => {
+        if (!cancelled) setLiveRoles(items);
       })
       .catch(() => undefined);
 

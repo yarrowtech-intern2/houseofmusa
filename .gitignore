@@ -12,9 +12,11 @@ out/
 # env
 .env
 .env.local
-.env.example
+!.env.example
 
 .env.*.local
+supabase/.env
+.vercel
 
 # logs
 *.log
@@ -26,9 +28,6 @@ pnpm-debug.log*
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
-
-# uploads (local dev only)
-apps/api/uploads/
 
 # turbo (future)
 .turbo/

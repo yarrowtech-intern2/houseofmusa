@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { Plus } from "lucide-react";
-import type { Product, PaginatedResult } from "@houseofmusa/types";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
+import { listProductsAdmin } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { ProductRowActions } from "@/components/products/ProductRowActions";
 
 export default async function ProductsAdminPage() {
-  const data = await apiFetch<PaginatedResult<Product>>("/api/products/admin?pageSize=50", {
-    cookie: cookies().toString(),
-  });
+  const data = await listProductsAdmin(getServerDb(), { pageSize: 50 });
 
   return (
     <div>

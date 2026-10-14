@@ -1,7 +1,6 @@
-import { cookies } from "next/headers";
 import { Activity, GalleryHorizontal, MousePointerClick, Package, Route } from "lucide-react";
-import { apiFetch } from "@/lib/api";
-import type { AnalyticsSummary } from "@/lib/dashboardTypes";
+import { getAnalyticsSummary, type AnalyticsSummary } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Panel } from "@/components/dashboard/Panel";
 import { BarList } from "@/components/dashboard/BarList";
@@ -23,9 +22,7 @@ function formatDate(date: string) {
 }
 
 export default async function WebsiteAnalyticsPage() {
-  const summary = await apiFetch<AnalyticsSummary>("/api/analytics/summary", {
-    cookie: cookies().toString(),
-  });
+  const summary = await getAnalyticsSummary(getServerDb());
 
   return (
     <div className="space-y-5">

@@ -6,7 +6,8 @@ import { ArrowLeft } from "lucide-react";
 import type { CareerRole } from "@houseofmusa/types";
 import { ApplicationForm } from "@/components/careers/ApplicationForm";
 import { RevealText } from "@/components/motion/RevealText";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getCareerRoleBySlug } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
 
 export function CareerDetailClient({ initialRole }: { initialRole: CareerRole }) {
@@ -21,13 +22,9 @@ export function CareerDetailClient({ initialRole }: { initialRole: CareerRole })
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/career-roles/${initialRole.slug}`, { cache: "no-store" })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load career role: ${res.status}`);
-        return res.json() as Promise<{ item: CareerRole }>;
-      })
-      .then((data) => {
-        if (!cancelled) setRole(data.item);
+    getCareerRoleBySlug(getDb(), initialRole.slug)
+      .then((item) => {
+        if (!cancelled && item) setRole(item);
       })
       .catch(() => undefined);
 

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Plus, Save, Trash2 } from "lucide-react";
 import type { ContactDetails, HomepageContent, StorySectionContent } from "@houseofmusa/types";
 import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { ApiRequestError, apiFetch } from "@/lib/api";
+import { DataError, updateSetting } from "@houseofmusa/data";
+import { getBrowserDb } from "@/lib/supabase/browser";
 
 const emptyStory: StorySectionContent = { eyebrow: "", title: "", body: "", href: "", linkLabel: "" };
 
@@ -34,13 +35,13 @@ export function HomepageContentEditor({
     setMessage(null);
     try {
       await Promise.all([
-        apiFetch("/api/settings/homepage-content", { method: "PATCH", body: JSON.stringify({ value: homepage }) }),
-        apiFetch("/api/settings/contact-details", { method: "PATCH", body: JSON.stringify({ value: contact }) }),
+        updateSetting(getBrowserDb(), "homepage-content", homepage),
+        updateSetting(getBrowserDb(), "contact-details", contact),
       ]);
       setMessage("Saved homepage and contact details.");
       router.refresh();
     } catch (err) {
-      setMessage(err instanceof ApiRequestError ? err.message : "Save failed");
+      setMessage(err instanceof DataError ? err.message : "Save failed");
     } finally {
       setIsSaving(false);
     }

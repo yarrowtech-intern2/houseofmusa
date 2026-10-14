@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { ContactDetails } from "@houseofmusa/types";
-import { API_URL, CAN_USE_API } from "@/lib/api";
+import { getPublicSettings } from "@houseofmusa/data";
+import { CAN_USE_API, getDb } from "@/lib/api";
 
 export function ContactDetailsInline({ contactDetails }: { contactDetails?: ContactDetails }) {
   const [liveContactDetails, setLiveContactDetails] = useState(contactDetails);
@@ -16,10 +17,9 @@ export function ContactDetailsInline({ contactDetails }: { contactDetails?: Cont
 
     let cancelled = false;
 
-    fetch(`${API_URL}/api/settings/public`, { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: { settings?: { contactDetails?: ContactDetails } } | null) => {
-        if (!cancelled && data?.settings?.contactDetails) setLiveContactDetails(data.settings.contactDetails);
+    getPublicSettings(getDb())
+      .then((settings) => {
+        if (!cancelled && settings.contactDetails) setLiveContactDetails(settings.contactDetails);
       })
       .catch(() => undefined);
 

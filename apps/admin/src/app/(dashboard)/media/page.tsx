@@ -1,9 +1,8 @@
-import { cookies } from "next/headers";
-import type { Media } from "@houseofmusa/types";
-import { apiFetch } from "@/lib/api";
+import { listMedia } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { MediaManager } from "@/components/media/MediaManager";
 
 export default async function MediaPage() {
-  const { items } = await apiFetch<{ items: Media[] }>("/api/media", { cookie: cookies().toString() });
+  const items = await listMedia(getServerDb());
   return <MediaManager items={items} />;
 }

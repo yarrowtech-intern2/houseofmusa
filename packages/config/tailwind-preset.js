@@ -28,12 +28,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        // Single typeface (Onest) for the whole site — display/sans are kept
-        // as separate Tailwind keys for semantic clarity in class names
-        // (font-display for headings, font-sans for body copy), but both
-        // resolve to the same font file/variable. Weight utilities
-        // (font-normal/medium/semibold) do the actual differentiation.
-        display: ["var(--font-onest)", "system-ui", "sans-serif"],
+        // Titles use the custom Inertia face, while body/interface copy uses
+        // Onest. The fallback keeps apps that only load Onest rendering cleanly.
+        display: ["var(--font-inertia, var(--font-onest))", "system-ui", "sans-serif"],
         sans: ["var(--font-onest)", "system-ui", "sans-serif"],
       },
       fontSize: {

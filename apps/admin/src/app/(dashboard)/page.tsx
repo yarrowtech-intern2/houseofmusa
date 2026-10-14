@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { Activity, Briefcase, FileText, Mail, Package } from "lucide-react";
 import { Button } from "@houseofmusa/ui";
-import { apiFetch } from "@/lib/api";
-import type { DashboardSummary } from "@/lib/dashboardTypes";
+import { getDashboardSummary } from "@houseofmusa/data";
+import { getServerDb } from "@/lib/supabase/server";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Panel } from "@/components/dashboard/Panel";
@@ -14,9 +13,7 @@ function formatDate(date: string) {
 }
 
 export default async function AnalyticsPage() {
-  const summary = await apiFetch<DashboardSummary>("/api/dashboard/summary", {
-    cookie: cookies().toString(),
-  });
+  const summary = await getDashboardSummary(getServerDb());
 
   return (
     <div className="space-y-5">
