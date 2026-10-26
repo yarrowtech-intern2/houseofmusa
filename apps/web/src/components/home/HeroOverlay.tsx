@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import type { ContactDetails, HomepageContent } from "@hausofmusa/types";
 import { Button } from "@hausofmusa/ui";
 import { RevealText } from "@/components/motion/RevealText";

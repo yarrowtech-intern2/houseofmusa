@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import { ArrowLeft } from "lucide-react";
 import type { CareerRole } from "@hausofmusa/types";
 import { ApplicationForm } from "@/components/careers/ApplicationForm";

@@ -43,8 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inertia.variable} ${onest.variable}`}>
       <body className="font-sans antialiased">
         <AnalyticsTracker />
-        <RouteTransitionProvider />
-        {children}
+        <RouteTransitionProvider>{children}</RouteTransitionProvider>
       </body>
     </html>
   );

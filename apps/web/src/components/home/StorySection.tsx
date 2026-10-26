@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import { RevealText } from "@/components/motion/RevealText";
 
 export interface StorySectionData {

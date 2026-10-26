@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import type { MutableRefObject } from "react";
 import { ArrowLeft, Eye, Hand, HelpCircle, Keyboard, MousePointer2, Move, X } from "lucide-react";
 import type { Product } from "@hausofmusa/types";

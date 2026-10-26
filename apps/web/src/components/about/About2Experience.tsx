@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import {
   AnimatePresence,
   motion as Motion,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import type { CareerRole } from "@hausofmusa/types";
 import { listCareerRoles } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";

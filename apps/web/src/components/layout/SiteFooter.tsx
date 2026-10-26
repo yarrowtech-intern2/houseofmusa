@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { ContactDetails } from "@hausofmusa/types";

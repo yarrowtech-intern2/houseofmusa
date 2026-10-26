@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/transitions/TransitionLink";
 import { ArrowLeft, ExternalLink, FileText, Github, type LucideIcon } from "lucide-react";
 import type { Product } from "@hausofmusa/types";
 import { Badge, Button } from "@hausofmusa/ui";
