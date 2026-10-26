@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import type { CareerRole } from "@houseofmusa/types";
-import { DataError, getCareerRoleById } from "@houseofmusa/data";
+import type { CareerRole } from "@hausofmusa/types";
+import { DataError, getCareerRoleById } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { CareerRoleForm } from "@/components/careerRoles/CareerRoleForm";
 

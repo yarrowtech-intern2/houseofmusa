@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
-import type { GalleryFrameAssignment, GalleryFramesSetting, Product } from "@houseofmusa/types";
-import { Button, Input, Label } from "@houseofmusa/ui";
-import { DataError, updateSetting } from "@houseofmusa/data";
+import type { GalleryFrameAssignment, GalleryFramesSetting, Product } from "@hausofmusa/types";
+import { Button, Input, Label } from "@hausofmusa/ui";
+import { DataError, updateSetting } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 const albumKeys = ["album1", "album2", "album3", "album4", "album5", "album6", "album7", "album8"] as const;

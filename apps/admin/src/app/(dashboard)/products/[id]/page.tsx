@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import type { Product } from "@houseofmusa/types";
-import { DataError, getProductById } from "@houseofmusa/data";
+import type { Product } from "@hausofmusa/types";
+import { DataError, getProductById } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/products/ProductForm";
 

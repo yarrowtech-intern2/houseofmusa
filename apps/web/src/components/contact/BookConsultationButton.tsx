@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { ContactDetails } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
-import type { ButtonProps } from "@houseofmusa/ui";
+import type { ContactDetails } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
+import type { ButtonProps } from "@hausofmusa/ui";
 import { ContactModal } from "@/components/contact/ContactModal";
 
 export function BookConsultationButton({

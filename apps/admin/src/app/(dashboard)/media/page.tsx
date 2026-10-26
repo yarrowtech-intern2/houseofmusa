@@ -1,4 +1,4 @@
-import { listMedia } from "@houseofmusa/data";
+import { listMedia } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { MediaManager } from "@/components/media/MediaManager";
 

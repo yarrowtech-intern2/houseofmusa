@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { Product } from "@houseofmusa/types";
-import { Badge } from "@houseofmusa/ui";
+import type { Product } from "@hausofmusa/types";
+import { Badge } from "@hausofmusa/ui";
 import { TiltCard } from "@/components/motion/TiltCard";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 

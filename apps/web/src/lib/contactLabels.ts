@@ -1,4 +1,4 @@
-import { contactBudgetValues, projectTypeValues } from "@houseofmusa/schemas";
+import { contactBudgetValues, projectTypeValues } from "@hausofmusa/schemas";
 
 export const BUDGET_LABELS: Record<(typeof contactBudgetValues)[number], string> = {
   "under-10k": "Under $10k",

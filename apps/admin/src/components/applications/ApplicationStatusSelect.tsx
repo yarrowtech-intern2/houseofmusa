@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { applicationStatusValues } from "@houseofmusa/schemas";
-import type { ApplicationStatus } from "@houseofmusa/types";
-import { updateApplicationStatus } from "@houseofmusa/data";
+import { applicationStatusValues } from "@hausofmusa/schemas";
+import type { ApplicationStatus } from "@hausofmusa/types";
+import { updateApplicationStatus } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 const STATUS_LABELS: Record<ApplicationStatus, string> = {

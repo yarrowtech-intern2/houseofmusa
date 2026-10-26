@@ -1,4 +1,4 @@
-import type { ContactDetails, GalleryFramesSetting, HomepageContent, SeoSettings } from "@houseofmusa/types";
+import type { ContactDetails, GalleryFramesSetting, HomepageContent, SeoSettings } from "@hausofmusa/types";
 
 export const defaultHomepageContent: HomepageContent = {
   heroTitle: "Engineering Tomorrow.",
@@ -48,7 +48,7 @@ export const defaultHomepageContent: HomepageContent = {
 };
 
 export const defaultContactDetails: ContactDetails = {
-  email: "hello@houseofmusa.com",
+  email: "hello@hausofmusa.com",
   phone: "",
   location: "Remote-first",
   address: "",
@@ -66,14 +66,14 @@ export const defaultGalleryFrames: GalleryFramesSetting = {
 };
 
 export const defaultSeoSettings: SeoSettings = {
-  defaultTitle: "House of Musa - Engineering Tomorrow",
+  defaultTitle: "Haus of Musa - Engineering Tomorrow",
   defaultDescription:
-    "House of Musa builds enterprise ERP systems, SaaS products, AI-ready infrastructure, and digital transformation solutions for ambitious companies.",
+    "Haus of Musa builds enterprise ERP systems, SaaS products, AI-ready infrastructure, and digital transformation solutions for ambitious companies.",
   ogImage: "",
   routes: [
     {
       path: "/",
-      title: "House of Musa - Engineering Tomorrow",
+      title: "Haus of Musa - Engineering Tomorrow",
       description:
         "Enterprise ERP, SaaS, and AI-ready infrastructure engineered from a single digital headquarters.",
       ogImage: "",
@@ -81,13 +81,13 @@ export const defaultSeoSettings: SeoSettings = {
     {
       path: "/products",
       title: "Products",
-      description: "Explore House of Musa products across ERP, SaaS, AI infrastructure, cloud, and web platforms.",
+      description: "Explore Haus of Musa products across ERP, SaaS, AI infrastructure, cloud, and web platforms.",
       ogImage: "",
     },
     {
       path: "/careers",
       title: "Careers",
-      description: "Join House of Musa and help build durable enterprise software systems.",
+      description: "Join Haus of Musa and help build durable enterprise software systems.",
       ogImage: "",
     },
   ],

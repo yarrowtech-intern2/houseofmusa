@@ -1,4 +1,4 @@
-# Product Requirements — House of Musa
+# Product Requirements — Haus of Musa
 
 ## What this is
 

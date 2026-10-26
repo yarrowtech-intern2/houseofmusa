@@ -3,8 +3,8 @@
 import Link from "next/link";
 import type { MutableRefObject } from "react";
 import { ArrowLeft, Eye, Hand, HelpCircle, Keyboard, MousePointer2, Move, X } from "lucide-react";
-import type { Product } from "@houseofmusa/types";
-import { Badge, Button } from "@houseofmusa/ui";
+import type { Product } from "@hausofmusa/types";
+import { Badge, Button } from "@hausofmusa/ui";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 import { VirtualJoystick } from "./VirtualJoystick";
 import { TouchLookArea } from "./TouchLookArea";

@@ -1,5 +1,5 @@
 import { createBrowserClient } from "@supabase/ssr";
-import type { Db } from "@houseofmusa/data";
+import type { Db } from "@hausofmusa/data";
 import { supabaseAnonKey, supabaseUrl } from "./env";
 
 let client: Db | null = null;

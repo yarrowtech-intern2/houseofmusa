@@ -3,10 +3,10 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageIcon, Trash2, Upload } from "lucide-react";
-import type { Media } from "@houseofmusa/types";
-import { mediaCategoryValues } from "@houseofmusa/schemas";
-import { Button, Label } from "@houseofmusa/ui";
-import { deleteMedia, uploadMedia } from "@houseofmusa/data";
+import type { Media } from "@hausofmusa/types";
+import { mediaCategoryValues } from "@hausofmusa/schemas";
+import { Button, Label } from "@hausofmusa/ui";
+import { deleteMedia, uploadMedia } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 function formatSize(size: number) {

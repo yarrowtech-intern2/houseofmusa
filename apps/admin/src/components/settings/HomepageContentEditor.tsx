@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Save, Trash2 } from "lucide-react";
-import type { ContactDetails, HomepageContent, StorySectionContent } from "@houseofmusa/types";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, updateSetting } from "@houseofmusa/data";
+import type { ContactDetails, HomepageContent, StorySectionContent } from "@hausofmusa/types";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, updateSetting } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 const emptyStory: StorySectionContent = { eyebrow: "", title: "", body: "", href: "", linkLabel: "" };

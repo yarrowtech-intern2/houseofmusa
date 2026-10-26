@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import type { Product } from "@houseofmusa/types";
+import type { Product } from "@hausofmusa/types";
 import { ProductDetailClient } from "@/components/products/ProductDetailClient";
-import { getProductBySlug } from "@houseofmusa/data";
+import { getProductBySlug } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_PRODUCTS } from "@/lib/staticContent";
 

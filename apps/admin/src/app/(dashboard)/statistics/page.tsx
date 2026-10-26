@@ -1,5 +1,5 @@
 import { BriefcaseBusiness, CheckCircle2, ClipboardList, MailCheck } from "lucide-react";
-import { getDashboardSummary } from "@houseofmusa/data";
+import { getDashboardSummary } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 import { StatCard } from "@/components/dashboard/StatCard";

@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import type { Product, ProjectType } from "@houseofmusa/types";
-import { Input, cn } from "@houseofmusa/ui";
+import type { Product, ProjectType } from "@hausofmusa/types";
+import { Input, cn } from "@hausofmusa/ui";
 import { ProductCard } from "@/components/products/ProductCard";
-import { listProducts } from "@houseofmusa/data";
+import { listProducts } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 

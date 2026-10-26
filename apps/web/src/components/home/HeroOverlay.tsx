@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { ContactDetails, HomepageContent } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
+import type { ContactDetails, HomepageContent } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
 import { RevealText } from "@/components/motion/RevealText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { BookConsultationButton } from "@/components/contact/BookConsultationButton";

@@ -1,4 +1,4 @@
-import type { Contact } from "@houseofmusa/types";
+import type { Contact } from "@hausofmusa/types";
 
 export const CONTACT_STATUS_LABELS: Record<Contact["status"], string> = {
   new: "New",

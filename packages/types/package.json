@@ -1,5 +1,5 @@
 {
-  "name": "@houseofmusa/types",
+  "name": "@hausofmusa/types",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",

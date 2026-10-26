@@ -5,8 +5,8 @@ import type {
   Contact,
   Media,
   Product,
-} from "@houseofmusa/types";
-import type { CareerRoleInput, ContactInput, ProductInput } from "@houseofmusa/schemas";
+} from "@hausofmusa/types";
+import type { CareerRoleInput, ContactInput, ProductInput } from "@hausofmusa/schemas";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Row = Record<string, any>;

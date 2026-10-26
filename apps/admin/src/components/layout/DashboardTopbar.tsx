@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Moon, Sun, LogOut, UserCircle2 } from "lucide-react";
-import { Button } from "@houseofmusa/ui";
+import { Button } from "@hausofmusa/ui";
 import { getBrowserDb } from "@/lib/supabase/browser";
 import type { AdminSession } from "@/lib/auth";
 import { Logo } from "./Logo";
@@ -11,7 +11,7 @@ import { Logo } from "./Logo";
 export function DashboardTopbar({ admin }: { admin: AdminSession }) {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  const displayEmail = admin.email.endsWith("@example.com") ? "admin@houseofmusa.com" : admin.email;
+  const displayEmail = admin.email.endsWith("@example.com") ? "admin@hausofmusa.com" : admin.email;
 
   const handleLogout = async () => {
     await getBrowserDb().auth.signOut();
@@ -22,8 +22,8 @@ export function DashboardTopbar({ admin }: { admin: AdminSession }) {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-foreground/8 bg-surface/95 px-4 py-3 backdrop-blur-md dark:border-white/10 dark:bg-[#111111]/95 sm:px-5 lg:px-6">
       <div className="min-w-0">
-        <div className="block h-8 w-28 lg:hidden">
-          <Logo className="h-full w-full" />
+        <div className="block h-5 w-20 lg:hidden">
+          <Logo className="h-full w-full object-contain object-left" />
         </div>
         <div className="hidden sm:block">
           <h1 className="font-display text-base font-semibold tracking-tight text-foreground dark:text-white">

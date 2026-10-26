@@ -1,4 +1,4 @@
-import type { AdminRole } from "@houseofmusa/types";
+import type { AdminRole } from "@hausofmusa/types";
 import { getServerDb } from "./supabase/server";
 
 export interface AdminSession {

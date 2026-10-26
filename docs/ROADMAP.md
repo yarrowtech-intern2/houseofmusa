@@ -52,7 +52,7 @@ all 10 sidebar sections as routes).
 ## Phase 5 — Contact (done)
 
 - `components/contact/ContactModal.tsx` now does the real thing: React Hook Form + `contactSchema`
-  (`@houseofmusa/schemas`, shared with the API, so client and server validation can't drift), full field set
+  (`@hausofmusa/schemas`, shared with the API, so client and server validation can't drift), full field set
   (name, email, phone, company, budget, project type, message), submits directly to `POST /api/contacts`,
   success state (checkmark + message) instead of closing immediately, form resets on reopen so a second visit
   never shows a stale success screen.

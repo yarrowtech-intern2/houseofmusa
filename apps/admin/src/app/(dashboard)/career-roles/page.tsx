@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import type { CareerRole } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
-import { listCareerRolesAdmin } from "@houseofmusa/data";
+import type { CareerRole } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
+import { listCareerRolesAdmin } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { CareerRoleRowActions } from "@/components/careerRoles/CareerRoleRowActions";
 

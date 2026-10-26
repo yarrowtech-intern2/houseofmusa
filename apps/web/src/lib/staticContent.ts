@@ -1,4 +1,4 @@
-import type { CareerRole, PaginatedResult, Product } from "@houseofmusa/types";
+import type { CareerRole, PaginatedResult, Product } from "@hausofmusa/types";
 
 const STATIC_DATE = "2026-01-01T00:00:00.000Z";
 

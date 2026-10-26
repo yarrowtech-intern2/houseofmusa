@@ -1,4 +1,4 @@
-import type { Application, Contact } from "@houseofmusa/types";
+import type { Application, Contact } from "@hausofmusa/types";
 
 export type ApplicationWithRole = Omit<Application, "roleId"> & {
   roleId: { _id: string; title: string; department: string } | null;

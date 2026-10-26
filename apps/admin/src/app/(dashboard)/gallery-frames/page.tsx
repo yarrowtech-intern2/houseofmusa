@@ -1,4 +1,4 @@
-import { listProductsAdmin, listSettingsAdmin } from "@houseofmusa/data";
+import { listProductsAdmin, listSettingsAdmin } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { GalleryFramesEditor } from "@/components/settings/GalleryFramesEditor";
 

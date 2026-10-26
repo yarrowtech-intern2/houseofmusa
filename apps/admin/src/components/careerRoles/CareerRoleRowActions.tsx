@@ -4,9 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Eye, EyeOff } from "lucide-react";
-import type { CareerRole } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
-import { deleteCareerRole, updateCareerRole } from "@houseofmusa/data";
+import type { CareerRole } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
+import { deleteCareerRole, updateCareerRole } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 export function CareerRoleRowActions({ role }: { role: CareerRole }) {

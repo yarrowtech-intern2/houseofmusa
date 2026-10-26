@@ -64,7 +64,7 @@ Security middleware applied globally: `helmet`, `cors` (origin allowlist via `CO
 | GET | `/api/settings/public` | public | Public settings payload with defaults for homepage content, contact details, gallery frames, and SEO. |
 | GET | `/api/settings/admin` | admin | Same normalized payload plus raw stored setting documents. |
 | GET | `/api/settings/:key` | public | Fetch one setting, falling back to defaults. Keys: `homepage-content`, `contact-details`, `gallery-frames`, `seo`. |
-| PATCH | `/api/settings/:key` | admin | Upserts one setting. Body can be the setting object or `{ value }`; validated by `@houseofmusa/schemas`. |
+| PATCH | `/api/settings/:key` | admin | Upserts one setting. Body can be the setting object or `{ value }`; validated by `@hausofmusa/schemas`. |
 
 ## Media
 

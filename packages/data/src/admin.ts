@@ -6,7 +6,7 @@ import type {
   PaginatedResult,
   Product,
   SiteSettings,
-} from "@houseofmusa/types";
+} from "@hausofmusa/types";
 import type { z } from "zod";
 import {
   applicationStatusSchema,
@@ -20,7 +20,7 @@ import {
   settingKeyValues,
   settingsUpdateSchema,
   type ProductQuery,
-} from "@houseofmusa/schemas";
+} from "@hausofmusa/schemas";
 import {
   APPLICATIONS_BUCKET,
   DataError,

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
-import { contactAdminUpdateSchema, contactBudgetValues, contactStatusValues, projectTypeValues } from "@houseofmusa/schemas";
-import type { Contact } from "@houseofmusa/types";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, updateContact } from "@houseofmusa/data";
+import { contactAdminUpdateSchema, contactBudgetValues, contactStatusValues, projectTypeValues } from "@hausofmusa/schemas";
+import type { Contact } from "@hausofmusa/types";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, updateContact } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 import {
   CONTACT_BUDGET_LABELS,

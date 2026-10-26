@@ -19,7 +19,7 @@ write via `packages/schemas` (Zod). All collections use `{ timestamps: true }`.
 ## Seeding an admin user
 
 ```
-pnpm --filter @houseofmusa/api seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
+pnpm --filter @hausofmusa/api seed:admin admin@hausofmusa.com "a-strong-password" "Haus of Musa Admin"
 ```
 
 Upserts by email, so it's safe to re-run.
@@ -27,7 +27,7 @@ Upserts by email, so it's safe to re-run.
 ## Seeding placeholder products
 
 ```
-pnpm --filter @houseofmusa/api seed:products
+pnpm --filter @hausofmusa/api seed:products
 ```
 
 Upserts 8 placeholder products (one per category) by slug — see `apps/api/src/scripts/seedProducts.ts`.
@@ -36,7 +36,7 @@ Replace via the admin Products CRUD once real product content exists.
 ## Seeding placeholder career roles
 
 ```
-pnpm --filter @houseofmusa/api seed:career-roles
+pnpm --filter @hausofmusa/api seed:career-roles
 ```
 
 Upserts 6 placeholder roles across Engineering/Design/Sales/People by slug — see

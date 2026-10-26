@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import type { CareerRole } from "@houseofmusa/types";
+import type { CareerRole } from "@hausofmusa/types";
 import { CareerDetailClient } from "@/components/careers/CareerDetailClient";
-import { getCareerRoleBySlug } from "@houseofmusa/data";
+import { getCareerRoleBySlug } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 

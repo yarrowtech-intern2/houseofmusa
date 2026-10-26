@@ -1,9 +1,9 @@
-# House of Musa
+# Haus of Musa
 
 Ultra-premium IT company website — cinematic 3D hero, first-person product gallery, and a full
 content/ops backend. pnpm monorepo: `apps/web` (public site) and `apps/admin` (dashboard), both Next.js on
 Vercel; the database, auth and file storage live in Supabase. `packages/*` hold the shared
-types/schemas/ui/config plus `@houseofmusa/data`, the typed Supabase data layer both apps use.
+types/schemas/ui/config plus `@hausofmusa/data`, the typed Supabase data layer both apps use.
 
 Full documentation lives in [`docs/`](./docs):
 [PRD](./docs/PRD.md) · [Architecture](./docs/ARCHITECTURE.md) · [Design System](./docs/DESIGN-SYSTEM.md) ·
@@ -24,7 +24,7 @@ cp supabase/.env.example supabase/.env             # service-role key, used only
 pnpm dev:web      # http://localhost:3000
 pnpm dev:admin    # http://localhost:3001
 
-pnpm seed:admin admin@houseofmusa.com "a-strong-password" "House of Musa Admin"
+pnpm seed:admin admin@hausofmusa.com "a-strong-password" "Haus of Musa Admin"
 pnpm seed:products
 pnpm seed:career-roles
 ```

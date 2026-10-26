@@ -15,7 +15,7 @@ import {
   Search,
   Globe,
 } from "lucide-react";
-import { cn } from "@houseofmusa/ui";
+import { cn } from "@hausofmusa/ui";
 import { Logo } from "./Logo";
 
 const NAV_SECTIONS = [
@@ -39,7 +39,7 @@ export function DashboardSidebar() {
     <>
       <aside className="hidden w-64 shrink-0 flex-col border-r border-foreground/8 bg-surface px-4 py-6 dark:border-white/10 dark:bg-[#111111] lg:flex">
         <div className="mb-7 -ml-1 px-1">
-          <Logo className="h-16 w-52 object-contain object-left" />
+          <Logo className="h-8 w-28 object-contain object-left" />
         </div>
         <nav className="flex flex-col gap-1">
           {NAV_SECTIONS.map(({ href, label, icon: Icon }) => {

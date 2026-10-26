@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { employmentTypeValues } from "@houseofmusa/schemas";
-import type { CareerRole } from "@houseofmusa/types";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, createCareerRole, updateCareerRole } from "@houseofmusa/data";
+import { employmentTypeValues } from "@hausofmusa/schemas";
+import type { CareerRole } from "@hausofmusa/types";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, createCareerRole, updateCareerRole } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
-// Mirrors @houseofmusa/schemas' careerRoleSchema but keeps responsibilities/
+// Mirrors @hausofmusa/schemas' careerRoleSchema but keeps responsibilities/
 // requirements as newline-separated text for plain textareas — split into
 // arrays only when building the API payload.
 const careerRoleFormSchema = z.object({

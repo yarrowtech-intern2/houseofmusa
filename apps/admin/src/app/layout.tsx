@@ -6,8 +6,8 @@ import "./globals.css";
 const onest = Onest({ subsets: ["latin"], variable: "--font-onest", weight: "variable" });
 
 export const metadata: Metadata = {
-  title: { default: "Admin · House of Musa", template: "%s · Admin" },
-  description: "House of Musa content and operations dashboard.",
+  title: { default: "Admin · Haus of Musa", template: "%s · Admin" },
+  description: "Haus of Musa content and operations dashboard.",
   icons: { icon: "/favicon.png" },
   robots: { index: false, follow: false },
 };

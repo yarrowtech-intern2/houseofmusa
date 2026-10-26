@@ -123,7 +123,7 @@ const FOOTER_LINK_GROUPS = [
 const FAQ_ITEMS = [
   {
     id: "01",
-    question: "What does House of Musa actually build?",
+    question: "What does Haus of Musa actually build?",
     answer:
       "We design and ship ERP systems, AI-enabled workflows, branded web platforms, and conversion-focused product experiences for businesses that need clarity and scale.",
   },
@@ -168,18 +168,18 @@ const PRINCIPLE_ITEMS = [
     cardBody:
       "ERP architecture, workflow automation, and interface systems designed for daily use at scale.",
     imageSrc: MISSION_IMAGE_SRC,
-    imageAlt: "House of Musa mission visual",
+    imageAlt: "Haus of Musa mission visual",
   },
   {
     id: "02",
     title: "Vision",
     body:
-      "To shape House of Musa into a studio where engineering, interface design, and motion-led storytelling work as one coherent product language.",
+      "To shape Haus of Musa into a studio where engineering, interface design, and motion-led storytelling work as one coherent product language.",
     cardTitle: "Brand + Product",
     cardBody:
       "A visual and technical standard that makes every launch feel clear, premium, and memorable.",
     imageSrc: VISION_IMAGE_SRC,
-    imageAlt: "House of Musa vision visual",
+    imageAlt: "Haus of Musa vision visual",
   },
   {
     id: "03",
@@ -190,7 +190,7 @@ const PRINCIPLE_ITEMS = [
     cardBody:
       "Performance-minded delivery across web platforms, AI-enabled tools, and tailored business systems.",
     imageSrc: PURPOSE_IMAGE_SRC,
-    imageAlt: "House of Musa purpose visual",
+    imageAlt: "Haus of Musa purpose visual",
   },
 ];
 const smoothEase = [0.22, 1, 0.36, 1] as const;
@@ -493,7 +493,7 @@ export function About2Experience() {
         const lightBands = Array.from(container.querySelectorAll<HTMLElement>(".about-projects, .about-footer"));
         const isOverLightBand = lightBands.some((band) => probeY >= band.offsetTop && probeY <= band.offsetTop + band.offsetHeight);
         window.dispatchEvent(
-          new CustomEvent("houseofmusa:nav-logo-tone", { detail: { overDark: !isOverLightBand } }),
+          new CustomEvent("hausofmusa:nav-logo-tone", { detail: { overDark: !isOverLightBand } }),
         );
       });
     };
@@ -556,7 +556,7 @@ export function About2Experience() {
             className="about-hero__ghost-word"
             style={{ opacity: ghostOpacity, y: ghostY }}
           >
-            HOUSE OF MUSA
+            HAUS OF MUSA
           </Motion.div>
 
           <Motion.div
@@ -564,7 +564,7 @@ export function About2Experience() {
             style={{ y: shellY, opacity: shellOpacity }}
           >
             <div className="about-hero__topbar">
-              <div className="about-hero__eyebrow">House of Musa // About</div>
+              <div className="about-hero__eyebrow">Haus of Musa // About</div>
               <div className="about-hero__summary">
                 Digital systems, branded experiences, and product engineering
                 crafted with control.
@@ -589,7 +589,7 @@ export function About2Experience() {
 
               <Motion.div className="about-hero__aside" style={{ y: detailY }}>
                 <p className="about-hero__description">
-                  House of Musa builds ERP platforms, AI-backed products, custom
+                  Haus of Musa builds ERP platforms, AI-backed products, custom
                   websites, and immersive interfaces that turn complex ideas
                   into confident digital presence.
                 </p>
@@ -682,7 +682,7 @@ export function About2Experience() {
             className="about-identity__body"
             variants={sectionItemVariants}
           >
-            House of Musa builds ERP systems, AI-enabled products, and
+            Haus of Musa builds ERP systems, AI-enabled products, and
             conversion-focused web experiences that bring clarity to operations,
             stronger brand presence, and room for businesses to grow with
             confidence.
@@ -761,7 +761,7 @@ export function About2Experience() {
                     <img
                       className="about-principles__visual-image"
                       src={MISSION_IMAGE_SRC}
-                      alt="House of Musa mission visual"
+                      alt="Haus of Musa mission visual"
                       loading="lazy"
                     />
                   </div>
@@ -779,7 +779,7 @@ export function About2Experience() {
                     <img
                       className="about-principles__visual-image"
                       src={VISION_IMAGE_SRC}
-                      alt="House of Musa vision visual"
+                      alt="Haus of Musa vision visual"
                       loading="lazy"
                     />
                   </div>
@@ -797,7 +797,7 @@ export function About2Experience() {
                     <img
                       className="about-principles__visual-image"
                       src={PURPOSE_IMAGE_SRC}
-                      alt="House of Musa purpose visual"
+                      alt="Haus of Musa purpose visual"
                       loading="lazy"
                     />
                   </div>
@@ -924,7 +924,7 @@ export function About2Experience() {
               >
                 <div className="about-showcase__footer-copy">
                   Explore the full catalogue of launches, systems, and digital
-                  products built by House of Musa.
+                  products built by Haus of Musa.
                 </div>
                 {/* <Link className="about-showcase__cta" to="/projects">
                   View projects
@@ -965,7 +965,7 @@ export function About2Experience() {
               variants={sectionItemVariants}
             >
               <div className="about-projects__kicker">
-                Introducing six House of Musa launches:
+                Introducing six Haus of Musa launches:
               </div>
               <p className="about-projects__summary">
                 ERP platforms. Commerce systems. Creator networks. HR tools.
@@ -1061,7 +1061,7 @@ export function About2Experience() {
             FAQ
           </Motion.h2>
           <Motion.p className="about-faq__summary" variants={sectionItemVariants}>
-            If you are evaluating House of Musa for a product, platform, or
+            If you are evaluating Haus of Musa for a product, platform, or
             systems-focused engagement, these are the questions that usually
             come up first.
           </Motion.p>
@@ -1137,9 +1137,9 @@ export function About2Experience() {
             <div className="about-footer__eyebrow">Project inquiries</div>
             <a
               className="about-footer__contact-link"
-              href="mailto:hello@houseofmusa.com"
+              href="mailto:hello@hausofmusa.com"
             >
-              hello@houseofmusa.com
+              hello@hausofmusa.com
             </a>
 
             <div className="about-footer__eyebrow">Build with us</div>
@@ -1153,7 +1153,7 @@ export function About2Experience() {
             className="about-footer__identity"
             variants={sectionItemVariants}
           >
-            <div className="about-footer__badge">House of Musa</div>
+            <div className="about-footer__badge">Haus of Musa</div>
             <h2 className="about-footer__headline">
               Systems with precision.
               <br />
@@ -1191,12 +1191,12 @@ export function About2Experience() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: smoothEase }}
         >
-          <div className="about-footer__wordmark">House of Musa</div>
+          <div className="about-footer__wordmark">Haus of Musa</div>
         </Motion.div>
 
         <div className="about-footer__meta">
           <div className="about-footer__meta-item">
-            Â©{footerYear} House of Musa. All rights reserved.
+            Â©{footerYear} Haus of Musa. All rights reserved.
           </div>
           <div className="about-footer__meta-item">
             Designed for bold product systems.

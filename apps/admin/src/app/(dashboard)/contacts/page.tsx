@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Pencil } from "lucide-react";
-import { Button } from "@houseofmusa/ui";
-import { listContacts } from "@houseofmusa/data";
+import { Button } from "@hausofmusa/ui";
+import { listContacts } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import {
   CONTACT_BUDGET_LABELS,

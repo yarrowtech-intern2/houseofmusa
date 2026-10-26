@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import type { PaginatedResult, Product } from "@houseofmusa/types";
+import type { PaginatedResult, Product } from "@hausofmusa/types";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
 import { RevealText } from "@/components/motion/RevealText";
-import { listProducts } from "@houseofmusa/data";
+import { listProducts } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "ERP, SaaS, and cloud infrastructure products built by House of Musa.",
+  description: "ERP, SaaS, and cloud infrastructure products built by Haus of Musa.",
 };
 
 export default async function ProductsPage() {

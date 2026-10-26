@@ -1,6 +1,6 @@
 import { getAdminClient } from "./lib";
 
-/** Usage: pnpm --filter @houseofmusa/data seed:admin <email> <password> [name] */
+/** Usage: pnpm --filter @hausofmusa/data seed:admin <email> <password> [name] */
 async function main() {
   const [email, password, name = "Admin"] = process.argv.slice(2);
   if (!email || !password) {

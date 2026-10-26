@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const sharedPreset = require("@houseofmusa/config/tailwind-preset.js");
+const sharedPreset = require("@hausofmusa/config/tailwind-preset.js");
 
 const config: Config = {
   presets: [sharedPreset],

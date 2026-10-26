@@ -5,6 +5,7 @@ import { useProgress } from "@react-three/drei";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { gsap } from "gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { CurtainLayers, type CurtainLayerRefs } from "@/components/transitions/CurtainLayers";
 
 const SESSION_KEY = "hom:arrival-played";
 const WAIT_MESSAGES = [
@@ -26,6 +27,7 @@ export function ArrivalSequence({ sceneReady, onComplete }: { sceneReady: boolea
   const [copyIndex, setCopyIndex] = useState(0);
   const [visualProgress, setVisualProgress] = useState(8);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const curtainRef = useRef<CurtainLayerRefs>([]);
   const contentRef = useRef<HTMLDivElement>(null);
   const completeRef = useRef(false);
   const previousOverflowRef = useRef<string>();
@@ -87,15 +89,21 @@ export function ArrivalSequence({ sceneReady, onComplete }: { sceneReady: boolea
     }
 
     const alreadyPlayed = sessionStorage.getItem(SESSION_KEY) === "1";
+    const layers = curtainRef.current.filter((el): el is HTMLDivElement => el !== null);
     const tl = gsap.timeline({ defaults: { ease: "power4.inOut" }, onComplete: finish });
 
-    tl.to(contentRef.current, { y: alreadyPlayed ? -16 : -44, autoAlpha: 0, duration: alreadyPlayed ? 0.35 : 0.65 })
+    tl.to(contentRef.current, { y: alreadyPlayed ? -16 : -44, autoAlpha: 0, duration: alreadyPlayed ? 0.4 : 0.75 })
       .to(
         overlayRef.current,
+        { yPercent: -4, duration: alreadyPlayed ? 0.6 : 1.1 },
+        alreadyPlayed ? 0.05 : 0.18,
+      )
+      .to(
+        layers,
         {
           clipPath: "inset(0% 0% 100% 0%)",
-          yPercent: -4,
-          duration: alreadyPlayed ? 0.55 : 1.15,
+          duration: alreadyPlayed ? 0.6 : 1.1,
+          stagger: alreadyPlayed ? 0.12 : 0.22,
         },
         alreadyPlayed ? 0.05 : 0.18,
       );
@@ -113,19 +121,20 @@ export function ArrivalSequence({ sceneReady, onComplete }: { sceneReady: boolea
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[100] flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-primary text-primary-foreground"
-      style={{ clipPath: "inset(0% 0% 0% 0%)" }}
+      className="fixed inset-0 z-[100] flex min-h-dvh flex-col items-center justify-center overflow-hidden text-primary-foreground"
     >
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden text-center font-display text-[18vw] font-semibold leading-none text-black/[0.055] sm:text-[15vw]">
-        HOUSEOFMUSA
-      </div>
+      <CurtainLayers ref={curtainRef} className="absolute inset-0">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden text-center font-display text-[18vw] font-semibold leading-none text-black/[0.055] sm:text-[15vw]">
+          HAUSOFMUSA
+        </div>
+      </CurtainLayers>
 
       <div
         ref={contentRef}
         className="relative z-10 flex w-full max-w-[min(34rem,calc(100vw-2rem))] flex-col items-center px-4 text-center"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/logo-black.png" alt="House of Musa" className="h-auto w-[min(18rem,68vw)]" />
+        <img src="/logo/logo-black.png" alt="Haus of Musa" className="h-auto w-[min(9rem,34vw)]" />
 
         <div className="relative mt-10 grid size-40 place-items-center sm:size-48" aria-hidden="true">
           <DotLottieReact

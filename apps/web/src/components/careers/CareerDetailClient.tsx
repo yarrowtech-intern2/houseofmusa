@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import type { CareerRole } from "@houseofmusa/types";
+import type { CareerRole } from "@hausofmusa/types";
 import { ApplicationForm } from "@/components/careers/ApplicationForm";
 import { RevealText } from "@/components/motion/RevealText";
-import { getCareerRoleBySlug } from "@houseofmusa/data";
+import { getCareerRoleBySlug } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import type { ContactDetails } from "@houseofmusa/types";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@houseofmusa/ui";
+import type { ContactDetails } from "@hausofmusa/types";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@hausofmusa/ui";
 import { ConsultationForm } from "@/components/contact/ConsultationForm";
 
 export function ContactModal({

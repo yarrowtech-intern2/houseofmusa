@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import type { Db } from "@houseofmusa/data";
+import type { Db } from "@hausofmusa/data";
 import { supabaseAnonKey, supabaseUrl } from "./env";
 
 /** Server-component / route-handler client bound to the request's session cookies. */

@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { productCategoryValues } from "@houseofmusa/schemas";
-import type { Product } from "@houseofmusa/types";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, createProduct, updateProduct } from "@houseofmusa/data";
+import { productCategoryValues } from "@hausofmusa/schemas";
+import type { Product } from "@hausofmusa/types";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, createProduct, updateProduct } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
-// Mirrors @houseofmusa/schemas' productSchema but keeps techStack as a raw
+// Mirrors @hausofmusa/schemas' productSchema but keeps techStack as a raw
 // comma-separated string for a plain text input — split into an array only
 // when building the API payload.
 const productFormSchema = z.object({

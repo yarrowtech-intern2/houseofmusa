@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Product } from "@houseofmusa/types";
+import type { Product } from "@hausofmusa/types";
 import { useIsTouchDevice } from "@/hooks/useIsTouchDevice";
 import { GalleryUI } from "./GalleryUI";
-import { getPublicSettings, listProducts } from "@houseofmusa/data";
+import { getPublicSettings, listProducts } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import type { MoveInput, LookDelta } from "@/three/gallery/FirstPersonRig";
 

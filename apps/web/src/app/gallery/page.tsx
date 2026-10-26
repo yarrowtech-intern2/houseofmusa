@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import type { Product, PaginatedResult } from "@houseofmusa/types";
-import { listProducts } from "@houseofmusa/data";
+import type { Product, PaginatedResult } from "@hausofmusa/types";
+import { listProducts } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { GalleryExperience } from "@/components/gallery/GalleryExperience";
 import { STATIC_PRODUCTS, toPaginatedResult } from "@/lib/staticContent";
@@ -8,7 +8,7 @@ import { getPublicSiteSettings } from "@/lib/siteSettings";
 
 export const metadata: Metadata = {
   title: "3D Gallery",
-  description: "Walk through a first-person art gallery showcasing every House of Musa product.",
+  description: "Walk through a first-person art gallery showcasing every Haus of Musa product.",
 };
 
 // Standalone route (outside the (site) group) — the gallery is full-bleed

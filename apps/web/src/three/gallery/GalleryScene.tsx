@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
-import type { Product } from "@houseofmusa/types";
+import type { Product } from "@hausofmusa/types";
 import { FirstPersonRig, type MoveInput, type LookDelta, type Orientation } from "./FirstPersonRig";
 import { ModelGalleryEnvironment } from "./ModelGalleryEnvironment";
 import { GalleryFrame } from "./GalleryFrame";

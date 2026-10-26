@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { cn } from "@houseofmusa/ui";
+import { cn } from "@hausofmusa/ui";
 
 const NAV_LINKS: Array<{ href: string; label: string; iconSrc: string }> = [
   { href: "/about", label: "About", iconSrc: "/icons/about.webp" },
@@ -33,11 +33,11 @@ export function SiteNav() {
     };
 
     updateLogoTone();
-    window.addEventListener("houseofmusa:nav-logo-tone", handleExternalLogoTone);
+    window.addEventListener("hausofmusa:nav-logo-tone", handleExternalLogoTone);
     window.addEventListener("scroll", updateLogoTone, { passive: true });
     window.addEventListener("resize", updateLogoTone);
     return () => {
-      window.removeEventListener("houseofmusa:nav-logo-tone", handleExternalLogoTone);
+      window.removeEventListener("hausofmusa:nav-logo-tone", handleExternalLogoTone);
       window.removeEventListener("scroll", updateLogoTone);
       window.removeEventListener("resize", updateLogoTone);
     };
@@ -134,7 +134,7 @@ function LogoHomeLink({
   return (
     <Link
       href="/"
-      aria-label="House of Musa home"
+      aria-label="Haus of Musa home"
       onClick={(event) => {
         event.preventDefault();
         setTapCount((count) => {
@@ -146,12 +146,12 @@ function LogoHomeLink({
           return nextCount;
         });
       }}
-      className="relative block h-20 w-56 drop-shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:h-24 sm:w-72 lg:h-28 lg:w-80"
+      className="relative block h-10 w-28 drop-shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:h-12 sm:w-36 lg:h-14 lg:w-40"
     >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo/logo-black.png"
-          alt="House of Musa"
+          alt="Haus of Musa"
           className={cn("h-full w-full object-contain object-left transition-opacity duration-300", logoOverDark && "opacity-0")}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}

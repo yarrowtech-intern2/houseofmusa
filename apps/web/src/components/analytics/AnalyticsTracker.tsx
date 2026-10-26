@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { trackEvent } from "@houseofmusa/data";
+import { trackEvent } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 function eventTypeForPath(path: string) {

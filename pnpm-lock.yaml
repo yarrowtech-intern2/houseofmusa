@@ -10,21 +10,21 @@ importers:
 
   apps/admin:
     dependencies:
+      '@hausofmusa/data':
+        specifier: workspace:*
+        version: link:../../packages/data
+      '@hausofmusa/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
+      '@hausofmusa/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@hausofmusa/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.10.0(react-hook-form@7.84.0(react@18.3.1))
-      '@houseofmusa/data':
-        specifier: workspace:*
-        version: link:../../packages/data
-      '@houseofmusa/schemas':
-        specifier: workspace:*
-        version: link:../../packages/schemas
-      '@houseofmusa/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@houseofmusa/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@supabase/ssr':
         specifier: ^0.5.2
         version: 0.5.2(@supabase/supabase-js@2.117.3)
@@ -53,7 +53,7 @@ importers:
         specifier: ^3.23.8
         version: 3.25.76
     devDependencies:
-      '@houseofmusa/config':
+      '@hausofmusa/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@types/node':
@@ -86,24 +86,24 @@ importers:
 
   apps/web:
     dependencies:
+      '@hausofmusa/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@hausofmusa/data':
+        specifier: workspace:*
+        version: link:../../packages/data
+      '@hausofmusa/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
+      '@hausofmusa/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@hausofmusa/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.10.0(react-hook-form@7.84.0(react@18.3.1))
-      '@houseofmusa/config':
-        specifier: workspace:*
-        version: link:../../packages/config
-      '@houseofmusa/data':
-        specifier: workspace:*
-        version: link:../../packages/data
-      '@houseofmusa/schemas':
-        specifier: workspace:*
-        version: link:../../packages/schemas
-      '@houseofmusa/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@houseofmusa/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@lottiefiles/dotlottie-react':
         specifier: ^0.19.12
         version: 0.19.12(react@18.3.1)
@@ -191,10 +191,10 @@ importers:
 
   packages/data:
     dependencies:
-      '@houseofmusa/schemas':
+      '@hausofmusa/schemas':
         specifier: workspace:*
         version: link:../schemas
-      '@houseofmusa/types':
+      '@hausofmusa/types':
         specifier: workspace:*
         version: link:../types
       zod:

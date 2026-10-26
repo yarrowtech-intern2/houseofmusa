@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { Contact } from "@houseofmusa/types";
-import { updateContactStatus } from "@houseofmusa/data";
+import type { Contact } from "@hausofmusa/types";
+import { updateContactStatus } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 

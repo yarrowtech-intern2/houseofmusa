@@ -1,5 +1,5 @@
 import { Activity, GalleryHorizontal, MousePointerClick, Package, Route } from "lucide-react";
-import { getAnalyticsSummary, type AnalyticsSummary } from "@houseofmusa/data";
+import { getAnalyticsSummary, type AnalyticsSummary } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Panel } from "@/components/dashboard/Panel";

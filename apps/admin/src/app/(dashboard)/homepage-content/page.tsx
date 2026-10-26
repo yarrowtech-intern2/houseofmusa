@@ -1,4 +1,4 @@
-import { listSettingsAdmin } from "@houseofmusa/data";
+import { listSettingsAdmin } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { HomepageContentEditor } from "@/components/settings/HomepageContentEditor";
 

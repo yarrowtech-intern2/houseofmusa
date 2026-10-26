@@ -1,4 +1,4 @@
-import type { CareerRole, PaginatedResult, Product, SiteSettings } from "@houseofmusa/types";
+import type { CareerRole, PaginatedResult, Product, SiteSettings } from "@hausofmusa/types";
 import {
   analyticsEventSchema,
   applicationSchema,
@@ -7,7 +7,7 @@ import {
   type ApplicationInput,
   type ContactInput,
   type ProductQuery,
-} from "@houseofmusa/schemas";
+} from "@hausofmusa/schemas";
 import {
   APPLICATIONS_BUCKET,
   DataError,

@@ -1,1 +1,1 @@
-export type { AnalyticsSummary, ApplicationWithRole, DashboardSummary } from "@houseofmusa/data";
+export type { AnalyticsSummary, ApplicationWithRole, DashboardSummary } from "@hausofmusa/data";

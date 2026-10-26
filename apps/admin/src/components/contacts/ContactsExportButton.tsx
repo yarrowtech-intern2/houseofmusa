@@ -1,8 +1,8 @@
 "use client";
 
 import { Download } from "lucide-react";
-import type { Contact } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
+import type { Contact } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
 import { CONTACT_BUDGET_LABELS, CONTACT_PROJECT_TYPE_LABELS, CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 
 function csvCell(value: unknown) {

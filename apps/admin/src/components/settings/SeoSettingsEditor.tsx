@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Save, Trash2 } from "lucide-react";
-import type { SeoRouteSetting, SeoSettings } from "@houseofmusa/types";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, updateSetting } from "@houseofmusa/data";
+import type { SeoRouteSetting, SeoSettings } from "@hausofmusa/types";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, updateSetting } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 const emptyRoute: SeoRouteSetting = { path: "/", title: "", description: "", ogImage: "" };

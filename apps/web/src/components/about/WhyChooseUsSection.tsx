@@ -44,7 +44,7 @@ export function WhyChooseUsSection() {
   return (
     <section className="px-6 py-24 sm:px-12 lg:px-24">
       <div className="mx-auto max-w-6xl">
-        <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Why House of Musa</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Why Haus of Musa</span>
         <RevealText
           as="h2"
           text="Why teams choose to stay."

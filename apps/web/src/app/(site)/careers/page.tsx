@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import type { CareerRole } from "@houseofmusa/types";
+import type { CareerRole } from "@hausofmusa/types";
 import { CareersListClient } from "@/components/careers/CareersListClient";
 import { RevealText } from "@/components/motion/RevealText";
-import { listCareerRoles } from "@houseofmusa/data";
+import { listCareerRoles } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { STATIC_CAREER_ROLES } from "@/lib/staticContent";
 
 export const metadata: Metadata = {
   title: "Careers",
-  description: "Open roles at House of Musa.",
+  description: "Open roles at Haus of Musa.",
 };
 
 export default async function CareersPage() {

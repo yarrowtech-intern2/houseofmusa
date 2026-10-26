@@ -1,5 +1,5 @@
 import { FileText, FileCheck } from "lucide-react";
-import { listApplications } from "@houseofmusa/data";
+import { listApplications } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { ApplicationStatusSelect } from "@/components/applications/ApplicationStatusSelect";
 

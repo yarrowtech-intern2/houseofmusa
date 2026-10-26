@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Activity, Briefcase, FileText, Mail, Package } from "lucide-react";
-import { Button } from "@houseofmusa/ui";
-import { getDashboardSummary } from "@houseofmusa/data";
+import { Button } from "@hausofmusa/ui";
+import { getDashboardSummary } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { CONTACT_STATUS_LABELS } from "@/lib/contactLabels";
 import { StatCard } from "@/components/dashboard/StatCard";

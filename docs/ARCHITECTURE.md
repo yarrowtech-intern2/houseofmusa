@@ -3,7 +3,7 @@
 ## Monorepo layout
 
 ```
-houseofmusa/
+hausofmusa/
   apps/
     web/     Next.js 14 App Router — public marketing site
     admin/   Next.js 14 App Router — internal dashboard, separate deploy target

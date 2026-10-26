@@ -4,9 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Eye, EyeOff } from "lucide-react";
-import type { Product } from "@houseofmusa/types";
-import { Button } from "@houseofmusa/ui";
-import { deleteProduct, updateProduct } from "@houseofmusa/data";
+import type { Product } from "@hausofmusa/types";
+import { Button } from "@hausofmusa/ui";
+import { deleteProduct, updateProduct } from "@hausofmusa/data";
 import { getBrowserDb } from "@/lib/supabase/browser";
 
 export function ProductRowActions({ product }: { product: Product }) {

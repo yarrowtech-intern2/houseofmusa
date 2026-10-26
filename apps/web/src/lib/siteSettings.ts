@@ -1,5 +1,5 @@
-import type { ContactDetails, HomepageContent, SeoSettings, SiteSettings } from "@houseofmusa/types";
-import { getPublicSettings } from "@houseofmusa/data";
+import type { ContactDetails, HomepageContent, SeoSettings, SiteSettings } from "@hausofmusa/types";
+import { getPublicSettings } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 export const defaultHomepageContent: HomepageContent = {
@@ -50,7 +50,7 @@ export const defaultHomepageContent: HomepageContent = {
 };
 
 export const defaultContactDetails: ContactDetails = {
-  email: "hello@houseofmusa.com",
+  email: "hello@hausofmusa.com",
   phone: "",
   location: "Remote-first",
   address: "",
@@ -59,9 +59,9 @@ export const defaultContactDetails: ContactDetails = {
 };
 
 export const defaultSeoSettings: SeoSettings = {
-  defaultTitle: "House of Musa - Engineering Tomorrow",
+  defaultTitle: "Haus of Musa - Engineering Tomorrow",
   defaultDescription:
-    "House of Musa builds enterprise ERP systems, SaaS products, AI-ready infrastructure, and digital transformation solutions for ambitious companies.",
+    "Haus of Musa builds enterprise ERP systems, SaaS products, AI-ready infrastructure, and digital transformation solutions for ambitious companies.",
   ogImage: "",
   routes: [],
 };

@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText, Github, type LucideIcon } from "lucide-react";
-import type { Product } from "@houseofmusa/types";
-import { Badge, Button } from "@houseofmusa/ui";
+import type { Product } from "@hausofmusa/types";
+import { Badge, Button } from "@hausofmusa/ui";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RevealText } from "@/components/motion/RevealText";
-import { getProductBySlug } from "@houseofmusa/data";
+import { getProductBySlug } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { CATEGORY_LABELS } from "@/lib/productCategories";
 

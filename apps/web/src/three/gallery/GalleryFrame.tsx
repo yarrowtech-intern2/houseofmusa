@@ -5,7 +5,7 @@ import type { MutableRefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Mesh, MeshStandardMaterial, Object3D, SpotLight } from "three";
-import type { Product } from "@houseofmusa/types";
+import type { Product } from "@hausofmusa/types";
 import type { FrameAnchor } from "@/lib/galleryLayout";
 import { FRAME_GLOW_RADIUS } from "@/lib/galleryLayout";
 import type { DeviceTier } from "@/hooks/useDeviceTier";

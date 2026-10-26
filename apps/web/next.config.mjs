@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: "export",
-  transpilePackages: ["@houseofmusa/ui", "@houseofmusa/types", "@houseofmusa/schemas", "@houseofmusa/data"],
+  transpilePackages: ["@hausofmusa/ui", "@hausofmusa/types", "@hausofmusa/schemas", "@hausofmusa/data"],
   eslint: {
     ignoreDuringBuilds: false,
   },

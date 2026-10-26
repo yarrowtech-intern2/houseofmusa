@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { DataError, getContactById } from "@houseofmusa/data";
+import { DataError, getContactById } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { ContactForm } from "@/components/contacts/ContactForm";
 

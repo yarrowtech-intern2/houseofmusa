@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { Button } from "@houseofmusa/ui";
-import { listProductsAdmin } from "@houseofmusa/data";
+import { Button } from "@hausofmusa/ui";
+import { listProductsAdmin } from "@hausofmusa/data";
 import { getServerDb } from "@/lib/supabase/server";
 import { ProductRowActions } from "@/components/products/ProductRowActions";
 

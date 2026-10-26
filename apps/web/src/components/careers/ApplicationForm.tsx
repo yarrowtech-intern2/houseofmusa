@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle2 } from "lucide-react";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, submitApplication } from "@houseofmusa/data";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, submitApplication } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 const applicationFormSchema = z.object({

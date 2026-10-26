@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { ContactDetails } from "@houseofmusa/types";
-import { cn } from "@houseofmusa/ui";
-import { getPublicSettings } from "@houseofmusa/data";
+import type { ContactDetails } from "@hausofmusa/types";
+import { cn } from "@hausofmusa/ui";
+import { getPublicSettings } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [liveContactDetails, setLiveContactDetails] = useState(contactDetails);
-  const email = liveContactDetails?.email ?? "hello@houseofmusa.com";
+  const email = liveContactDetails?.email ?? "hello@hausofmusa.com";
 
   useEffect(() => {
     if (!CAN_USE_API) return;
@@ -43,8 +43,8 @@ export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={isHome ? "/logo/logo-white.png" : "/logo/logo-black.png"}
-            alt="House of Musa"
-            className="h-14 w-auto sm:h-16"
+            alt="Haus of Musa"
+            className="h-7 w-auto sm:h-8"
           />
           <p className={cn("mt-3 max-w-xs text-sm", isHome ? "text-white/75" : "text-foreground/50")}>
             Enterprise ERP, SaaS, and AI-ready infrastructure - engineered from a single digital headquarters.
@@ -111,7 +111,7 @@ export function SiteFooter({ contactDetails }: { contactDetails?: ContactDetails
         </div>
       </div>
       <p className={cn("mx-auto mt-16 max-w-5xl text-xs", isHome ? "text-white/50" : "text-foreground/40")}>
-        &copy; {new Date().getFullYear()} House of Musa. All rights reserved.
+        &copy; {new Date().getFullYear()} Haus of Musa. All rights reserved.
       </p>
     </footer>
   );

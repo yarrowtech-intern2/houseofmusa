@@ -2,11 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ContactDetails, HomepageContent } from "@houseofmusa/types";
+import type { ContactDetails, HomepageContent } from "@hausofmusa/types";
 import { ArrivalSequence } from "@/components/loader/ArrivalSequence";
 import { HeroOverlay } from "@/components/home/HeroOverlay";
 import { StorySection } from "@/components/home/StorySection";
-import { getPublicSettings } from "@houseofmusa/data";
+import { getPublicSettings } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 const HeroCanvas = dynamic(() => import("@/three/scenes/HeroCanvas").then((m) => m.HeroCanvas), {

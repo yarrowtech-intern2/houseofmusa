@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { Home } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginInput } from "@houseofmusa/schemas";
-import { Button, Input, Label } from "@houseofmusa/ui";
+import { loginSchema, type LoginInput } from "@hausofmusa/schemas";
+import { Button, Input, Label } from "@hausofmusa/ui";
 import { getBrowserDb } from "@/lib/supabase/browser";
 import { Logo } from "@/components/layout/Logo";
 

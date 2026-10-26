@@ -1,4 +1,4 @@
-import type { ProjectType } from "@houseofmusa/types";
+import type { ProjectType } from "@hausofmusa/types";
 
 export const CATEGORY_LABELS: Record<Exclude<ProjectType, never>, string> = {
   erp: "ERP",

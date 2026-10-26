@@ -1,4 +1,4 @@
--- House of Musa — initial Supabase schema (replaces the Mongo/Mongoose models in the old apps/api).
+-- Haus of Musa — initial Supabase schema (replaces the Mongo/Mongoose models in the old apps/api).
 -- Public visitors use the anon key; admins sign in through Supabase Auth and are recognised by a row in
 -- public.admin_profiles. Every table has RLS enabled; there is no service-role access from the browser.
 

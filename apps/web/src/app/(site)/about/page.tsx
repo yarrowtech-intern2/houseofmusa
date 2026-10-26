@@ -8,7 +8,7 @@ import { LeadershipSection } from "@/components/about/LeadershipSection";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "The story, mission, and people behind House of Musa.",
+  description: "The story, mission, and people behind Haus of Musa.",
 };
 
 export default function AboutPage() {

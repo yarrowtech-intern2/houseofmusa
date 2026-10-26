@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { CareerRole } from "@houseofmusa/types";
-import { listCareerRoles } from "@houseofmusa/data";
+import type { CareerRole } from "@hausofmusa/types";
+import { listCareerRoles } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { EMPLOYMENT_TYPE_LABELS } from "@/lib/careerLabels";
 

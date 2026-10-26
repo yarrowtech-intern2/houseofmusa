@@ -1,10 +1,10 @@
 {
-  "name": "@houseofmusa/admin",
+  "name": "@hausofmusa/admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "prebuild": "pnpm --filter @houseofmusa/schemas build",
+    "prebuild": "pnpm --filter @hausofmusa/schemas build",
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
-    "@houseofmusa/data": "workspace:*",
-    "@houseofmusa/schemas": "workspace:*",
-    "@houseofmusa/types": "workspace:*",
-    "@houseofmusa/ui": "workspace:*",
+    "@hausofmusa/data": "workspace:*",
+    "@hausofmusa/schemas": "workspace:*",
+    "@hausofmusa/types": "workspace:*",
+    "@hausofmusa/ui": "workspace:*",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.117.3",
     "lucide-react": "^0.454.0",
@@ -27,7 +27,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@houseofmusa/config": "workspace:*",
+    "@hausofmusa/config": "workspace:*",
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

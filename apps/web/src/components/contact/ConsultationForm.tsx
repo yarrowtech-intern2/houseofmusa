@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
-import type { ContactDetails } from "@houseofmusa/types";
-import { contactSchema, contactBudgetValues, projectTypeValues, type ContactInput } from "@houseofmusa/schemas";
-import { Button, Input, Label, Textarea } from "@houseofmusa/ui";
-import { DataError, getPublicSettings, submitContact } from "@houseofmusa/data";
+import type { ContactDetails } from "@hausofmusa/types";
+import { contactSchema, contactBudgetValues, projectTypeValues, type ContactInput } from "@hausofmusa/schemas";
+import { Button, Input, Label, Textarea } from "@hausofmusa/ui";
+import { DataError, getPublicSettings, submitContact } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 import { BUDGET_LABELS, CONTACT_PROJECT_TYPE_LABELS } from "@/lib/contactLabels";
 
@@ -15,7 +15,7 @@ const selectClassName =
   "flex h-12 w-full rounded-xl border border-foreground/12 bg-white/70 px-4 text-sm text-foreground backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
 
 export function ConsultationForm({
-  contactDetails = { email: "hello@houseofmusa.com" },
+  contactDetails = { email: "hello@hausofmusa.com" },
   onClose,
 }: {
   contactDetails?: ContactDetails;

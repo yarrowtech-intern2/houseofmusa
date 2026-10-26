@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ContactDetails } from "@houseofmusa/types";
-import { getPublicSettings } from "@houseofmusa/data";
+import type { ContactDetails } from "@hausofmusa/types";
+import { getPublicSettings } from "@hausofmusa/data";
 import { CAN_USE_API, getDb } from "@/lib/api";
 
 export function ContactDetailsInline({ contactDetails }: { contactDetails?: ContactDetails }) {

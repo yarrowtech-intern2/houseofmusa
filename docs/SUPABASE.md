@@ -11,7 +11,7 @@ except Next.js on Vercel.
 | Uploads | Storage buckets `media` (public, admin-write) and `applications` (private, anyone-can-upload, admin-read via signed URLs) |
 | Dashboard numbers | SQL functions `dashboard_summary()` / `analytics_summary()` (admin only) |
 | Contact / application analytics events | Postgres triggers, so they can't be forged from the browser |
-| Data access in code | [`packages/data`](../packages/data) (`@houseofmusa/data`) — used by both apps |
+| Data access in code | [`packages/data`](../packages/data) (`@hausofmusa/data`) — used by both apps |
 
 ## One-time Supabase setup
 

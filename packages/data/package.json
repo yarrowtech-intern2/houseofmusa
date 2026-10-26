@@ -1,5 +1,5 @@
 {
-  "name": "@houseofmusa/data",
+  "name": "@hausofmusa/data",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
@@ -11,8 +11,8 @@
     "seed:career-roles": "tsx --env-file=../../supabase/.env scripts/seedCareerRoles.ts"
   },
   "dependencies": {
-    "@houseofmusa/schemas": "workspace:*",
-    "@houseofmusa/types": "workspace:*",
+    "@hausofmusa/schemas": "workspace:*",
+    "@hausofmusa/types": "workspace:*",
     "zod": "^3.25.76"
   },
   "peerDependencies": {
